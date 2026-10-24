@@ -67,6 +67,12 @@ export const GlobalLocaleMenu: React.FC<GlobalLocaleMenuProps> = ({
         setIsOpen(false);
         if (code === currentLocale) return;
 
+        try {
+            document.cookie = `crow:locale=${code}; path=/; max-age=31536000; SameSite=Lax`;
+        } catch {
+            // Ignore cookie write issues
+        }
+
         if (onLocaleChange) {
             onLocaleChange(code);
             return;

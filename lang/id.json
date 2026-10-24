@@ -121,6 +121,8 @@
     }
   },
   "reader": {
+    "mode_read": "📖 Mode Baca",
+    "mode_animation": "🎬 Animasi 16:9",
     "prev_chapter": "Bab Sebelumnya",
     "next_chapter": "Lanjut: Bab :num",
     "chapter_progress": "Bab :current dari :total",

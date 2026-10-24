@@ -121,6 +121,8 @@
     }
   },
   "reader": {
+    "mode_read": "📖 Reading Mode",
+    "mode_animation": "🎬 16:9 Animation",
     "prev_chapter": "Previous Chapter",
     "next_chapter": "Next: Chapter :num",
     "chapter_progress": "Chapter :current of :total",

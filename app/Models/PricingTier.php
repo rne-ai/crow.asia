@@ -74,7 +74,8 @@ class PricingTier extends Model
         }
 
         // Handle multi-locale object: {"id": [...], "en": [...]}
-        return $raw[$locale] ?? $raw['id'] ?? (is_array(reset($raw)) ? reset($raw) : []);
+        $features = $raw[$locale] ?? $raw['id'] ?? (is_array(reset($raw)) ? reset($raw) : []);
+        return is_array($features) ? array_values($features) : [];
     }
 
     public function includesBook(string $bookId): bool

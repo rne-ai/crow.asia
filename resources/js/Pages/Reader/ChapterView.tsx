@@ -310,6 +310,8 @@ export default function ChapterView({
                                 volumeCode={book.volumeCode}
                                 bookTitle={book.title}
                                 bookId={book.id}
+                                priceSingleIdr={book.priceSingleIdr}
+                                priceSingleUsd={book.priceSingleUsd}
                             />
                         )}
                     </div>

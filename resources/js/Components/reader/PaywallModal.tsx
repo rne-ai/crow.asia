@@ -17,7 +17,7 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({
     priceSingleIdr = 149000,
     priceSingleUsd = 9.99,
 }) => {
-    const { t, formatPrice } = useTranslation();
+    const { t, locale, formatPrice } = useTranslation();
     const formattedPrice = formatPrice(priceSingleIdr, priceSingleUsd);
 
     return (
@@ -55,7 +55,7 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({
 
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <a
-                    href="/#harga"
+                    href={`/#harga?locale=${locale}`}
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold rounded-lg bg-[#111113] text-[#FAF8F5] hover:bg-stone-800 transition-colors focus-visible:outline-2 focus-visible:outline-[#1D4ED8] min-h-[44px]"
                 >
                     <ShieldCheck className="w-4 h-4" />

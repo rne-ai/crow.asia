@@ -22,13 +22,16 @@ class DashboardController extends Controller
             return redirect()->route('login');
         }
 
-        $allBooks = Book::active()->get()->map(function ($b) use ($user) {
+        $locale = $request->query('locale', $request->cookie('crow:locale', 'id'));
+        $register = ($locale === 'id') ? 'casual' : 'standard';
+
+        $allBooks = Book::active()->get()->map(function ($b) use ($user, $locale, $register) {
             $isUnlocked = $user->isAdmin() || $user->hasAccessToBook($b->id);
             return [
                 'id' => $b->id,
                 'volumeCode' => $b->volume_code,
-                'title' => $b->title('id', 'casual'),
-                'subtitle' => $b->subtitle('id', 'casual'),
+                'title' => $b->title($locale, $register),
+                'subtitle' => $b->subtitle($locale, $register),
                 'accentHex' => $b->accent_hex,
                 'priceSingleIdr' => $b->price_single_idr,
                 'isUnlocked' => $isUnlocked,
@@ -43,7 +46,7 @@ class DashboardController extends Controller
             ->get()
             ->map(fn ($o) => [
                 'orderNumber' => $o->order_number,
-                'tierName' => $o->pricingTier?->name('id') ?? 'Paket Playbook',
+                'tierName' => $o->pricingTier?->name($locale) ?? 'Playbook Pack',
                 'amountIdr' => $o->amount_idr,
                 'status' => $o->payment_status->value,
                 'paidAt' => $o->paid_at?->format('d M Y H:i'),

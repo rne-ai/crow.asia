@@ -165,7 +165,7 @@ export default function Checkout({ tier, locale, user }: CheckoutProps) {
                                 />
                             </div>
 
-                            <div className="pt-2">
+                            <div className="pt-2 space-y-1.5">
                                 <button
                                     type="submit"
                                     disabled={processing}
@@ -178,6 +178,11 @@ export default function Checkout({ tier, locale, user }: CheckoutProps) {
                                             : t('checkout.pay_cta', { price: formattedPrice })}
                                     </span>
                                 </button>
+                                {currency === 'USD' && (
+                                    <p className="text-[11px] font-mono text-stone-500 text-center leading-snug">
+                                        Billed in IDR: Rp{tier.priceIdr.toLocaleString('id-ID')} (~${tier.priceUsd.toFixed(2)} USD). Your card issuer converts automatically.
+                                    </p>
+                                )}
                             </div>
                         </form>
 

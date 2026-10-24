@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from '@/hooks/useTranslation';
 import { BookOpen, Film } from 'lucide-react';
 
 export type ReaderMode = 'read' | 'animasi';
@@ -14,6 +15,8 @@ export const ReaderModeSwitch: React.FC<ReaderModeSwitchProps> = ({
     onModeChange,
     className = '',
 }) => {
+    const { t } = useTranslation();
+
     return (
         <div
             role="tablist"
@@ -33,7 +36,7 @@ export const ReaderModeSwitch: React.FC<ReaderModeSwitchProps> = ({
                 }`}
             >
                 <BookOpen className="w-4 h-4" />
-                <span>📖 Mode Baca</span>
+                <span>{t('reader.mode_read')}</span>
             </button>
 
             {/* Mode 2: Animasi Landscape 16:9 */}
@@ -49,7 +52,7 @@ export const ReaderModeSwitch: React.FC<ReaderModeSwitchProps> = ({
                 }`}
             >
                 <Film className="w-4 h-4" />
-                <span>🎬 Animasi 16:9</span>
+                <span>{t('reader.mode_animation')}</span>
             </button>
         </div>
     );
