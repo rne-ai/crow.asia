@@ -36,13 +36,18 @@
       "showcase_loading": "Memuat Showcase Remotion 16:9..."
     },
     "catalog": {
-      "badge": "TRILOGI TAKTIS KEPEMIMPINAN",
-      "title": "Tiga Volume Mandiri untuk Setiap Fase Karier",
+      "badge": "KURIKULUM TANGGA KARIER LEADER",
+      "title": "3 Buku Playbook Sesuai Fase Tantangan Kepemimpinan Anda",
       "desc": "Dirancang agar dapat dibaca terpisah sesuai friksi paling mendesak di tim Anda saat ini.",
       "suitable_for": "Cocok Untuk:",
       "key_frameworks": "Kerangka Kunci:",
       "single_access": "Akses Tunggal:",
-      "chapters_count": ":count Bab"
+      "chapters_count": ":count Bab + PDF",
+      "read_free_sample": "Baca Gratis Bab 1",
+      "buy_now": "Beli →",
+      "curriculum_tag_book-1": "PEMIMPIN TIM BARU",
+      "curriculum_tag_book-2": "KETAHANAN DIRI",
+      "curriculum_tag_book-3": "MANAJER DIVISI"
     },
     "quiz": {
       "header_badge": "DIAGNOSIS 45 DETIK",
@@ -70,13 +75,28 @@
       "cta_repeat_quiz": "Ulangi Kuis Diagnosis"
     },
     "pricing": {
-      "badge": "INVESTASI SEKALI SEUMUR HIDUP",
-      "title": "Pilih Paket Meja Kerja Anda",
-      "desc": "Akses seumur hidup (lifetime). Termasuk pembaruan naskah, kanvas animasi 16:9, dan master PDF A5.",
-      "best_value_badge": "★ PILIHAN TERBAIK (HEMAT 33%)",
-      "single_badge": "SATUAN",
-      "per_lifetime": "/ selamanya",
-      "cta_buy": "Beli Akses Playbook"
+      "badge": "INVESTASI SEKALI BAYAR • AKSES SEUMUR HIDUP",
+      "title": "Pilih Paket Playbook Sesuai Kebutuhan Anda",
+      "desc": "Setiap pembelian langsung membuka kedua bahasa sekaligus: Bahasa Indonesia (pilih gaya Kasual Gue/Lo atau Standar Saya/Kamu) dan Bahasa Inggris, beserta unduhan PDF A5 ramah HP.",
+      "bundle_badge_1": "👑 BEST VALUE • Hemat Rp 48.000",
+      "bundle_badge_2": "★ PILIHAN PALING HEMAT",
+      "bundle_title": "Complete Trilogy Box Set (Volume 01, 02 & 03)",
+      "bundle_desc": "Akses menyeluruh seluruh trilogi (45 bab), Bahasa Indonesia (Kasual & Standar) + English, dan seluruh berkas PDF A5.",
+      "bundle_cta": "Ambil Bundel 3 Buku (:price)",
+      "save_badge": "Hemat :amount",
+      "single_buy_cta": "Beli Sekarang (:price)",
+      "per_once": "/ sekali bayar",
+      "bundle_price_sub": "sekali bayar untuk 3 buku lengkap",
+      "table_title": "Tabel Perbandingan Materi & Nilai Antar Paket",
+      "table_header_feature": "Materi & Fasilitas",
+      "table_col_b1": "Buku 1",
+      "table_col_b2": "Buku 2",
+      "table_col_b3": "Buku 3",
+      "table_col_bundle": "Trilogi Lengkap",
+      "table_row_role": "Fokus Level / Peran",
+      "table_row_chapters": "Total Bab & File Master PDF",
+      "table_row_frameworks": "Framework & Tool Inti",
+      "table_row_price": "Investasi (Sekali Bayar)"
     },
     "faq": {
       "badge": "PERTANYAAN SERING DIAJUKAN",

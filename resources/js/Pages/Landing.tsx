@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/react';
 import MarketingFullWidthLayout from '@/Layouts/MarketingFullWidthLayout';
 import { SupportedLocaleItem } from '@/Components/navigation/GlobalLocaleMenu';
 import { HeroTrilogy16x9Comp } from '@/Components/remotion/compositions/HeroTrilogy16x9Comp';
+import { RemotionBookCoverPlayer } from '@/Components/reader/RemotionBookCoverPlayer';
 import { BookId, LocaleCode } from '@/types/remotion';
 import { Player, PlayerRef } from '@remotion/player';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -10,10 +11,12 @@ import {
     ArrowRight,
     BookOpen,
     Check,
+    CheckCircle2,
     ChevronDown,
     HelpCircle,
     RotateCcw,
     ShieldCheck,
+    Sparkles,
 } from 'lucide-react';
 
 interface BookItem {
@@ -91,8 +94,6 @@ export default function Landing({
 
     const recommendedBook = books.find((b) => b.id === quizResultBookId) || books[0];
 
-    const heroTitle = t('landing.hero.title');
-    const heroHighlight = t('landing.hero.title_highlight');
     const heroDesc = t('landing.hero.desc');
 
     const faqItems = [
@@ -493,12 +494,13 @@ export default function Landing({
                 </div>
             </section>
 
-            {/* 3. KATALOG 3 VOLUME PLAYBOOK */}
+            {/* 3. KATALOG 3 VOLUME PLAYBOOK (Image 3) */}
             <section id="katalog" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FAF8F5]">
                 <div className="w-full max-w-6xl mx-auto space-y-10">
                     <div className="text-center space-y-2">
-                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-stone-500">
-                            {t('landing.catalog.badge')}
+                        <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-stone-600 bg-white px-3 py-1 rounded-full border border-[#E5E0D5]">
+                            <span>📚</span>
+                            <span>{t('landing.catalog.badge')}</span>
                         </span>
                         <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111113]">
                             {t('landing.catalog.title')}
@@ -508,176 +510,305 @@ export default function Landing({
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {books.map((b) => (
-                            <div
-                                key={b.id}
-                                className="rounded-2xl border border-[#E5E0D5] bg-[#FFFFFF] p-6 flex flex-col justify-between space-y-6 hover:border-stone-400 transition-all shadow-2xs"
-                            >
-                                <div className="space-y-4">
-                                    <div className="flex items-center justify-between">
-                                        <span
-                                            className="px-2.5 py-1 rounded text-xs font-mono font-bold text-white uppercase"
-                                            style={{ backgroundColor: b.accentHex }}
-                                        >
-                                            {b.volumeCode}
-                                        </span>
-                                        <span className="text-xs font-mono text-stone-500">
-                                            {t('landing.catalog.chapters_count', { count: 15 })}
-                                        </span>
-                                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                        {books.map((b) => {
+                            const tier = pricingTiers.find((t) => t.id === `tier-${b.id}`);
+                            const features = tier?.features || [];
 
-                                    <div className="space-y-1.5">
-                                        <h3 className="text-lg font-black text-[#111113] leading-snug">
-                                            {b.title}
-                                        </h3>
-                                        <p className="text-xs text-stone-600 leading-relaxed">
-                                            {b.subtitle}
-                                        </p>
-                                    </div>
-
-                                    <div className="pt-2 border-t border-[#E5E0D5] space-y-2">
-                                        <span className="text-[11px] font-mono font-bold uppercase text-stone-400 block">
-                                            {t('landing.catalog.suitable_for')}
-                                        </span>
-                                        <div className="flex flex-wrap gap-1.5">
-                                            {b.targetRoles.map((role, rIdx) => (
-                                                <span
-                                                    key={rIdx}
-                                                    className="px-2 py-0.5 rounded text-[11px] bg-[#FAF8F5] border border-[#E5E0D5] text-stone-700 font-medium"
-                                                >
-                                                    {role}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-1">
-                                        <span className="text-[11px] font-mono font-bold uppercase text-stone-400 block">
-                                            {t('landing.catalog.key_frameworks')}
-                                        </span>
-                                        <p className="text-xs font-mono text-stone-700">
-                                            {b.keyFrameworks.join(' • ')}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="pt-4 border-t border-[#E5E0D5] flex items-center justify-between">
-                                    <div className="space-y-0.5">
-                                        <span className="text-[10px] font-mono text-stone-400 uppercase block">
-                                            {t('landing.catalog.single_access')}
-                                        </span>
-                                        <span className="text-base font-extrabold text-[#111113]">
-                                            {formatPrice(b.priceSingleIdr, b.priceSingleUsd)}
-                                        </span>
-                                    </div>
-
-                                    <a
-                                        href={`/read/${b.id}/${locale}/ch-0`}
-                                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#111113] text-white text-xs font-bold hover:bg-stone-800 transition-colors"
-                                    >
-                                        <BookOpen className="w-3.5 h-3.5" />
-                                        <span>{t('landing.hero.cta_read_free')}</span>
-                                    </a>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* 4. PRICING TIERS & BUNDLE */}
-            <section id="harga" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FFFFFF]">
-                <div className="w-full max-w-6xl mx-auto space-y-10">
-                    <div className="text-center space-y-2">
-                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#1D4ED8] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-                            {t('landing.pricing.badge')}
-                        </span>
-                        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111113]">
-                            {t('landing.pricing.title')}
-                        </h2>
-                        <p className="text-sm text-stone-600 max-w-lg mx-auto">
-                            {t('landing.pricing.desc')}
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-                        {pricingTiers.map((tier) => {
-                            const isBundle = tier.isBestValue;
                             return (
                                 <div
-                                    key={tier.id}
-                                    className={`rounded-2xl p-6 flex flex-col justify-between space-y-6 transition-all ${
-                                        isBundle
-                                            ? 'border-2 border-[#111113] bg-[#FFFFFF] shadow-lg lg:-translate-y-2'
-                                            : 'border border-[#E5E0D5] bg-[#FAF8F5] shadow-2xs'
-                                    }`}
+                                    key={b.id}
+                                    className="rounded-2xl border border-[#E5E0D5] bg-[#FFFFFF] p-5 sm:p-6 flex flex-col justify-between space-y-5 hover:border-stone-400 transition-all shadow-sm group"
                                 >
                                     <div className="space-y-4">
-                                        {isBundle ? (
-                                            <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-mono font-extrabold uppercase bg-[#FFE66D] text-[#111113] border border-[#111113]">
-                                                {t('landing.pricing.best_value_badge')}
+                                        {/* Remotion Animated Book Cover with Hover Trigger */}
+                                        <div className="w-full flex justify-center pb-2">
+                                            <RemotionBookCoverPlayer
+                                                bookProps={{
+                                                    bookId: b.id,
+                                                    volumeCode: b.volumeCode,
+                                                    title: b.title,
+                                                    subtitle: b.subtitle,
+                                                    accentHex: b.accentHex,
+                                                    illustrationPath: `/illustrations/${b.id}/portrait.png`,
+                                                    chaptersLabel: t('landing.catalog.chapters_count', { count: 15 }),
+                                                    spineLabel: 'CROW PLAYBOOK',
+                                                    editionLabel: 'ID + EN',
+                                                }}
+                                                className="w-full max-w-[280px]"
+                                            />
+                                        </div>
+
+                                        {/* Tag and Price Header */}
+                                        <div className="flex items-center justify-between text-xs font-mono pt-1">
+                                            <span className="px-2 py-0.5 rounded bg-stone-100 text-stone-700 font-bold uppercase text-[10px]">
+                                                {b.volumeCode} • {t(`landing.catalog.curriculum_tag_${b.id}`)}
                                             </span>
-                                        ) : (
-                                            <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-stone-100 text-stone-600">
-                                                {t('landing.pricing.single_badge')}
+                                            <span className="font-extrabold text-sm text-[#111113]">
+                                                {formatPrice(b.priceSingleIdr, b.priceSingleUsd)}
                                             </span>
-                                        )}
+                                        </div>
 
                                         <div className="space-y-1">
-                                            <h3 className="font-extrabold text-base text-[#111113]">
-                                                {tier.name}
+                                            <h3 className="text-lg font-black text-[#111113] leading-snug">
+                                                {b.title}
                                             </h3>
-                                            <p className="text-xs text-stone-500 leading-snug">
-                                                {tier.description}
+                                            <p className="text-xs text-stone-500 leading-relaxed">
+                                                {b.subtitle}
                                             </p>
                                         </div>
 
-                                        <div className="py-2">
-                                            {currency === 'IDR' && tier.strikePriceIdr && (
-                                                <span className="text-xs line-through text-stone-400 block font-mono">
-                                                    Rp{tier.strikePriceIdr.toLocaleString('id-ID')}
-                                                </span>
-                                            )}
-                                            {currency === 'USD' && isBundle && (
-                                                <span className="text-xs line-through text-stone-400 block font-mono">
-                                                    $29.99
-                                                </span>
-                                            )}
-                                            <div className="flex items-baseline gap-1">
-                                                <span className="text-2xl font-black text-[#111113]">
-                                                    {formatPrice(tier.priceIdr, tier.priceUsd)}
-                                                </span>
-                                                <span className="text-[11px] font-mono text-stone-400">{t('landing.pricing.per_lifetime')}</span>
-                                            </div>
+                                        {/* Cocok Untuk Box */}
+                                        <div className="p-2.5 rounded-lg bg-[#FAF8F5] border border-[#E5E0D5] text-xs space-y-0.5">
+                                            <span className="font-mono text-[10px] font-bold text-stone-400 uppercase block">
+                                                {t('landing.catalog.suitable_for')}
+                                            </span>
+                                            <p className="text-stone-800 font-medium text-[11px] leading-snug">
+                                                {b.targetRoles.join(', ')}
+                                            </p>
                                         </div>
 
-                                        <ul className="space-y-2 text-xs text-stone-700 border-t border-[#E5E0D5] pt-4">
-                                            {tier.features.map((feat, fIdx) => (
+                                        {/* Features List */}
+                                        <ul className="space-y-2 text-xs text-stone-700 pt-1">
+                                            {features.slice(0, 3).map((feat, fIdx) => (
                                                 <li key={fIdx} className="flex items-start gap-2">
-                                                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                                                    <span className="leading-tight">{feat}</span>
+                                                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                                                    <span className="leading-snug">{feat}</span>
                                                 </li>
                                             ))}
                                         </ul>
                                     </div>
 
-                                    <div className="pt-4 border-t border-[#E5E0D5]">
+                                    {/* Action Buttons */}
+                                    <div className="pt-4 border-t border-[#E5E0D5] grid grid-cols-2 gap-2">
                                         <a
-                                            href={`/checkout/${tier.id}?locale=${locale}`}
-                                            className={`w-full inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl font-bold text-xs sm:text-sm transition-colors min-h-[44px] ${
-                                                isBundle
-                                                    ? 'bg-[#111113] text-white hover:bg-stone-800'
-                                                    : 'border border-[#E5E0D5] bg-[#FFFFFF] text-stone-800 hover:bg-stone-100'
-                                            }`}
+                                            href={`/read/${b.id}/${locale}/ch-0`}
+                                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl border border-[#E5E0D5] bg-[#FFFFFF] text-[#111113] font-bold text-xs hover:bg-[#FAF8F5] transition-colors min-h-[40px]"
                                         >
-                                            <ShieldCheck className="w-4 h-4" />
-                                            <span>{t('landing.pricing.cta_buy')}</span>
+                                            <BookOpen className="w-3.5 h-3.5" />
+                                            <span>{t('landing.catalog.read_free_sample')}</span>
+                                        </a>
+
+                                        <a
+                                            href={`/checkout/tier-${b.id}?locale=${locale}`}
+                                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-[#111113] text-[#FAF8F5] font-bold text-xs hover:bg-stone-800 transition-colors min-h-[40px]"
+                                        >
+                                            <span>{t('landing.catalog.buy_now')}</span>
                                         </a>
                                     </div>
                                 </div>
                             );
                         })}
+                    </div>
+                </div>
+            </section>
+
+            {/* 4. PRICING TIERS & BUNDLE (Image 4) */}
+            <section id="harga" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FFFFFF]">
+                <div className="w-full max-w-6xl mx-auto space-y-12">
+                    <div className="text-center space-y-2">
+                        <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+                            <span>⚡</span>
+                            <span>{t('landing.pricing.badge')}</span>
+                        </span>
+                        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111113]">
+                            {t('landing.pricing.title')}
+                        </h2>
+                        <p className="text-sm text-stone-600 max-w-2xl mx-auto leading-relaxed">
+                            {t('landing.pricing.desc')}
+                        </p>
+                    </div>
+
+                    {/* Featured Complete Trilogy Box Set Card (Image 4 top box) */}
+                    {(() => {
+                        const bundleTier = pricingTiers.find((t) => t.isBestValue) || pricingTiers[pricingTiers.length - 1];
+                        if (!bundleTier) return null;
+
+                        return (
+                            <div className="p-6 sm:p-8 rounded-2xl border-2 border-[#111113] bg-[#FFFFFF] shadow-lg flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+                                <div className="space-y-4 max-w-2xl">
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-mono font-extrabold uppercase bg-[#1D4ED8] text-white">
+                                            {t('landing.pricing.bundle_badge_1')}
+                                        </span>
+                                        <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-mono font-extrabold uppercase bg-stone-100 text-stone-700 border border-stone-200">
+                                            {t('landing.pricing.bundle_badge_2')}
+                                        </span>
+                                    </div>
+
+                                    <div className="space-y-1">
+                                        <h3 className="text-2xl sm:text-3xl font-black text-[#111113]">
+                                            {t('landing.pricing.bundle_title')}
+                                        </h3>
+                                        <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                                            {t('landing.pricing.bundle_desc')}
+                                        </p>
+                                    </div>
+
+                                    {/* Checklist Grid */}
+                                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 text-xs font-medium text-stone-800">
+                                        {bundleTier.features.map((feat, fIdx) => (
+                                            <li key={fIdx} className="flex items-start gap-2">
+                                                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                                                <span>{feat}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                {/* Right Side Price and CTA */}
+                                <div className="w-full lg:w-72 p-6 rounded-xl border border-[#E5E0D5] bg-[#FAF8F5] flex flex-col justify-between space-y-4 shrink-0 text-center sm:text-left">
+                                    <div className="space-y-1">
+                                        <div className="flex items-center justify-center sm:justify-start gap-2">
+                                            {currency === 'IDR' ? (
+                                                <span className="text-xs line-through text-stone-400 font-mono">
+                                                    Rp 197.000
+                                                </span>
+                                            ) : (
+                                                <span className="text-xs line-through text-stone-400 font-mono">
+                                                    $14.99
+                                                </span>
+                                            )}
+                                            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                                                {currency === 'IDR' ? t('landing.pricing.save_badge', { amount: 'Rp 48.000' }) : t('landing.pricing.save_badge', { amount: '$5.00' })}
+                                            </span>
+                                        </div>
+
+                                        <div className="text-3xl font-black text-[#111113]">
+                                            {formatPrice(bundleTier.priceIdr, bundleTier.priceUsd)}
+                                        </div>
+                                        <p className="text-[11px] font-mono text-stone-500">
+                                            {t('landing.pricing.bundle_price_sub')}
+                                        </p>
+                                    </div>
+
+                                    <a
+                                        href={`/checkout/${bundleTier.id}?locale=${locale}`}
+                                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#111113] text-white font-bold text-sm hover:bg-stone-800 transition-colors shadow-sm min-h-[44px]"
+                                    >
+                                        <span>{t('landing.pricing.bundle_cta', { price: formatPrice(bundleTier.priceIdr, bundleTier.priceUsd) })}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        );
+                    })()}
+
+                    {/* 3 Individual Cards Below */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                        {books.map((b) => {
+                            const tier = pricingTiers.find((t) => t.id === `tier-${b.id}`);
+                            if (!tier) return null;
+
+                            return (
+                                <div
+                                    key={b.id}
+                                    className="p-6 rounded-2xl border border-[#E5E0D5] bg-[#FFFFFF] flex flex-col justify-between space-y-6 shadow-2xs hover:border-stone-400 transition-all"
+                                >
+                                    <div className="space-y-4">
+                                        <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-mono uppercase bg-stone-100 text-stone-700 border border-stone-200">
+                                            {b.volumeCode} • {t(`landing.catalog.curriculum_tag_${b.id}`)}
+                                        </span>
+
+                                        <div className="space-y-1">
+                                            <h4 className="font-extrabold text-base text-[#111113]">
+                                                {b.title}
+                                            </h4>
+                                            <p className="text-xs text-stone-500 leading-snug">
+                                                {b.subtitle}
+                                            </p>
+                                        </div>
+
+                                        <div className="py-2 border-y border-[#E5E0D5]">
+                                            <span className="text-2xl font-black text-[#111113]">
+                                                {formatPrice(tier.priceIdr, tier.priceUsd)}
+                                            </span>
+                                            <span className="text-xs font-mono text-stone-400 ml-1">
+                                                {t('landing.pricing.per_once')}
+                                            </span>
+                                        </div>
+
+                                        <ul className="space-y-2 text-xs text-stone-700">
+                                            {tier.features.slice(0, 2).map((feat, fIdx) => (
+                                                <li key={fIdx} className="flex items-start gap-2">
+                                                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                                                    <span className="leading-snug">{feat}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    <a
+                                        href={`/checkout/${tier.id}?locale=${locale}`}
+                                        className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-[#E5E0D5] bg-[#FAF8F5] text-stone-800 font-bold text-xs hover:bg-stone-100 transition-colors min-h-[42px]"
+                                    >
+                                        <span>{t('landing.pricing.single_buy_cta', { price: formatPrice(tier.priceIdr, tier.priceUsd) })}</span>
+                                    </a>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {/* Comparison Matrix Table (Image 4 bottom table) */}
+                    <div className="space-y-4 pt-6 border-t border-[#E5E0D5]">
+                        <div className="text-center">
+                            <h3 className="font-bold text-base sm:text-lg text-[#111113]">
+                                {t('landing.pricing.table_title')}
+                            </h3>
+                        </div>
+
+                        <div className="w-full overflow-x-auto rounded-xl border border-[#E5E0D5] bg-white shadow-2xs">
+                            <table className="w-full text-left text-xs">
+                                <thead>
+                                    <tr className="border-b border-[#E5E0D5] bg-[#FAF8F5] text-stone-600 font-mono text-[11px]">
+                                        <th className="p-3.5 w-1/5">{t('landing.pricing.table_header_feature')}</th>
+                                        <th className="p-3.5 w-1/5 text-center">{t('landing.pricing.table_col_b1')}</th>
+                                        <th className="p-3.5 w-1/5 text-center">{t('landing.pricing.table_col_b2')}</th>
+                                        <th className="p-3.5 w-1/5 text-center">{t('landing.pricing.table_col_b3')}</th>
+                                        <th className="p-3.5 w-1/5 text-center bg-amber-50/70 border-x-2 border-t-2 border-amber-400 font-extrabold text-[#111113]">
+                                            {t('landing.pricing.table_col_bundle')}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-[#E5E0D5] text-stone-700">
+                                    <tr>
+                                        <td className="p-3.5 font-bold text-stone-900 bg-[#FAF8F5]/40">{t('landing.pricing.table_row_role')}</td>
+                                        <td className="p-3.5 text-center">Leader Baru & Supervisor</td>
+                                        <td className="p-3.5 text-center">Ketahanan & Anti-Burnout</td>
+                                        <td className="p-3.5 text-center">Manajer Divisi & Lintas Tim</td>
+                                        <td className="p-3.5 text-center bg-amber-50/40 border-x-2 border-amber-400 font-bold text-[#111113]">
+                                            Seluruh Level Kepemimpinan
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-3.5 font-bold text-stone-900 bg-[#FAF8F5]/40">{t('landing.pricing.table_row_chapters')}</td>
+                                        <td className="p-3.5 text-center">15 Bab + 3 File Master PDF</td>
+                                        <td className="p-3.5 text-center">15 Bab + 3 File Master PDF</td>
+                                        <td className="p-3.5 text-center">15 Bab + 3 File Master PDF</td>
+                                        <td className="p-3.5 text-center bg-amber-50/40 border-x-2 border-amber-400 font-bold text-[#111113]">
+                                            45 Bab Penuh + 9 File Master PDF
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-3.5 font-bold text-stone-900 bg-[#FAF8F5]/40">{t('landing.pricing.table_row_frameworks')}</td>
+                                        <td className="p-3.5 text-center">Rumus Target 3K & Koreksi 4 Mata</td>
+                                        <td className="p-3.5 text-center">Perisai Kaca & Detachment 18:00</td>
+                                        <td className="p-3.5 text-center">Coaching the Coach & Rumus 3S</td>
+                                        <td className="p-3.5 text-center bg-amber-50/40 border-x-2 border-amber-400 font-bold text-[#111113]">
+                                            Seluruh Framework (CCL, Harvard, Gallup)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-3.5 font-bold text-stone-900 bg-[#FAF8F5]/40">{t('landing.pricing.table_row_price')}</td>
+                                        <td className="p-3.5 text-center font-bold text-stone-900">{formatPrice(49000, 3.99)}</td>
+                                        <td className="p-3.5 text-center font-bold text-stone-900">{formatPrice(49000, 3.99)}</td>
+                                        <td className="p-3.5 text-center font-bold text-stone-900">{formatPrice(99000, 6.99)}</td>
+                                        <td className="p-3.5 text-center bg-amber-50/40 border-x-2 border-b-2 border-amber-400 font-black text-sm text-[#111113]">
+                                            {formatPrice(149000, 9.99)} <span className="text-[10px] font-normal text-emerald-700 block">(Hemat 24%)</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </section>

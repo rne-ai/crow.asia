@@ -36,13 +36,18 @@
       "showcase_loading": "Loading 16:9 Remotion Showcase..."
     },
     "catalog": {
-      "badge": "TACTICAL LEADERSHIP TRILOGY",
-      "title": "Three Standalone Volumes for Every Career Stage",
+      "badge": "LEADERSHIP CAREER LADDER CURRICULUM",
+      "title": "3 Playbooks Tailored to Your Leadership Stage",
       "desc": "Designed to be read independently based on the most pressing friction in your team right now.",
       "suitable_for": "Target Roles:",
       "key_frameworks": "Key Frameworks:",
       "single_access": "Single Volume:",
-      "chapters_count": ":count Chapters"
+      "chapters_count": ":count Chapters + PDF",
+      "read_free_sample": "Read Free Chapter 1",
+      "buy_now": "Buy Now →",
+      "curriculum_tag_book-1": "FIRST-TIME LEAD",
+      "curriculum_tag_book-2": "LEADERSHIP RESILIENCE",
+      "curriculum_tag_book-3": "DIVISION MANAGER"
     },
     "quiz": {
       "header_badge": "45-SECOND DIAGNOSTIC",
@@ -72,11 +77,26 @@
     "pricing": {
       "badge": "LIFETIME ONE-TIME INVESTMENT",
       "title": "Choose Your Field Playbook",
-      "desc": "Lifetime access. Includes manuscript updates, 16:9 animation stage, and print-ready A5 master PDF.",
-      "best_value_badge": "★ BEST VALUE (SAVE 33%)",
-      "single_badge": "SINGLE VOLUME",
-      "per_lifetime": "/ lifetime",
-      "cta_buy": "Get Playbook Access"
+      "desc": "Each purchase unlocks both languages: Indonesian (Casual & Standard registers) and English, along with mobile-optimized A5 Master PDFs.",
+      "bundle_badge_1": "👑 BEST VALUE • Save $10.00",
+      "bundle_badge_2": "★ BEST VALUE CHOICE",
+      "bundle_title": "Complete Trilogy Box Set (Volume 01, 02 & 03)",
+      "bundle_desc": "Full lifetime access to complete trilogy (45 chapters), ID (Casual & Standard) + English, and all A5 PDFs.",
+      "bundle_cta": "Get 3-Book Bundle (:price)",
+      "save_badge": "Save :amount",
+      "single_buy_cta": "Buy Now (:price)",
+      "per_once": "/ one-time",
+      "bundle_price_sub": "one-time payment for complete 3 books",
+      "table_title": "Package & Content Comparison Table",
+      "table_header_feature": "Curriculum & Inclusions",
+      "table_col_b1": "Book 1",
+      "table_col_b2": "Book 2",
+      "table_col_b3": "Book 3",
+      "table_col_bundle": "Complete Trilogy",
+      "table_row_role": "Level Focus & Target Role",
+      "table_row_chapters": "Total Chapters & Master PDFs",
+      "table_row_frameworks": "Core Frameworks & Tools",
+      "table_row_price": "Investment (One-Time)"
     },
     "faq": {
       "badge": "FREQUENTLY ASKED QUESTIONS",

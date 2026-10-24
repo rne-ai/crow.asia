@@ -2,7 +2,10 @@
 
 use App\Models\Book;
 use App\Models\PricingTier;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
     Artisan::call('crow:seed-manuscripts');
