@@ -43,7 +43,7 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function process(Request $request, MayarInvoiceService $invoiceService): RedirectResponse
+    public function store(Request $request, MayarInvoiceService $invoiceService): RedirectResponse
     {
         $validated = $request->validate([
             'pricing_tier_id' => 'required|string|exists:pricing_tiers,id',
@@ -79,7 +79,7 @@ class CheckoutController extends Controller
     /**
      * Development mock payment simulator: instantly marks order as PAID and redirects to dashboard.
      */
-    public function mockPay(string $orderNumber, EntitlementSyncService $syncService): RedirectResponse
+    public function update(string $orderNumber, EntitlementSyncService $syncService): RedirectResponse
     {
         $order = Order::query()->where('order_number', $orderNumber)->firstOrFail();
 

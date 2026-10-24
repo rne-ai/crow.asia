@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ChecklistController extends Controller
 {
-    public function toggle(Request $request): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'book_id' => 'required|string|max:32',

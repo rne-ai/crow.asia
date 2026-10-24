@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
-    public function search(Request $request): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         $query = trim($request->query('q', ''));
         if (mb_strlen($query) < 2) {

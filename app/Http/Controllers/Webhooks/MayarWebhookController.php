@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 class MayarWebhookController extends Controller
 {
-    public function handle(Request $request, EntitlementSyncService $syncService): JsonResponse
+    public function __invoke(Request $request, EntitlementSyncService $syncService): JsonResponse
     {
         // 1. Verify Secret Callback Token using constant-time comparison
         $configuredToken = (string) config('services.mayar.webhook_token', 'crow_webhook_secret_123');

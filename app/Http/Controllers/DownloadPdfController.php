@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class DownloadPdfController extends Controller
 {
-    public function download(string $bookId, Request $request): RedirectResponse|HttpResponse
+    public function __invoke(string $bookId, Request $request): RedirectResponse|HttpResponse
     {
         /** @var User|null $user */
         $user = $request->user();
