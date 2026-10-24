@@ -28,19 +28,13 @@ class LandingController extends Controller
             $locale = 'id';
         }
 
-        if ($locale === 'id') {
-            $regParam = $request->query('reg', $request->cookie('crow:id-register', 'casual'));
-            $register = ($regParam === 'standard') ? ContentRegister::STANDARD : ContentRegister::CASUAL;
-        } else {
-            $register = ContentRegister::STANDARD;
-        }
-
+        // Landing page copy & books always use standard/formal register
         $books = Book::active()->get()->map(fn ($b) => [
             'id' => $b->id,
             'volumeNumber' => $b->volume_number,
             'volumeCode' => $b->volume_code,
-            'title' => $b->title($locale, $register),
-            'subtitle' => $b->subtitle($locale, $register),
+            'title' => $b->title($locale, ContentRegister::STANDARD),
+            'subtitle' => $b->subtitle($locale, ContentRegister::STANDARD),
             'accentHex' => $b->accent_hex,
             'priceSingleIdr' => $b->price_single_idr,
             'priceSingleUsd' => (float) $b->price_single_usd,
@@ -66,7 +60,6 @@ class LandingController extends Controller
 
         return Inertia::render('Landing', [
             'locale' => $locale,
-            'register' => $register->value,
             'supportedLocales' => $supportedLocales,
             'books' => $books,
             'pricingTiers' => $pricingTiers,

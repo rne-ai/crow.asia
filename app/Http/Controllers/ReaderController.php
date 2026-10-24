@@ -42,10 +42,11 @@ class ReaderController extends Controller
         }
 
         // 3. Resolve Register
-        // STRICT INVARIANT: If locale !== 'id', register is ALWAYS 'standard'
+        // STRICT INVARIANT: If locale !== 'id', register is ALWAYS 'standard'.
+        // In Indonesian (id), default register is 'standard', but user can toggle to 'casual'.
         if ($locale === 'id') {
-            $regParam = $request->query('reg', $request->cookie('crow:id-register', 'casual'));
-            $register = ($regParam === 'standard') ? ContentRegister::STANDARD : ContentRegister::CASUAL;
+            $regParam = $request->query('reg', $request->cookie('crow:id-register', 'standard'));
+            $register = ($regParam === 'casual') ? ContentRegister::CASUAL : ContentRegister::STANDARD;
         } else {
             $register = ContentRegister::STANDARD;
         }
