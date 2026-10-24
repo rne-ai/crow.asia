@@ -32,11 +32,16 @@ export default function ChapterView({
         setChecklists(currentChapter.checklists);
     }, [currentChapter.slug, currentChapter.checklists]);
 
-    // Load teammate name preference from localStorage
+    // Load preferences from localStorage
     useEffect(() => {
         try {
             const savedName = localStorage.getItem('crow:teammate-name');
             if (savedName) setTeammateName(savedName);
+
+            const savedSize = localStorage.getItem('crow:reader-font-size');
+            if (savedSize === 'sm' || savedSize === 'base' || savedSize === 'lg') {
+                setFontSize(savedSize);
+            }
         } catch {
             // Ignore storage issues
         }
@@ -46,6 +51,15 @@ export default function ChapterView({
         setTeammateName(name);
         try {
             localStorage.setItem('crow:teammate-name', name);
+        } catch {
+            // Ignore
+        }
+    };
+
+    const handleFontSizeChange = (size: 'sm' | 'base' | 'lg') => {
+        setFontSize(size);
+        try {
+            localStorage.setItem('crow:reader-font-size', size);
         } catch {
             // Ignore
         }
@@ -188,7 +202,7 @@ export default function ChapterView({
                     paperTheme={paperTheme}
                     onPaperThemeChange={setPaperTheme}
                     fontSize={fontSize}
-                    onFontSizeChange={setFontSize}
+                    onFontSizeChange={handleFontSizeChange}
                     checklists={checklists}
                     onToggleChecklist={handleToggleChecklist}
                 />

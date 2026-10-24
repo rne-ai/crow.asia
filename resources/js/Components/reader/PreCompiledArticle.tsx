@@ -117,18 +117,11 @@ export const PreCompiledArticle: React.FC<PreCompiledArticleProps> = ({
         });
     }, [html]);
 
-    const fontSizeClass =
-        fontSize === 'sm'
-            ? 'text-sm'
-            : fontSize === 'lg'
-            ? 'text-lg'
-            : 'text-base';
-
     return (
-        <div className={`w-full ${className}`}>
+        <div className={`w-full ${className}`} data-font-size={fontSize}>
             <article
                 ref={articleRef}
-                className={`max-w-[72ch] mx-auto prose font-sans ${fontSizeClass} selection:bg-[#FFE66D] selection:text-[#111113]`}
+                className="max-w-[72ch] mx-auto prose font-sans selection:bg-[#FFE66D] selection:text-[#111113]"
                 dangerouslySetInnerHTML={{ __html: html }}
             />
         </div>

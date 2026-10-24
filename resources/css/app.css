@@ -61,21 +61,65 @@
 }
 
 /* ==============================================================================
-   TYPOGRAPHY & ARTIKEL BACAAN EDITORIAL (TACTILE CROW STUDIO)
+   TYPOGRAPHY & DYNAMIC FONT SCALING (KECIL / STANDAR / BESAR)
    ============================================================================== */
 article.prose {
   color: var(--color-crow-ink);
   line-height: 1.85;
-  font-size: 1.0625rem;
 }
 
-/* Elevated Lead Paragraph */
-article.prose > p:first-of-type {
+/* Standar (Default: 17px) */
+article.prose,
+[data-font-size="base"] article.prose {
+  font-size: 1.0625rem;
+}
+article.prose > p:first-of-type,
+[data-font-size="base"] article.prose > p:first-of-type {
   font-size: 1.1875rem;
   line-height: 1.85;
   color: #18181B;
   font-weight: 500;
   margin-bottom: 1.75rem;
+}
+[data-font-size="base"] article p,
+[data-font-size="base"] article li {
+  font-size: 1.0625rem;
+}
+
+/* Kecil (15px) */
+[data-font-size="sm"] article.prose {
+  font-size: 0.9375rem;
+}
+[data-font-size="sm"] article.prose > p:first-of-type {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+[data-font-size="sm"] article p,
+[data-font-size="sm"] article li {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+[data-font-size="sm"] article table {
+  font-size: 0.8125rem;
+}
+
+/* Besar (20px) */
+[data-font-size="lg"] article.prose {
+  font-size: 1.25rem;
+}
+[data-font-size="lg"] article.prose > p:first-of-type {
+  font-size: 1.375rem;
+  line-height: 1.95;
+  margin-bottom: 2rem;
+}
+[data-font-size="lg"] article p,
+[data-font-size="lg"] article li {
+  font-size: 1.25rem;
+  line-height: 1.95;
+}
+[data-font-size="lg"] article table {
+  font-size: 1rem;
 }
 
 [data-paper-theme="sepia"] article.prose > p:first-of-type {
@@ -149,8 +193,7 @@ article strong {
 
 article em {
   font-style: italic;
-  font-family: var(--font-serif);
-  font-size: 1.05em;
+  font-family: inherit;
 }
 
 /* Highlighting */
