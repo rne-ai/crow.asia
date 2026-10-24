@@ -105,15 +105,19 @@ class ChapterCompilerService
         $extractedChecklists = $this->extractChecklists($rawMarkdown);
 
         // 3. Transform checklist items into structured editorial action cards
-        $processedMd = $this->transformPracticeCards($processedMd);
+        $processedMd = $this->transformPracticeCards($processedMd, $locale);
 
         // 4. Compile Markdown to HTML via League CommonMark (with Tables and Footnotes)
         $html = (string) $this->converter->convert($processedMd);
 
         // 4. Wrap Mermaid diagram blocks with header badge
+        $mermaidBadge = ($locale === 'en')
+            ? '📊 WORKFLOW DIAGRAM • TACTICAL SCHEMA'
+            : '📊 DIAGRAM ALUR KERJA • SKEMA TAKTIS';
+
         $html = preg_replace(
             '/<pre><code class="language-mermaid">(.*?)<\/code><\/pre>/s',
-            '<div class="crow-mermaid-block"><div class="crow-mermaid-header"><span class="crow-mermaid-badge">📊 DIAGRAM ALUR KERJA • SKEMA TAKTIS</span></div><pre class="mermaid">$1</pre></div>',
+            '<div class="crow-mermaid-block"><div class="crow-mermaid-header"><span class="crow-mermaid-badge">' . $mermaidBadge . '</span></div><pre class="mermaid">$1</pre></div>',
             $html
         );
 
@@ -175,11 +179,14 @@ class ChapterCompilerService
         );
     }
 
-    private function transformPracticeCards(string $markdown): string
+    private function transformPracticeCards(string $markdown, string $locale = 'id'): string
     {
         $pattern = '/(?:^[-*]\s+\[[ xX]\]\s+.+(?:\r?\n|$))+/m';
+        $practiceBadge = ($locale === 'en')
+            ? '🎯 PRACTICE ACTIONS • WORKSPACE STEPS'
+            : '🎯 LATIHAN PRAKTIK • AKSI MEJA KERJA';
 
-        return preg_replace_callback($pattern, function ($matches) {
+        return preg_replace_callback($pattern, function ($matches) use ($practiceBadge) {
             preg_match_all('/^[-*]\s+\[[ xX]\]\s+(.+)$/m', $matches[0], $items);
             if (empty($items[1])) {
                 return $matches[0];
@@ -187,7 +194,7 @@ class ChapterCompilerService
 
             $html = "<div class=\"crow-practice-section\">\n";
             $html .= "  <div class=\"crow-practice-header\">\n";
-            $html .= "    <span class=\"crow-practice-badge\">🎯 LATIHAN PRAKTIK • AKSI MEJA KERJA</span>\n";
+            $html .= "    <span class=\"crow-practice-badge\">{$practiceBadge}</span>\n";
             $html .= "  </div>\n";
             $html .= "  <div class=\"crow-practice-grid\">\n";
             foreach ($items[1] as $idx => $itemText) {
