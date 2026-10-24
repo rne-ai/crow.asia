@@ -66,6 +66,8 @@
 article.prose {
   color: var(--color-crow-ink);
   line-height: 1.85;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 /* Standar (Default: 17px) */
@@ -547,6 +549,13 @@ article .footnotes {
   font-size: 0.8125rem;
   line-height: 1.65;
   color: #52525B;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+article .footnotes a {
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 article .footnotes hr {

@@ -102,33 +102,39 @@ export default function FullWidthWorkspaceLayout({
             )}
 
             {/* Main 3-Pane Body (Full-Width Desktop) */}
-            <div className="w-full flex-1 flex relative overflow-hidden">
-                {/* 1. Left Rail (Sidebar) - Desktop */}
+            <div className="w-full flex-1 flex justify-center items-start px-4 sm:px-6 lg:px-8 py-6 gap-6 relative">
+                {/* 1. Left Box (Daftar Bab) - Desktop Sticky Card */}
                 {leftSidebar && (
                     <aside
-                        className={`hidden lg:block shrink-0 border-r border-[#E5E0D5] transition-all duration-200 overflow-y-auto bg-inherit ${
-                            leftOpen ? 'w-72 xl:w-80' : 'w-0 border-r-0'
+                        className={`hidden lg:block shrink-0 transition-all duration-200 sticky top-20 z-10 ${
+                            leftOpen ? 'w-72 xl:w-80' : 'w-0 overflow-hidden'
                         }`}
-                        style={{ height: 'calc(100vh - 3.5rem)' }}
                     >
-                        {leftOpen && <div className="p-4">{leftSidebar}</div>}
+                        {leftOpen && (
+                            <div className="reading-sheet rounded-2xl border p-4 sm:p-5 shadow-xs max-h-[calc(100vh-6rem)] overflow-y-auto">
+                                {leftSidebar}
+                            </div>
+                        )}
                     </aside>
                 )}
 
                 {/* 2. Center Canvas (Fluid Full-Width) */}
-                <main className="flex-1 min-w-0 overflow-y-auto px-4 sm:px-6 lg:px-10 xl:px-12 py-6">
+                <main className="flex-1 min-w-0 max-w-4xl">
                     {children}
                 </main>
 
-                {/* 3. Right Rail (Tactical Dock) - Desktop */}
+                {/* 3. Right Box (Tactical Dock) - Desktop Sticky Card */}
                 {rightDock && (
                     <aside
-                        className={`hidden xl:block shrink-0 border-l border-[#E5E0D5] transition-all duration-200 overflow-y-auto bg-inherit ${
-                            rightOpen ? 'w-72 2xl:w-80' : 'w-0 border-l-0'
+                        className={`hidden xl:block shrink-0 transition-all duration-200 sticky top-20 z-10 ${
+                            rightOpen ? 'w-72 2xl:w-80' : 'w-0 overflow-hidden'
                         }`}
-                        style={{ height: 'calc(100vh - 3.5rem)' }}
                     >
-                        {rightOpen && <div className="p-4">{rightDock}</div>}
+                        {rightOpen && (
+                            <div className="reading-sheet rounded-2xl border p-5 shadow-xs max-h-[calc(100vh-6rem)] overflow-y-auto">
+                                {rightDock}
+                            </div>
+                        )}
                     </aside>
                 )}
             </div>
