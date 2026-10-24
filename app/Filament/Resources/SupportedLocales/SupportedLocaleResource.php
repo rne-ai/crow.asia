@@ -7,7 +7,6 @@ use App\Filament\Resources\SupportedLocales\Pages\EditSupportedLocale;
 use App\Filament\Resources\SupportedLocales\Pages\ListSupportedLocales;
 use App\Models\Book;
 use App\Models\SupportedLocale;
-use App\Services\Content\LlmTranslationService;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -104,30 +103,6 @@ class SupportedLocaleResource extends Resource
                     ->sortable(),
             ])
             ->recordActions([
-                Action::make('trigger_ai_translation')
-                    ->label('Translasi via AI')
-                    ->icon(Heroicon::OutlinedSparkles)
-                    ->color('primary')
-                    ->form([
-                        Select::make('book_id')
-                            ->label('Pilih Buku yang Ingin Diterjemahkan')
-                            ->options(fn () => Book::query()->pluck('volume_code', 'id'))
-                            ->default('book-1')
-                            ->required(),
-                    ])
-                    ->modalHeading('Trigger Pipeline Translasi AI Bahasa Asia')
-                    ->modalDescription('Proses ini akan men-dispatch job penerjemahan bab ke Laravel Queue menggunakan Laravel 13 AI SDK (Gemini 3.8 Flash) dan menyimpannya sebagai status REVIEW.')
-                    ->action(function (SupportedLocale $record, array $data, LlmTranslationService $translationService) {
-                        $count = $translationService->translateBook($data['book_id'], $record->code);
-                        $record->is_llm_translated = true;
-                        $record->save();
-
-                        Notification::make()
-                            ->title('Pipeline AI Berhasil Dijalankan')
-                            ->body("Sebanyak {$count} bab dari buku {$data['book_id']} telah dijadwalkan untuk diterjemahkan ke {$record->native_name}.")
-                            ->success()
-                            ->send();
-                    }),
                 EditAction::make(),
             ])
             ->toolbarActions([
