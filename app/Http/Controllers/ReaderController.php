@@ -78,11 +78,10 @@ class ReaderController extends Controller
                 ->first();
 
             if (!$translation) {
-                // Fallback to standard if casual translation is not available
+                // Fallback to any available translation for this chapter in that locale
                 $translation = ChapterTranslation::query()
                     ->where('chapter_id', $chapter->id)
                     ->where('locale', $locale)
-                    ->where('register', ContentRegister::STANDARD->value)
                     ->firstOrFail();
             }
 
@@ -197,7 +196,7 @@ class ReaderController extends Controller
         $translation = $chapter->translations
             ->where('locale', $locale)
             ->where('register', $register)
-            ->first();
+            ->first() ?? $chapter->translations->where('locale', $locale)->first();
 
         return $translation?->title ?? "Bab {$chapter->chapter_index}";
     }

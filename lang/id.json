@@ -2,6 +2,7 @@
   "nav": {
     "brand": "crow.asia",
     "playbooks_catalog": "Katalog Playbook",
+    "diagnosis": "Diagnosis 45 Detik",
     "pricing": "Paket Harga",
     "search_placeholder": "Cari Topik / Skrip...",
     "change_theme": "Ganti tema kertas",
@@ -22,14 +23,8 @@
   "landing": {
     "badge": "TACTICAL FIELD PLAYBOOK 2026",
     "hero": {
-      "title_casual": "Baru Jadi Leader atau Mulai Kewalahan Ngurusin Tim?",
-      "title_casual_highlight": "Ini Contekan Meja Kerja Lo.",
-      "title_standard": "Baru Diangkat Menjadi Pemimpin atau Menghadapi Beban Tim?",
-      "title_standard_highlight": "Panduan Meja Kerja Taktis Anda.",
       "title": "Baru Diangkat Menjadi Pemimpin atau Menghadapi Beban Tim?",
       "title_highlight": "Panduan Meja Kerja Taktis Anda.",
-      "desc_casual": "Bukan teori motivasi bertele-tele. Ini playbook 1-on-1 konkret, rumus kalibrasi tugas (L1–L4), dan skrip siap salin buat bikin tim mandiri tanpa lo harus burnout.",
-      "desc_standard": "Bukan sekadar wacana motivasi kepemimpinan. Ini buku pedoman 1-on-1 taktis, formula kalibrasi tugas (L1–L4), dan skrip teruji untuk membangun tim mandiri secara berkelanjutan.",
       "desc": "Bukan sekadar wacana motivasi kepemimpinan. Ini buku pedoman 1-on-1 taktis, formula kalibrasi tugas (L1–L4), dan skrip teruji untuk membangun tim mandiri secara berkelanjutan.",
       "cta_read_free": "Baca Gratis Bab 0 & 1",
       "cta_view_bundle": "Lihat Paket Bundel",
@@ -73,20 +68,6 @@
       "frameworks_label": "Kerangka: :frameworks",
       "cta_open_recommended": "Buka Playbook Rekomendasi",
       "cta_repeat_quiz": "Ulangi Kuis Diagnosis"
-    },
-    "demo": {
-      "badge": "DEMO SKRIP INTERAKTIF",
-      "title": "Simulasi Skrip 1-on-1 Meja Kerja",
-      "desc": "Ganti nama staf di bawah untuk melihat bagaimana token otomatis disematkan ke dalam kalimat skrip taktis.",
-      "teammate_label": "NAMA ANGGOTA TIM",
-      "script_dialog_title": "CONTEKAN DIALOG OBROLAN 1 (RUMUS 3K)",
-      "register_label": "Pilihan Gaya Bahasa:",
-      "name_placeholder": "Contoh: Rina, Budi, Dimas",
-      "sample_script_casual": "Lo perhatiin nggak, di sprint kemarin ada 2 delivery yang geser? Menurut lo, apa blocker terbesarnya, :name?",
-      "sample_script_standard": "Apakah Anda memperhatikan ada 2 deliverable yang tertunda pada siklus kerja kemarin? Menurut analisis Anda, apa kendala utamanya, :name?",
-      "sample_script": "Apakah Anda memperhatikan ada 2 deliverable yang tertunda pada siklus kerja kemarin? Menurut analisis Anda, apa kendala utamanya, :name?",
-      "copy_script": "Salin Skrip Ini",
-      "copied": "✓ Skrip Berhasil Disalin!"
     },
     "pricing": {
       "badge": "INVESTASI SEKALI SEUMUR HIDUP",

@@ -55,6 +55,5 @@ test('landing page returns successful inertia response with required props', fun
         ->has('books')
         ->has('pricingTiers')
         ->where('locale', 'id')
-        ->where('register', 'casual')
     );
 });

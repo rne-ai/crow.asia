@@ -45,6 +45,12 @@ export default function MarketingFullWidthLayout({
                                 {t('nav.playbooks_catalog')}
                             </a>
                             <a
+                                href="#diagnosis"
+                                className="hover:text-[#111113] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] rounded px-1 py-0.5 transition-colors"
+                            >
+                                {t('nav.diagnosis')}
+                            </a>
+                            <a
                                 href="#harga"
                                 className="hover:text-[#111113] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] rounded px-1 py-0.5 transition-colors"
                             >

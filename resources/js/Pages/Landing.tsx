@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Head, router } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import MarketingFullWidthLayout from '@/Layouts/MarketingFullWidthLayout';
-import { InContentRegisterToggle } from '@/Components/navigation/InContentRegisterToggle';
 import { SupportedLocaleItem } from '@/Components/navigation/GlobalLocaleMenu';
 import { HeroTrilogy16x9Comp } from '@/Components/remotion/compositions/HeroTrilogy16x9Comp';
-import { BookId, ContentRegister, LocaleCode } from '@/types/remotion';
+import { BookId, LocaleCode } from '@/types/remotion';
 import { Player, PlayerRef } from '@remotion/player';
 import { useTranslation } from '@/hooks/useTranslation';
 import {
@@ -12,13 +11,9 @@ import {
     BookOpen,
     Check,
     ChevronDown,
-    Compass,
-    Copy,
     HelpCircle,
     RotateCcw,
     ShieldCheck,
-    Sparkles,
-    User,
 } from 'lucide-react';
 
 interface BookItem {
@@ -49,7 +44,6 @@ interface PricingTierItem {
 
 interface LandingProps {
     locale: LocaleCode;
-    register: ContentRegister;
     supportedLocales: SupportedLocaleItem[];
     books: BookItem[];
     pricingTiers: PricingTierItem[];
@@ -58,17 +52,13 @@ interface LandingProps {
 
 export default function Landing({
     locale,
-    register: initialRegister,
     supportedLocales,
     books,
     pricingTiers,
     user,
 }: LandingProps) {
     const { t, currency, formatPrice } = useTranslation();
-    const [register, setRegister] = useState<ContentRegister>(initialRegister);
     const [activeVolume, setActiveVolume] = useState<BookId>('book-1');
-    const [demoTeammate, setDemoTeammate] = useState('Budi');
-    const [demoCopied, setDemoCopied] = useState(false);
     const [mounted, setMounted] = useState(false);
 
     // Kuis Diagnosis State (3 Questions)
@@ -88,16 +78,6 @@ export default function Landing({
         setMounted(true);
     }, []);
 
-    const handleRegisterToggle = (newRegister: ContentRegister) => {
-        setRegister(newRegister);
-        const url = new URL(window.location.href);
-        url.searchParams.set('reg', newRegister);
-        router.visit(url.pathname + url.search, {
-            preserveScroll: true,
-            preserveState: true,
-        });
-    };
-
     // Calculate Quiz Recommendation
     const quizResultBookId: BookId = (() => {
         const votes = { 'book-1': 0, 'book-2': 0, 'book-3': 0 };
@@ -111,30 +91,9 @@ export default function Landing({
 
     const recommendedBook = books.find((b) => b.id === quizResultBookId) || books[0];
 
-    const heroTitle = locale === 'id'
-        ? (register === 'casual' ? t('landing.hero.title_casual') : t('landing.hero.title_standard'))
-        : t('landing.hero.title');
-
-    const heroHighlight = locale === 'id'
-        ? (register === 'casual' ? t('landing.hero.title_casual_highlight') : t('landing.hero.title_standard_highlight'))
-        : t('landing.hero.title_highlight');
-
-    const heroDesc = locale === 'id'
-        ? (register === 'casual' ? t('landing.hero.desc_casual') : t('landing.hero.desc_standard'))
-        : t('landing.hero.desc');
-
-    const copyDemoScript = () => {
-        const text = locale === 'id'
-            ? (register === 'casual'
-                ? t('landing.demo.sample_script_casual', { name: demoTeammate.trim() || 'Budi' })
-                : t('landing.demo.sample_script_standard', { name: demoTeammate.trim() || 'Budi' }))
-            : t('landing.demo.sample_script', { name: demoTeammate.trim() || 'Budi' });
-
-        navigator.clipboard.writeText(text).then(() => {
-            setDemoCopied(true);
-            setTimeout(() => setDemoCopied(false), 2000);
-        });
-    };
+    const heroTitle = t('landing.hero.title');
+    const heroHighlight = t('landing.hero.title_highlight');
+    const heroDesc = t('landing.hero.desc');
 
     const faqItems = [
         { q: t('landing.faq.items.0.q'), a: t('landing.faq.items.0.a') },
@@ -150,21 +109,13 @@ export default function Landing({
             {/* 1. HERO SECTION (Split 50/50 Desktop Full-Width) */}
             <section className="w-full border-b border-[#E5E0D5] bg-[#FAF8F5] py-12 lg:py-16 px-4 sm:px-6 lg:px-10">
                 <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
-                    {/* Left Column: Value Prop & In-Content Toggle */}
+                    {/* Left Column: Value Prop */}
                     <div className="flex-1 space-y-6">
                         <div className="flex flex-wrap items-center gap-3">
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#E5E0D5] bg-[#FFFFFF] text-xs font-mono font-bold text-stone-700 shadow-2xs">
                                 <span className="w-2 h-2 rounded-full bg-[#1D4ED8]" />
                                 <span>{t('landing.badge')}</span>
                             </div>
-
-                            {/* In-Content Register Toggle (Strictly ID only) */}
-                            <InContentRegisterToggle
-                                locale={locale}
-                                register={register}
-                                onRegisterChange={handleRegisterToggle}
-                                size="sm"
-                            />
                         </div>
 
                         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#111113] leading-[1.12]">
@@ -178,7 +129,7 @@ export default function Landing({
 
                         <div className="flex flex-wrap items-center gap-4 pt-2">
                             <a
-                                href={`/read/book-1/${locale}/ch-0${locale === 'id' ? `?reg=${register}` : ''}`}
+                                href={`/read/book-1/${locale}/ch-0`}
                                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#111113] text-[#FAF8F5] font-bold text-sm hover:bg-stone-800 transition-colors focus-visible:outline-2 focus-visible:outline-[#1D4ED8] shadow-xs min-h-[44px]"
                             >
                                 <BookOpen className="w-4 h-4" />
@@ -458,7 +409,7 @@ export default function Landing({
 
                                 <div className="pt-2 flex flex-wrap gap-3">
                                     <a
-                                        href={`/read/${recommendedBook.id}/${locale}/ch-0${locale === 'id' ? `?reg=${register}` : ''}`}
+                                        href={`/read/${recommendedBook.id}/${locale}/ch-0`}
                                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#111113] text-white text-xs sm:text-sm font-bold hover:bg-stone-800 transition-colors"
                                     >
                                         <BookOpen className="w-4 h-4" />
@@ -477,92 +428,8 @@ export default function Landing({
                 </div>
             </section>
 
-            {/* 3. LIVE SCRIPT PERSONALIZER DEMO */}
-            <section id="demo-skrip" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FAF8F5]">
-                <div className="w-full max-w-4xl mx-auto space-y-8">
-                    <div className="text-center space-y-2">
-                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-3 py-1 rounded-full border border-amber-300">
-                            {t('landing.demo.badge')}
-                        </span>
-                        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111113]">
-                            {t('landing.demo.title')}
-                        </h2>
-                        <p className="text-sm text-stone-600 max-w-lg mx-auto">
-                            {t('landing.demo.desc')}
-                        </p>
-                    </div>
-
-                    <div className="p-6 sm:p-8 rounded-2xl border border-[#E5E0D5] bg-[#FFFFFF] shadow-sm space-y-6">
-                        {/* Simulation Controls */}
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[#E5E0D5]">
-                            <div className="w-full sm:w-72 space-y-1.5">
-                                <label
-                                    htmlFor="demo-name-input"
-                                    className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase text-stone-700"
-                                >
-                                    <User className="w-3.5 h-3.5 text-[#1D4ED8]" />
-                                    <span>{t('landing.demo.teammate_label')}:</span>
-                                </label>
-                                <input
-                                    id="demo-name-input"
-                                    type="text"
-                                    value={demoTeammate}
-                                    onChange={(e) => setDemoTeammate(e.target.value)}
-                                    placeholder={t('landing.demo.name_placeholder')}
-                                    className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] focus:outline-none focus:border-[#1D4ED8] focus:ring-1 focus:ring-[#1D4ED8]"
-                                />
-                            </div>
-
-                            {/* In-Content Toggle for Demo (ID only) */}
-                            {locale === 'id' && (
-                                <div className="space-y-1.5 self-stretch sm:self-auto">
-                                    <span className="text-xs font-mono font-bold uppercase text-stone-500 block">
-                                        {t('landing.demo.register_label')}
-                                    </span>
-                                    <InContentRegisterToggle
-                                        locale={locale}
-                                        register={register}
-                                        onRegisterChange={setRegister}
-                                    />
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Live Script Bubble */}
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <span className="font-mono text-xs font-bold text-stone-500 flex items-center gap-1.5">
-                                    <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                                    <span>{t('landing.demo.script_dialog_title')}</span>
-                                </span>
-                                <button
-                                    type="button"
-                                    onClick={copyDemoScript}
-                                    className="inline-flex items-center gap-1 text-xs font-mono font-semibold px-3 py-1 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] text-stone-700 hover:text-[#111113] hover:bg-stone-100 transition-colors"
-                                >
-                                    {demoCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                                    <span>{demoCopied ? t('landing.demo.copied') : t('landing.demo.copy_script')}</span>
-                                </button>
-                            </div>
-
-                            <div className="p-5 rounded-xl bg-[#FAF8F5] border-l-4 border-[#1D4ED8] font-sans text-sm sm:text-base leading-relaxed text-[#111113] space-y-2">
-                                <p>
-                                    {locale === 'id' ? (
-                                        register === 'casual'
-                                            ? t('landing.demo.sample_script_casual', { name: demoTeammate.trim() || 'Budi' })
-                                            : t('landing.demo.sample_script_standard', { name: demoTeammate.trim() || 'Budi' })
-                                    ) : (
-                                        t('landing.demo.sample_script', { name: demoTeammate.trim() || 'Budi' })
-                                    )}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 4. KATALOG 3 VOLUME PLAYBOOK */}
-            <section id="katalog" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FFFFFF]">
+            {/* 3. KATALOG 3 VOLUME PLAYBOOK */}
+            <section id="katalog" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FAF8F5]">
                 <div className="w-full max-w-6xl mx-auto space-y-10">
                     <div className="text-center space-y-2">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-stone-500">
@@ -580,7 +447,7 @@ export default function Landing({
                         {books.map((b) => (
                             <div
                                 key={b.id}
-                                className="rounded-2xl border border-[#E5E0D5] bg-[#FAF8F5] p-6 flex flex-col justify-between space-y-6 hover:border-stone-400 transition-all shadow-2xs"
+                                className="rounded-2xl border border-[#E5E0D5] bg-[#FFFFFF] p-6 flex flex-col justify-between space-y-6 hover:border-stone-400 transition-all shadow-2xs"
                             >
                                 <div className="space-y-4">
                                     <div className="flex items-center justify-between">
@@ -612,7 +479,7 @@ export default function Landing({
                                             {b.targetRoles.map((role, rIdx) => (
                                                 <span
                                                     key={rIdx}
-                                                    className="px-2 py-0.5 rounded text-[11px] bg-white border border-[#E5E0D5] text-stone-700 font-medium"
+                                                    className="px-2 py-0.5 rounded text-[11px] bg-[#FAF8F5] border border-[#E5E0D5] text-stone-700 font-medium"
                                                 >
                                                     {role}
                                                 </span>
@@ -641,7 +508,7 @@ export default function Landing({
                                     </div>
 
                                     <a
-                                        href={`/read/${b.id}/${locale}/ch-0${locale === 'id' ? `?reg=${register}` : ''}`}
+                                        href={`/read/${b.id}/${locale}/ch-0`}
                                         className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#111113] text-white text-xs font-bold hover:bg-stone-800 transition-colors"
                                     >
                                         <BookOpen className="w-3.5 h-3.5" />
@@ -654,8 +521,8 @@ export default function Landing({
                 </div>
             </section>
 
-            {/* 5. PRICING TIERS & BUNDLE */}
-            <section id="harga" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FAF8F5]">
+            {/* 4. PRICING TIERS & BUNDLE */}
+            <section id="harga" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FFFFFF]">
                 <div className="w-full max-w-6xl mx-auto space-y-10">
                     <div className="text-center space-y-2">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#1D4ED8] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
@@ -678,7 +545,7 @@ export default function Landing({
                                     className={`rounded-2xl p-6 flex flex-col justify-between space-y-6 transition-all ${
                                         isBundle
                                             ? 'border-2 border-[#111113] bg-[#FFFFFF] shadow-lg lg:-translate-y-2'
-                                            : 'border border-[#E5E0D5] bg-[#FFFFFF] shadow-2xs'
+                                            : 'border border-[#E5E0D5] bg-[#FAF8F5] shadow-2xs'
                                     }`}
                                 >
                                     <div className="space-y-4">
@@ -736,7 +603,7 @@ export default function Landing({
                                             className={`w-full inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl font-bold text-xs sm:text-sm transition-colors min-h-[44px] ${
                                                 isBundle
                                                     ? 'bg-[#111113] text-white hover:bg-stone-800'
-                                                    : 'border border-[#E5E0D5] bg-[#FAF8F5] text-stone-800 hover:bg-stone-100'
+                                                    : 'border border-[#E5E0D5] bg-[#FFFFFF] text-stone-800 hover:bg-stone-100'
                                             }`}
                                         >
                                             <ShieldCheck className="w-4 h-4" />
@@ -750,8 +617,8 @@ export default function Landing({
                 </div>
             </section>
 
-            {/* 6. FAQ TAKTIS ACCORDION */}
-            <section className="w-full py-16 px-4 sm:px-6 lg:px-10 bg-[#FFFFFF]">
+            {/* 5. FAQ TAKTIS ACCORDION */}
+            <section className="w-full py-16 px-4 sm:px-6 lg:px-10 bg-[#FAF8F5]">
                 <div className="w-full max-w-3xl mx-auto space-y-8">
                     <div className="text-center space-y-2">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-stone-500">
@@ -768,7 +635,7 @@ export default function Landing({
                             return (
                                 <div
                                     key={idx}
-                                    className="border border-[#E5E0D5] rounded-xl overflow-hidden bg-[#FAF8F5] transition-colors"
+                                    className="border border-[#E5E0D5] rounded-xl overflow-hidden bg-[#FFFFFF] transition-colors"
                                 >
                                     <button
                                         type="button"
@@ -784,7 +651,7 @@ export default function Landing({
                                     </button>
 
                                     {isExpanded && (
-                                        <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-[#E5E0D5]/60 bg-white">
+                                        <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-[#E5E0D5]/60 bg-[#FAF8F5]">
                                             {item.a}
                                         </div>
                                     )}

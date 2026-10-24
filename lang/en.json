@@ -2,6 +2,7 @@
   "nav": {
     "brand": "crow.asia",
     "playbooks_catalog": "Playbooks Catalog",
+    "diagnosis": "45-Sec Diagnostic",
     "pricing": "Pricing Tiers",
     "search_placeholder": "Search topics & scripts...",
     "change_theme": "Change paper theme",
@@ -22,14 +23,8 @@
   "landing": {
     "badge": "TACTICAL FIELD PLAYBOOK 2026",
     "hero": {
-      "title_casual": "Stepped Into Leadership or Drowning in Team Fires?",
-      "title_casual_highlight": "Here Is Your Tactical Desk Fieldbook.",
-      "title_standard": "Stepped Into Leadership or Drowning in Team Fires?",
-      "title_standard_highlight": "Here Is Your Tactical Desk Fieldbook.",
       "title": "Stepped Into Leadership or Drowning in Team Fires?",
       "title_highlight": "Here Is Your Tactical Desk Fieldbook.",
-      "desc_casual": "No fluffy motivational theories. Real tactical 1-on-1 playbooks, task calibration frameworks (L1–L4), and copy-paste scripts to build autonomous teams without burning out.",
-      "desc_standard": "No fluffy motivational theories. Real tactical 1-on-1 playbooks, task calibration frameworks (L1–L4), and copy-paste scripts to build autonomous teams without burning out.",
       "desc": "No fluffy motivational theories. Real tactical 1-on-1 playbooks, task calibration frameworks (L1–L4), and copy-paste scripts to build autonomous teams without burning out.",
       "cta_read_free": "Read Free: Chapters 0 & 1",
       "cta_view_bundle": "View Bundle Packs",
@@ -73,20 +68,6 @@
       "frameworks_label": "Key Frameworks: :frameworks",
       "cta_open_recommended": "Open Recommended Playbook",
       "cta_repeat_quiz": "Retake Diagnostic Quiz"
-    },
-    "demo": {
-      "badge": "INTERACTIVE SCRIPT DEMO",
-      "title": "1-on-1 Workspace Script Simulator",
-      "desc": "Change staff name below to see dynamic token injection in real tactical phrasing.",
-      "teammate_label": "TEAMMATE NAME",
-      "script_dialog_title": "CONVERSATION SCRIPT 1 (3K FORMULA)",
-      "register_label": "Language Register:",
-      "name_placeholder": "e.g. Sarah, Alex, David",
-      "sample_script_casual": "Did you notice two deliverables slipped during the last sprint cycle? In your assessment, what was the primary blocker, :name?",
-      "sample_script_standard": "Did you notice two deliverables slipped during the last sprint cycle? In your assessment, what was the primary blocker, :name?",
-      "sample_script": "Did you notice two deliverables slipped during the last sprint cycle? In your assessment, what was the primary blocker, :name?",
-      "copy_script": "Copy This Script",
-      "copied": "✓ Script Copied!"
     },
     "pricing": {
       "badge": "LIFETIME ONE-TIME INVESTMENT",

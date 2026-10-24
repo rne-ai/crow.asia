@@ -51,16 +51,20 @@ class Book extends Model
     {
         $regStr = $register instanceof ContentRegister ? $register->value : $register;
         $key = "{$locale}:{$regStr}";
+        $titles = $this->titles ?? [];
+        $first = is_array($titles) && !empty($titles) ? reset($titles) : null;
 
-        return $this->titles[$key] ?? $this->titles["{$locale}:standard"] ?? reset($this->titles) ?: $this->volume_code;
+        return $titles[$key] ?? $titles["{$locale}:standard"] ?? $first ?: $this->volume_code;
     }
 
     public function subtitle(string $locale = 'id', string|ContentRegister $register = 'casual'): string
     {
         $regStr = $register instanceof ContentRegister ? $register->value : $register;
         $key = "{$locale}:{$regStr}";
+        $subtitles = $this->subtitles ?? [];
+        $first = is_array($subtitles) && !empty($subtitles) ? reset($subtitles) : '';
 
-        return $this->subtitles[$key] ?? $this->subtitles["{$locale}:standard"] ?? reset($this->subtitles) ?: '';
+        return $subtitles[$key] ?? $subtitles["{$locale}:standard"] ?? $first ?: '';
     }
 
     public function scopeActive(Builder $query): Builder
