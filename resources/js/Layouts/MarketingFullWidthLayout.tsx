@@ -1,13 +1,17 @@
 import React from 'react';
 import { BookOpen, Compass, ShieldCheck } from 'lucide-react';
+import { GlobalLocaleMenu } from '@/Components/navigation/GlobalLocaleMenu';
+import { LocaleCode } from '@/types/remotion';
 
 interface MarketingFullWidthLayoutProps {
     children: React.ReactNode;
+    currentLocale?: LocaleCode;
     headerRight?: React.ReactNode;
 }
 
 export default function MarketingFullWidthLayout({
     children,
+    currentLocale = 'id',
     headerRight,
 }: MarketingFullWidthLayoutProps) {
     return (
@@ -56,6 +60,8 @@ export default function MarketingFullWidthLayout({
                     </div>
 
                     <div className="flex items-center gap-3">
+                        <GlobalLocaleMenu currentLocale={currentLocale} />
+
                         {headerRight ? (
                             headerRight
                         ) : (

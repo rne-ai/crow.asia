@@ -1,31 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MarketingFullWidthLayout from '@/Layouts/MarketingFullWidthLayout';
+import { InContentRegisterToggle } from '@/Components/navigation/InContentRegisterToggle';
+import { ContentRegister, LocaleCode } from '@/types/remotion';
 import { BookOpen, Compass, Shield, Zap } from 'lucide-react';
 
 export default function Landing() {
+    const [locale, setLocale] = useState<LocaleCode>('id');
+    const [register, setRegister] = useState<ContentRegister>('casual');
+
     return (
-        <MarketingFullWidthLayout>
+        <MarketingFullWidthLayout currentLocale={locale}>
             <div className="w-full px-4 sm:px-6 lg:px-12 py-12 md:py-16 max-w-7xl mx-auto">
                 <div className="flex flex-col lg:flex-row gap-12 items-center">
                     {/* Left Column: Hero Copy */}
                     <div className="flex-1 space-y-6">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#E5E0D5] bg-[#FFFFFF] text-xs font-mono font-medium text-stone-700">
-                            <span className="w-2 h-2 rounded-full bg-[#1D4ED8]" />
-                            <span>TACTICAL LEADERSHIP FIELD PLAYBOOK</span>
+                        <div className="flex flex-wrap items-center gap-3">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#E5E0D5] bg-[#FFFFFF] text-xs font-mono font-medium text-stone-700">
+                                <span className="w-2 h-2 rounded-full bg-[#1D4ED8]" />
+                                <span>TACTICAL LEADERSHIP FIELD PLAYBOOK</span>
+                            </div>
+
+                            {/* In-Content Register Toggle (Only when locale === 'id') */}
+                            <InContentRegisterToggle
+                                locale={locale}
+                                register={register}
+                                onRegisterChange={setRegister}
+                                size="sm"
+                            />
                         </div>
 
                         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#111113] leading-[1.15]">
-                            Baru Jadi Leader atau Mulai Kewalahan Ngurusin Tim?
-                            <span className="block text-[#1D4ED8] mt-2">Ini Contekan Meja Kerja Lo.</span>
+                            {register === 'casual' ? (
+                                <>
+                                    Baru Jadi Leader atau Mulai Kewalahan Ngurusin Tim?
+                                    <span className="block text-[#1D4ED8] mt-2">Ini Contekan Meja Kerja Lo.</span>
+                                </>
+                            ) : (
+                                <>
+                                    Baru Diangkat Menjadi Pemimpin atau Menghadapi Beban Tim?
+                                    <span className="block text-[#1D4ED8] mt-2">Panduan Meja Kerja Taktis Anda.</span>
+                                </>
+                            )}
                         </h1>
 
                         <p className="text-base sm:text-lg text-stone-600 max-w-xl leading-relaxed">
-                            Bukan buku motivasi teoretis. Ini playbook taktis 1-on-1, rumus kalibrasi tugas, dan skrip siap salin untuk membangun tim mandiri tanpa burnout.
+                            {register === 'casual'
+                                ? 'Bukan buku motivasi teoretis. Ini playbook taktis 1-on-1, rumus kalibrasi tugas, dan skrip siap salin untuk membangun tim mandiri tanpa burnout.'
+                                : 'Bukan sekadar teori motivasi kepemimpinan. Ini buku pedoman taktis 1-on-1, formula kalibrasi tugas, dan naskah percakapan teruji untuk membangun kemandirian tim secara berkelanjutan.'}
                         </p>
 
                         <div className="flex flex-wrap gap-4 pt-2">
                             <a
-                                href="/read/book-1/id/ch-0"
+                                href={`/read/book-1/${locale}/ch-0`}
                                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#111113] text-[#FAF8F5] font-semibold text-sm hover:bg-stone-800 transition-colors focus-visible:outline-2 focus-visible:outline-[#1D4ED8] min-h-[44px]"
                             >
                                 <BookOpen className="w-4 h-4" />
