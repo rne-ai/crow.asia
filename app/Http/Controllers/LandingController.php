@@ -52,7 +52,7 @@ class LandingController extends Controller
             'id' => $t->id,
             'name' => $t->name($locale),
             'description' => $t->description($locale),
-            'features' => $t->features,
+            'features' => $t->features($locale),
             'badges' => $t->badges,
             'priceIdr' => $t->price_idr,
             'strikePriceIdr' => $t->strike_price_idr,

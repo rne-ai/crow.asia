@@ -4,23 +4,21 @@ import MarketingFullWidthLayout from '@/Layouts/MarketingFullWidthLayout';
 import { InContentRegisterToggle } from '@/Components/navigation/InContentRegisterToggle';
 import { SupportedLocaleItem } from '@/Components/navigation/GlobalLocaleMenu';
 import { HeroTrilogy16x9Comp } from '@/Components/remotion/compositions/HeroTrilogy16x9Comp';
-import { Player, PlayerRef } from '@remotion/player';
 import { BookId, ContentRegister, LocaleCode } from '@/types/remotion';
+import { Player, PlayerRef } from '@remotion/player';
+import { useTranslation } from '@/hooks/useTranslation';
 import {
     ArrowRight,
     BookOpen,
     Check,
-    CheckCircle2,
     ChevronDown,
     Compass,
     Copy,
     HelpCircle,
     RotateCcw,
-    Shield,
     ShieldCheck,
     Sparkles,
     User,
-    Zap
 } from 'lucide-react';
 
 interface BookItem {
@@ -66,6 +64,7 @@ export default function Landing({
     pricingTiers,
     user,
 }: LandingProps) {
+    const { t, currency, formatPrice } = useTranslation();
     const [register, setRegister] = useState<ContentRegister>(initialRegister);
     const [activeVolume, setActiveVolume] = useState<BookId>('book-1');
     const [demoTeammate, setDemoTeammate] = useState('Budi');
@@ -112,11 +111,24 @@ export default function Landing({
 
     const recommendedBook = books.find((b) => b.id === quizResultBookId) || books[0];
 
+    const heroTitle = locale === 'id'
+        ? (register === 'casual' ? t('landing.hero.title_casual') : t('landing.hero.title_standard'))
+        : t('landing.hero.title');
+
+    const heroHighlight = locale === 'id'
+        ? (register === 'casual' ? t('landing.hero.title_casual_highlight') : t('landing.hero.title_standard_highlight'))
+        : t('landing.hero.title_highlight');
+
+    const heroDesc = locale === 'id'
+        ? (register === 'casual' ? t('landing.hero.desc_casual') : t('landing.hero.desc_standard'))
+        : t('landing.hero.desc');
+
     const copyDemoScript = () => {
-        const text =
-            register === 'casual'
-                ? `Halo ${demoTeammate}, buat tugas laporan mingguan ini, yuk kita sepakatin dulu Rumus 3K-nya biar satu frekuensi:\n1. Keluaran: Dokumen analisis performa tim 3 halaman.\n2. Kriteria: Metrik akurasi 98% dan rekomendasi perbaikan terurai.\n3. Kalender: Draf pertama masuk hari Kamis jam 15.00 WIB.\nMenurut pertimbangan lo, ada kendala yang butuh kita bedah bareng?`
-                : `Halo ${demoTeammate}, untuk penugasan laporan mingguan ini, mari kita sepakati terlebih dahulu Formula 3K agar ekspektasi selaras sejak awal:\n1. Keluaran: Dokumen evaluasi kinerja tim setebal 3 halaman.\n2. Kriteria: Tingkat akurasi minimal 98% disertai rekomendasi perbaikan terstruktur.\n3. Kalender: Draf pertama diserahkan hari Kamis pukul 15.00 WIB.\nMenurut pandangan Anda, apakah ada bagian yang memerlukan dukungan teknis dari saya?`;
+        const text = locale === 'id'
+            ? (register === 'casual'
+                ? t('landing.demo.sample_script_casual', { name: demoTeammate.trim() || 'Budi' })
+                : t('landing.demo.sample_script_standard', { name: demoTeammate.trim() || 'Budi' }))
+            : t('landing.demo.sample_script', { name: demoTeammate.trim() || 'Budi' });
 
         navigator.clipboard.writeText(text).then(() => {
             setDemoCopied(true);
@@ -125,22 +137,10 @@ export default function Landing({
     };
 
     const faqItems = [
-        {
-            q: 'Apakah formatnya buku fisik yang dikirim atau web digital?',
-            a: 'crow.asia adalah field playbook interaktif web-first berkecepatan tinggi (< 25ms). Anda dapat membacanya langsung di browser HP maupun laptop tanpa perlu instal aplikasi, lengkap dengan animasi interaktif Remotion 16:9, checklist cloud, dan file Master PDF A5 siap unduh atau cetak mandiri.',
-        },
-        {
-            q: 'Apa perbedaan versi Kasual (Gue/Lo) dan Standar (Saya/Kamu)?',
-            a: 'Substansi strategi, rumus kepemimpinan, dan studi kasusnya 100% identik. Perbedaannya hanya pada ragam bahasa komunikasi agar pas dengan kultur kantor Anda: gaya Kasual memakai sapaan Gue/Lo yang akrab, sedangkan Standar memakai Saya/Kamu yang formal dan santun.',
-        },
-        {
-            q: 'Berapa lama masa berlaku akses setelah pembayaran?',
-            a: 'Akses berlaku seumur hidup (lifetime access) untuk akun Anda. Seluruh pembaruan naskah di masa depan dan sinkronisasi checklist progres dapat terus diakses tanpa biaya langganan bulanan.',
-        },
-        {
-            q: 'Metode pembayaran apa saja yang diterima?',
-            a: 'Kami menggunakan Mayar.id dengan dukungan QRIS instan (GoPay, OVO, Dana, ShopeePay), Transfer Bank / Virtual Account (BCA, Mandiri, BRI, BNI, Permata), dan Kartu Kredit dengan aktivasi akses instan otomatis.',
-        },
+        { q: t('landing.faq.items.0.q'), a: t('landing.faq.items.0.a') },
+        { q: t('landing.faq.items.1.q'), a: t('landing.faq.items.1.a') },
+        { q: t('landing.faq.items.2.q'), a: t('landing.faq.items.2.a') },
+        { q: t('landing.faq.items.3.q'), a: t('landing.faq.items.3.a') },
     ];
 
     return (
@@ -155,7 +155,7 @@ export default function Landing({
                         <div className="flex flex-wrap items-center gap-3">
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#E5E0D5] bg-[#FFFFFF] text-xs font-mono font-bold text-stone-700 shadow-2xs">
                                 <span className="w-2 h-2 rounded-full bg-[#1D4ED8]" />
-                                <span>TACTICAL FIELD PLAYBOOK 2026</span>
+                                <span>{t('landing.badge')}</span>
                             </div>
 
                             {/* In-Content Register Toggle (Strictly ID only) */}
@@ -168,23 +168,12 @@ export default function Landing({
                         </div>
 
                         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#111113] leading-[1.12]">
-                            {register === 'casual' ? (
-                                <>
-                                    Baru Jadi Leader atau Mulai Kewalahan Ngurusin Tim?
-                                    <span className="block text-[#1D4ED8] mt-2">Ini Contekan Meja Kerja Lo.</span>
-                                </>
-                            ) : (
-                                <>
-                                    Baru Diangkat Menjadi Pemimpin atau Menghadapi Beban Tim?
-                                    <span className="block text-[#1D4ED8] mt-2">Panduan Meja Kerja Taktis Anda.</span>
-                                </>
-                            )}
+                            {heroTitle}
+                            <span className="block text-[#1D4ED8] mt-2">{heroHighlight}</span>
                         </h1>
 
                         <p className="text-base sm:text-lg text-stone-600 max-w-xl leading-relaxed">
-                            {register === 'casual'
-                                ? 'Bukan teori motivasi bertele-tele. Ini playbook 1-on-1 konkret, rumus kalibrasi tugas (L1–L4), dan skrip siap salin buat bikin tim mandiri tanpa lo harus burnout.'
-                                : 'Bukan sekadar wacana motivasi kepemimpinan. Ini buku pedoman 1-on-1 taktis, formula kalibrasi tugas (L1–L4), dan skrip teruji untuk membangun tim mandiri secara berkelanjutan.'}
+                            {heroDesc}
                         </p>
 
                         <div className="flex flex-wrap items-center gap-4 pt-2">
@@ -193,13 +182,13 @@ export default function Landing({
                                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#111113] text-[#FAF8F5] font-bold text-sm hover:bg-stone-800 transition-colors focus-visible:outline-2 focus-visible:outline-[#1D4ED8] shadow-xs min-h-[44px]"
                             >
                                 <BookOpen className="w-4 h-4" />
-                                <span>Baca Gratis Bab 0 & 1</span>
+                                <span>{t('landing.hero.cta_read_free')}</span>
                             </a>
                             <a
                                 href="#harga"
                                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-[#E5E0D5] bg-[#FFFFFF] text-[#111113] font-bold text-sm hover:bg-stone-50 transition-colors focus-visible:outline-2 focus-visible:outline-[#1D4ED8] shadow-2xs min-h-[44px]"
                             >
-                                <span>Lihat Paket Bundel</span>
+                                <span>{t('landing.hero.cta_view_bundle')}</span>
                                 <ArrowRight className="w-4 h-4 text-stone-400" />
                             </a>
                         </div>
@@ -211,7 +200,7 @@ export default function Landing({
                             <div className="relative w-full overflow-hidden rounded-xl bg-black" style={{ aspectRatio: '16 / 9' }}>
                                 {!mounted ? (
                                     <div className="flex h-full w-full items-center justify-center font-mono text-xs text-stone-400">
-                                        Memuat Showcase Remotion 16:9...
+                                        {t('landing.hero.showcase_loading')}
                                     </div>
                                 ) : (
                                     <Player
@@ -220,80 +209,82 @@ export default function Landing({
                                         inputProps={{
                                             activeVolume,
                                             locale,
-                                            register,
-                                            teammateName: demoTeammate,
                                         }}
-                                        durationInFrames={300}
+                                        durationInFrames={540}
+                                        fps={30}
                                         compositionWidth={1280}
                                         compositionHeight={720}
-                                        fps={30}
-                                        loop
-                                        autoPlay
-                                        initiallyMuted
-                                        numberOfSharedAudioTags={0}
-                                        acknowledgeRemotionLicense
-                                        controls={false}
                                         style={{ width: '100%', height: '100%' }}
+                                        controls
+                                        autoPlay={false}
+                                        loop
                                     />
                                 )}
                             </div>
+                        </div>
 
-                            {/* Volume Selector for Remotion Showcase */}
-                            <div className="mt-2.5 flex items-center justify-between gap-1.5 pt-2 border-t border-[#E5E0D5]">
-                                <span className="font-mono text-[11px] font-bold uppercase text-stone-500 hidden sm:inline">
-                                    Pilih Preview Playbook:
-                                </span>
-                                <div className="flex gap-1.5 w-full sm:w-auto">
-                                    {(['book-1', 'book-2', 'book-3'] as const).map((bId) => {
-                                        const isSel = activeVolume === bId;
-                                        const bData = books.find((b) => b.id === bId);
-                                        return (
-                                            <button
-                                                key={bId}
-                                                type="button"
-                                                onClick={() => setActiveVolume(bId)}
-                                                className={`flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all min-h-[38px] ${
-                                                    isSel
-                                                        ? 'bg-[#111113] text-white shadow-xs'
-                                                        : 'bg-[#FAF8F5] text-stone-600 hover:text-[#111113] border border-[#E5E0D5]'
-                                                }`}
-                                            >
-                                                {bData?.volumeCode || bId.toUpperCase()}
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-                            </div>
+                        {/* Volume Switcher Tabs for 16:9 Player */}
+                        <div className="flex items-center justify-center gap-2 font-mono text-xs">
+                            <span className="text-stone-400 hidden sm:inline">Pratinjau Animasi:</span>
+                            {books.map((b) => (
+                                <button
+                                    key={b.id}
+                                    type="button"
+                                    onClick={() => setActiveVolume(b.id)}
+                                    className={`px-3 py-1.5 rounded-lg border transition-all flex items-center gap-1.5 min-h-[36px] ${
+                                        activeVolume === b.id
+                                            ? 'bg-[#111113] text-white border-[#111113] font-bold shadow-2xs'
+                                            : 'bg-white text-stone-600 border-[#E5E0D5] hover:border-stone-400'
+                                    }`}
+                                >
+                                    <span
+                                        className="w-2 h-2 rounded-full"
+                                        style={{ backgroundColor: b.accentHex }}
+                                    />
+                                    <span>{b.volumeCode}</span>
+                                </button>
+                            ))}
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* 2. KUIS DIAGNOSIS KEPEMIMPINAN 45 DETIK */}
+            {/* 2. KUIS DIAGNOSIS TAKTIS 45 DETIK */}
             <section id="diagnosis" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FFFFFF]">
                 <div className="w-full max-w-4xl mx-auto space-y-8">
                     <div className="text-center space-y-2">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#1D4ED8] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-                            DIAGNOSIS 45 DETIK
+                            {t('landing.quiz.header_badge')}
                         </span>
                         <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111113]">
-                            Situasi Mana yang Paling Menguras Energi Anda di Kantor?
+                            {t('landing.quiz.title')}
                         </h2>
                         <p className="text-sm text-stone-600 max-w-lg mx-auto">
-                            Jawab 3 pertanyaan situasional berikut untuk menemukan Volume Playbook yang langsung menyelesaikan friksi tim Anda.
+                            {t('landing.quiz.desc')}
                         </p>
                     </div>
 
-                    {/* Step Questions Card */}
-                    <div className="p-6 sm:p-8 rounded-2xl border border-[#E5E0D5] bg-[#FAF8F5] space-y-6">
+                    <div className="p-6 sm:p-8 rounded-2xl border border-[#E5E0D5] bg-[#FAF8F5] shadow-sm space-y-6">
+                        {/* Progress Indicator */}
+                        <div className="flex items-center gap-2">
+                            {[1, 2, 3].map((step) => (
+                                <div
+                                    key={step}
+                                    className={`h-2 flex-1 rounded-full transition-colors ${
+                                        quizCurrentStep >= step ? 'bg-[#1D4ED8]' : 'bg-[#E5E0D5]'
+                                    }`}
+                                />
+                            ))}
+                        </div>
+
                         {quizCurrentStep === 1 && (
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between text-xs font-mono text-stone-500">
-                                    <span>PERTANYAAN 01 / 03</span>
-                                    <span>POLA EKSEKUSI TUGAS</span>
+                                    <span>{t('landing.quiz.step_1_meta')}</span>
+                                    <span>{t('landing.quiz.step_1_cat')}</span>
                                 </div>
                                 <h3 className="font-extrabold text-base sm:text-lg text-[#111113]">
-                                    Bagaimana ritme kerja harian antara Anda dan anggota tim saat ini?
+                                    {t('landing.quiz.step_1_q')}
                                 </h3>
                                 <div className="space-y-2.5">
                                     <button
@@ -304,7 +295,7 @@ export default function Landing({
                                         }}
                                         className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#1D4ED8] hover:bg-blue-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
                                     >
-                                        <span>• "Anggota tim sering nunggu instruksi detail, bolak-balik nanya hal yang sama, dan kurang inisiatif."</span>
+                                        <span>{t('landing.quiz.step_1_o1')}</span>
                                         <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
                                     </button>
                                     <button
@@ -315,7 +306,7 @@ export default function Landing({
                                         }}
                                         className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#EA580C] hover:bg-orange-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
                                     >
-                                        <span>• "Beban kerja tim menumpuk tidak teratur, jam kerja molor, dan saya kehabisan energi menjaga ritme."</span>
+                                        <span>{t('landing.quiz.step_1_o2')}</span>
                                         <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
                                     </button>
                                     <button
@@ -326,7 +317,7 @@ export default function Landing({
                                         }}
                                         className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#0F766E] hover:bg-teal-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
                                     >
-                                        <span>• "Saya memimpin beberapa manajer / team lead, tapi masing-masing tim jalan sendiri tanpa keselarasan sasaran."</span>
+                                        <span>{t('landing.quiz.step_1_o3')}</span>
                                         <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
                                     </button>
                                 </div>
@@ -336,11 +327,11 @@ export default function Landing({
                         {quizCurrentStep === 2 && (
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between text-xs font-mono text-stone-500">
-                                    <span>PERTANYAAN 02 / 03</span>
-                                    <span>TITIK HAMBATAN KOMUNIKASI</span>
+                                    <span>{t('landing.quiz.step_2_meta')}</span>
+                                    <span>{t('landing.quiz.step_2_cat')}</span>
                                 </div>
                                 <h3 className="font-extrabold text-base sm:text-lg text-[#111113]">
-                                    Percakapan apa yang paling canggung atau sering Anda hindari di kantor?
+                                    {t('landing.quiz.step_2_q')}
                                 </h3>
                                 <div className="space-y-2.5">
                                     <button
@@ -351,7 +342,7 @@ export default function Landing({
                                         }}
                                         className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#1D4ED8] hover:bg-blue-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
                                     >
-                                        <span>• "Memberikan teguran atau koreksi saat kerjaan melenceng tanpa merusak mental staf."</span>
+                                        <span>{t('landing.quiz.step_2_o1')}</span>
                                         <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
                                     </button>
                                     <button
@@ -362,7 +353,7 @@ export default function Landing({
                                         }}
                                         className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#EA580C] hover:bg-orange-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
                                     >
-                                        <span>• "Menetapkan batasan beban kerja (Boundary Shield) dan menolak interupsi tak terencana dari atasan."</span>
+                                        <span>{t('landing.quiz.step_2_o2')}</span>
                                         <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
                                     </button>
                                     <button
@@ -373,7 +364,7 @@ export default function Landing({
                                         }}
                                         className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#0F766E] hover:bg-teal-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
                                     >
-                                        <span>• "Mendelegasikan kepemilikan keputusan strategis ke manajer di bawah saya tanpa micromanagement."</span>
+                                        <span>{t('landing.quiz.step_2_o3')}</span>
                                         <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
                                     </button>
                                 </div>
@@ -383,11 +374,11 @@ export default function Landing({
                         {quizCurrentStep === 3 && (
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between text-xs font-mono text-stone-500">
-                                    <span>PERTANYAAN 03 / 03</span>
-                                    <span>HASIL TARGET 30 HARI</span>
+                                    <span>{t('landing.quiz.step_3_meta')}</span>
+                                    <span>{t('landing.quiz.step_3_cat')}</span>
                                 </div>
                                 <h3 className="font-extrabold text-base sm:text-lg text-[#111113]">
-                                    Perubahan paling krusial apa yang ingin Anda wujudkan dalam 1 bulan ke depan?
+                                    {t('landing.quiz.step_3_q')}
                                 </h3>
                                 <div className="space-y-2.5">
                                     <button
@@ -398,7 +389,7 @@ export default function Landing({
                                         }}
                                         className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#1D4ED8] hover:bg-blue-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
                                     >
-                                        <span>• "Tim bisa menyepakati target Rumus 3K di awal dan beroperasi mandiri sesuai kalibrasi L1–L4."</span>
+                                        <span>{t('landing.quiz.step_3_o1')}</span>
                                         <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
                                     </button>
                                     <button
@@ -409,7 +400,7 @@ export default function Landing({
                                         }}
                                         className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#EA580C] hover:bg-orange-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
                                     >
-                                        <span>• "Menerapkan formula beban 30/70, memangkas rapat mubazir, dan mengembalikan energi tim."</span>
+                                        <span>{t('landing.quiz.step_3_o2')}</span>
                                         <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
                                     </button>
                                     <button
@@ -420,7 +411,7 @@ export default function Landing({
                                         }}
                                         className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#0F766E] hover:bg-teal-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
                                     >
-                                        <span>• "Membangun sistem kaderisasi manajer baru dan menyelaraskan eksekutif lintas fungsi."</span>
+                                        <span>{t('landing.quiz.step_3_o3')}</span>
                                         <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
                                     </button>
                                 </div>
@@ -435,7 +426,7 @@ export default function Landing({
                                         className="px-2.5 py-1 rounded text-xs font-mono font-bold text-white uppercase"
                                         style={{ backgroundColor: recommendedBook.accentHex }}
                                     >
-                                        REKOMENDASI PLAYBOOK ANDA: {recommendedBook.volumeCode}
+                                        {t('landing.quiz.result_badge')}
                                     </span>
                                     <button
                                         type="button"
@@ -446,13 +437,13 @@ export default function Landing({
                                         className="text-xs font-mono text-stone-500 hover:text-stone-900 flex items-center gap-1"
                                     >
                                         <RotateCcw className="w-3.5 h-3.5" />
-                                        <span>Ulangi Kuis</span>
+                                        <span>{t('landing.quiz.cta_repeat_quiz')}</span>
                                     </button>
                                 </div>
 
                                 <div className="space-y-2">
                                     <h3 className="text-xl sm:text-2xl font-black text-[#111113]">
-                                        {recommendedBook.title}
+                                        {t('landing.quiz.result_title', { volume: recommendedBook.volumeCode })}: {recommendedBook.title}
                                     </h3>
                                     <p className="text-sm text-stone-600 leading-relaxed">
                                         {recommendedBook.subtitle}
@@ -471,13 +462,13 @@ export default function Landing({
                                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#111113] text-white text-xs sm:text-sm font-bold hover:bg-stone-800 transition-colors"
                                     >
                                         <BookOpen className="w-4 h-4" />
-                                        <span>Buka Bab 0 & 1 Gratis</span>
+                                        <span>{t('landing.quiz.cta_open_recommended')}</span>
                                     </a>
                                     <a
                                         href="#harga"
                                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] text-stone-800 text-xs sm:text-sm font-bold hover:bg-stone-100 transition-colors"
                                     >
-                                        <span>Dapatkan Playbook Ini (Rp149.000)</span>
+                                        <span>{t('landing.pricing.cta_buy')} ({formatPrice(recommendedBook.priceSingleIdr, recommendedBook.priceSingleUsd)})</span>
                                     </a>
                                 </div>
                             </div>
@@ -491,13 +482,13 @@ export default function Landing({
                 <div className="w-full max-w-4xl mx-auto space-y-8">
                     <div className="text-center space-y-2">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-3 py-1 rounded-full border border-amber-300">
-                            LIVE DEMO SKRIP 1-ON-1
+                            {t('landing.demo.badge')}
                         </span>
                         <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111113]">
-                            Ketik Nama Staf Anda & Lihat Skrip Beradaptasi Seketika
+                            {t('landing.demo.title')}
                         </h2>
                         <p className="text-sm text-stone-600 max-w-lg mx-auto">
-                            Semua dialog empat mata di dalam 45 bab otomatis terpersonalisi tanpa perlu mengedit naskah secara manual.
+                            {t('landing.demo.desc')}
                         </p>
                     </div>
 
@@ -510,7 +501,7 @@ export default function Landing({
                                     className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase text-stone-700"
                                 >
                                     <User className="w-3.5 h-3.5 text-[#1D4ED8]" />
-                                    <span>Nama Anggota Tim:</span>
+                                    <span>{t('landing.demo.teammate_label')}:</span>
                                 </label>
                                 <input
                                     id="demo-name-input"
@@ -522,7 +513,7 @@ export default function Landing({
                                 />
                             </div>
 
-                            {/* In-Content Toggle for Demo */}
+                            {/* In-Content Toggle for Demo (ID only) */}
                             {locale === 'id' && (
                                 <div className="space-y-1.5 self-stretch sm:self-auto">
                                     <span className="text-xs font-mono font-bold uppercase text-stone-500 block">
@@ -550,63 +541,46 @@ export default function Landing({
                                     className="inline-flex items-center gap-1 text-xs font-mono font-semibold px-3 py-1 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] text-stone-700 hover:text-[#111113] hover:bg-stone-100 transition-colors"
                                 >
                                     {demoCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                                    <span>{demoCopied ? 'Tersalin!' : 'Salin Skrip'}</span>
+                                    <span>{demoCopied ? t('landing.demo.copied') : t('landing.demo.copy_script')}</span>
                                 </button>
                             </div>
 
                             <div className="p-5 rounded-xl bg-[#FAF8F5] border-l-4 border-[#1D4ED8] font-sans text-sm sm:text-base leading-relaxed text-[#111113] space-y-2">
-                                {register === 'casual' ? (
-                                    <>
-                                        <p>
-                                            "Halo <span className="teammate-token">{demoTeammate.trim() || 'Budi'}</span>, buat tugas laporan mingguan ini, yuk kita sepakatin dulu Rumus 3K-nya biar satu frekuensi sejak awal:"
-                                        </p>
-                                        <ol className="list-decimal pl-5 space-y-1 text-sm text-stone-700">
-                                            <li><strong>Keluaran:</strong> Dokumen analisis performa tim 3 halaman.</li>
-                                            <li><strong>Kriteria:</strong> Metrik akurasi 98% dan rekomendasi perbaikan terurai.</li>
-                                            <li><strong>Kalender:</strong> Draf pertama masuk hari Kamis jam 15.00 WIB.</li>
-                                        </ol>
-                                        <p className="text-sm italic text-stone-600">
-                                            "Menurut pertimbangan lo, ada bagian yang perlu kita sesuaikan dulu atau ada kendala teknis yang butuh dukungan dari gue?"
-                                        </p>
-                                    </>
-                                ) : (
-                                    <>
-                                        <p>
-                                            "Halo <span className="teammate-token">{demoTeammate.trim() || 'Budi'}</span>, untuk penugasan laporan mingguan ini, mari kita sepakati terlebih dahulu Formula 3K agar ekspektasi selaras sejak awal:"
-                                        </p>
-                                        <ol className="list-decimal pl-5 space-y-1 text-sm text-stone-700">
-                                            <li><strong>Keluaran:</strong> Dokumen evaluasi kinerja tim setebal 3 halaman.</li>
-                                            <li><strong>Kriteria:</strong> Tingkat akurasi minimal 98% disertai rekomendasi perbaikan terstruktur.</li>
-                                            <li><strong>Kalender:</strong> Draf pertama diserahkan hari Kamis pukul 15.00 WIB.</li>
-                                        </ol>
-                                        <p className="text-sm italic text-stone-600">
-                                            "Menurut pandangan Anda, apakah ada bagian yang memerlukan penyesuaian atau membutuhkan dukungan teknis dari saya?"
-                                        </p>
-                                    </>
-                                )}
+                                <p>
+                                    {locale === 'id' ? (
+                                        register === 'casual'
+                                            ? t('landing.demo.sample_script_casual', { name: demoTeammate.trim() || 'Budi' })
+                                            : t('landing.demo.sample_script_standard', { name: demoTeammate.trim() || 'Budi' })
+                                    ) : (
+                                        t('landing.demo.sample_script', { name: demoTeammate.trim() || 'Budi' })
+                                    )}
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* 4. KATALOG 3 PLAYBOOK (VOLUME CARDS) */}
+            {/* 4. KATALOG 3 VOLUME PLAYBOOK */}
             <section id="katalog" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FFFFFF]">
-                <div className="w-full max-w-7xl mx-auto space-y-10">
+                <div className="w-full max-w-6xl mx-auto space-y-10">
                     <div className="text-center space-y-2">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-stone-500">
-                            TRILOGI PLAYBOOK LENGKAP
+                            TRILOGI TAKTIS KEPEMIMPINAN
                         </span>
                         <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111113]">
-                            Dirancang untuk Tiga Jenjang Tanggung Jawab Kepemimpinan
+                            Tiga Volume Mandiri untuk Setiap Fase Karier
                         </h2>
+                        <p className="text-sm text-stone-600 max-w-lg mx-auto">
+                            Dirancang agar dapat dibaca terpisah sesuai friksi paling mendesak di tim Anda saat ini.
+                        </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {books.map((b) => (
                             <div
                                 key={b.id}
-                                className="p-6 rounded-2xl border border-[#E5E0D5] bg-[#FAF8F5] flex flex-col justify-between space-y-6 shadow-2xs hover:shadow-xs transition-shadow"
+                                className="rounded-2xl border border-[#E5E0D5] bg-[#FAF8F5] p-6 flex flex-col justify-between space-y-6 hover:border-stone-400 transition-all shadow-2xs"
                             >
                                 <div className="space-y-4">
                                     <div className="flex items-center justify-between">
@@ -616,58 +590,58 @@ export default function Landing({
                                         >
                                             {b.volumeCode}
                                         </span>
-                                        <span className="font-mono text-xs font-bold text-stone-900">
-                                            Rp{b.priceSingleIdr.toLocaleString('id-ID')}
-                                        </span>
+                                        <span className="text-xs font-mono text-stone-500">15 Bab</span>
                                     </div>
 
-                                    <div className="space-y-1">
-                                        <h3 className="font-extrabold text-lg sm:text-xl text-[#111113]">
+                                    <div className="space-y-1.5">
+                                        <h3 className="text-lg font-black text-[#111113] leading-snug">
                                             {b.title}
                                         </h3>
-                                        <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                                        <p className="text-xs text-stone-600 leading-relaxed">
                                             {b.subtitle}
                                         </p>
                                     </div>
 
-                                    <div className="space-y-2 pt-2 border-t border-[#E5E0D5]/70">
-                                        <span className="text-[11px] font-mono uppercase font-bold text-stone-400 block">
-                                            Untuk Peran:
+                                    <div className="pt-2 border-t border-[#E5E0D5] space-y-2">
+                                        <span className="text-[11px] font-mono font-bold uppercase text-stone-400 block">
+                                            Cocok Untuk:
                                         </span>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {b.targetRoles.map((r, rIdx) => (
+                                            {b.targetRoles.map((role, rIdx) => (
                                                 <span
                                                     key={rIdx}
                                                     className="px-2 py-0.5 rounded text-[11px] bg-white border border-[#E5E0D5] text-stone-700 font-medium"
                                                 >
-                                                    {r}
+                                                    {role}
                                                 </span>
                                             ))}
                                         </div>
                                     </div>
 
-                                    <div className="space-y-2 pt-2 border-t border-[#E5E0D5]/70">
-                                        <span className="text-[11px] font-mono uppercase font-bold text-stone-400 block">
-                                            Kerangka Inti:
+                                    <div className="space-y-1">
+                                        <span className="text-[11px] font-mono font-bold uppercase text-stone-400 block">
+                                            Kerangka Kunci:
                                         </span>
-                                        <ul className="text-xs text-stone-700 space-y-1">
-                                            {b.keyFrameworks.map((f, fIdx) => (
-                                                <li key={fIdx} className="flex items-center gap-1.5">
-                                                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                                                    <span>{f}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
+                                        <p className="text-xs font-mono text-stone-700">
+                                            {b.keyFrameworks.join(' • ')}
+                                        </p>
                                     </div>
                                 </div>
 
-                                <div className="pt-4 border-t border-[#E5E0D5] flex gap-2">
+                                <div className="pt-4 border-t border-[#E5E0D5] flex items-center justify-between">
+                                    <div className="space-y-0.5">
+                                        <span className="text-[10px] font-mono text-stone-400 uppercase block">Akses Tunggal:</span>
+                                        <span className="text-base font-extrabold text-[#111113]">
+                                            {formatPrice(b.priceSingleIdr, b.priceSingleUsd)}
+                                        </span>
+                                    </div>
+
                                     <a
                                         href={`/read/${b.id}/${locale}/ch-0${locale === 'id' ? `?reg=${register}` : ''}`}
-                                        className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-[#E5E0D5] bg-white text-xs font-bold text-[#111113] hover:bg-stone-50 transition-colors"
+                                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#111113] text-white text-xs font-bold hover:bg-stone-800 transition-colors"
                                     >
                                         <BookOpen className="w-3.5 h-3.5" />
-                                        <span>Baca Sampel Bab 0 & 1</span>
+                                        <span>{t('landing.hero.cta_read_free')}</span>
                                     </a>
                                 </div>
                             </div>
@@ -676,18 +650,18 @@ export default function Landing({
                 </div>
             </section>
 
-            {/* 5. MATRIKS HARGA (PRICING TIERS) */}
+            {/* 5. PRICING TIERS & BUNDLE */}
             <section id="harga" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FAF8F5]">
                 <div className="w-full max-w-6xl mx-auto space-y-10">
                     <div className="text-center space-y-2">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#1D4ED8] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-                            PAKET AKSES RESMI
+                            {t('landing.pricing.badge')}
                         </span>
                         <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111113]">
-                            Satu Kali Beli. Akses Selamanya & Bebas Biaya Langganan.
+                            {t('landing.pricing.title')}
                         </h2>
                         <p className="text-sm text-stone-600 max-w-lg mx-auto">
-                            Dapatkan akses naskah penuh 15 bab, panggung animasi Remotion 16:9, simulasi skrip 1-on-1, dan master PDF A5.
+                            {t('landing.pricing.desc')}
                         </p>
                     </div>
 
@@ -706,11 +680,11 @@ export default function Landing({
                                     <div className="space-y-4">
                                         {isBundle ? (
                                             <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-mono font-extrabold uppercase bg-[#FFE66D] text-[#111113] border border-[#111113]">
-                                                ★ PILIHAN TERBAIK (HEMAT 33%)
+                                                {t('landing.pricing.best_value_badge')}
                                             </span>
                                         ) : (
                                             <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-stone-100 text-stone-600">
-                                                SATUAN
+                                                {t('landing.pricing.single_badge')}
                                             </span>
                                         )}
 
@@ -724,16 +698,21 @@ export default function Landing({
                                         </div>
 
                                         <div className="py-2">
-                                            {tier.strikePriceIdr && (
+                                            {currency === 'IDR' && tier.strikePriceIdr && (
                                                 <span className="text-xs line-through text-stone-400 block font-mono">
                                                     Rp{tier.strikePriceIdr.toLocaleString('id-ID')}
                                                 </span>
                                             )}
+                                            {currency === 'USD' && isBundle && (
+                                                <span className="text-xs line-through text-stone-400 block font-mono">
+                                                    $29.99
+                                                </span>
+                                            )}
                                             <div className="flex items-baseline gap-1">
                                                 <span className="text-2xl font-black text-[#111113]">
-                                                    Rp{tier.priceIdr.toLocaleString('id-ID')}
+                                                    {formatPrice(tier.priceIdr, tier.priceUsd)}
                                                 </span>
-                                                <span className="text-[11px] font-mono text-stone-400">/ selamanya</span>
+                                                <span className="text-[11px] font-mono text-stone-400">{t('landing.pricing.per_lifetime')}</span>
                                             </div>
                                         </div>
 
@@ -749,7 +728,7 @@ export default function Landing({
 
                                     <div className="pt-4 border-t border-[#E5E0D5]">
                                         <a
-                                            href={`/checkout/${tier.id}`}
+                                            href={`/checkout/${tier.id}?locale=${locale}`}
                                             className={`w-full inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl font-bold text-xs sm:text-sm transition-colors min-h-[44px] ${
                                                 isBundle
                                                     ? 'bg-[#111113] text-white hover:bg-stone-800'
@@ -757,7 +736,7 @@ export default function Landing({
                                             }`}
                                         >
                                             <ShieldCheck className="w-4 h-4" />
-                                            <span>Beli Akses Playbook</span>
+                                            <span>{t('landing.pricing.cta_buy')}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -772,10 +751,10 @@ export default function Landing({
                 <div className="w-full max-w-3xl mx-auto space-y-8">
                     <div className="text-center space-y-2">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-stone-500">
-                            PERTANYAAN SERING DIAJUKAN
+                            {t('landing.faq.badge')}
                         </span>
                         <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111113]">
-                            Informasi Produk & Format Playbook
+                            {t('landing.faq.title')}
                         </h2>
                     </div>
 
