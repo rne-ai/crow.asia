@@ -309,60 +309,132 @@ article ol li::marker {
   color: var(--color-crow-ink);
 }
 
-/* Task list checkbox styling inside article */
-article ul:has(input[type="checkbox"]) {
-  list-style-type: none !important;
-  padding-left: 0 !important;
-  margin-left: 0.5rem !important;
+/* ==============================================================================
+   KARTU LATIHAN PRAKTIK BAB (.crow-practice-section)
+   ============================================================================== */
+.crow-practice-section {
+  margin: 2.5rem 0;
+  padding: 1.5rem;
+  background-color: #FAF8F5;
+  border: 1px solid var(--color-crow-border);
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
-article li:has(input[type="checkbox"]) {
-  list-style-type: none !important;
+.crow-practice-header {
   display: flex;
-  align-items: baseline;
-  gap: 0.625rem;
-  padding-left: 0 !important;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-crow-border);
 }
 
-article li input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 1.15rem;
-  height: 1.15rem;
-  border: 1.5px solid var(--color-crow-border);
-  border-radius: 0.35rem;
-  background-color: #FFFFFF;
-  margin-top: 0.2rem;
-  display: inline-grid;
-  place-content: center;
-  flex-shrink: 0;
-  cursor: default;
-}
-
-article li input[type="checkbox"]:checked {
-  background-color: #10B981;
-  border-color: #10B981;
-}
-
-article li input[type="checkbox"]:checked::before {
-  content: "✓";
-  color: #FFFFFF;
+.crow-practice-badge {
+  font-family: var(--font-mono);
   font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-vol-3-emerald);
+  background-color: rgba(15, 118, 110, 0.08);
+  padding: 0.3rem 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid rgba(15, 118, 110, 0.2);
+}
+
+.crow-practice-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.crow-practice-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-crow-border);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.15s ease;
+}
+
+.crow-practice-card:hover {
+  border-color: #D1CDC7;
+}
+
+.crow-practice-num {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-crow-ink);
+  color: var(--color-crow-gold);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.crow-practice-content {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #27272A;
+}
+
+.crow-practice-content p {
+  margin: 0 !important;
+  color: inherit;
+}
+
+.crow-practice-content strong {
+  color: var(--color-crow-ink);
   font-weight: 800;
 }
 
-[data-paper-theme="obsidian"] article ul li,
-[data-paper-theme="obsidian"] article ol li {
+/* Sepia Theme Practice Cards */
+[data-paper-theme="sepia"] .crow-practice-section {
+  background-color: #F4ECD8;
+  border-color: #E2D9C3;
+}
+[data-paper-theme="sepia"] .crow-practice-header {
+  border-bottom-color: #E2D9C3;
+}
+[data-paper-theme="sepia"] .crow-practice-card {
+  background-color: #FAF4E6;
+  border-color: #E2D9C3;
+}
+[data-paper-theme="sepia"] .crow-practice-content {
+  color: #1C1917;
+}
+
+/* Obsidian Theme Practice Cards */
+[data-paper-theme="obsidian"] .crow-practice-section {
+  background-color: #121316;
+  border-color: #2D3139;
+}
+[data-paper-theme="obsidian"] .crow-practice-header {
+  border-bottom-color: #2D3139;
+}
+[data-paper-theme="obsidian"] .crow-practice-card {
+  background-color: #1A1C22;
+  border-color: #2D3139;
+}
+[data-paper-theme="obsidian"] .crow-practice-num {
+  background-color: #27272A;
+  color: #FFE66D;
+}
+[data-paper-theme="obsidian"] .crow-practice-content {
   color: #D4D4D8;
 }
-
-[data-paper-theme="obsidian"] article ol li::marker {
-  color: #F4F4F5;
-}
-
-[data-paper-theme="obsidian"] article li input[type="checkbox"] {
-  background-color: #16181D;
-  border-color: #3F3F46;
+[data-paper-theme="obsidian"] .crow-practice-content strong {
+  color: #FFFFFF;
 }
 
 /* ==============================================================================

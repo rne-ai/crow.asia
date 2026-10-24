@@ -197,14 +197,10 @@ export default function ChapterView({
                     locale={locale}
                     register={activeRegister}
                     onRegisterChange={handleRegisterChange}
-                    teammateName={teammateName}
-                    onTeammateNameChange={handleTeammateNameChange}
                     paperTheme={paperTheme}
                     onPaperThemeChange={setPaperTheme}
                     fontSize={fontSize}
                     onFontSizeChange={handleFontSizeChange}
-                    checklists={checklists}
-                    onToggleChecklist={handleToggleChecklist}
                 />
             }
         >

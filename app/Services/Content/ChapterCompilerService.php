@@ -104,7 +104,10 @@ class ChapterCompilerService
         // 2. Extract checklists from raw markdown
         $extractedChecklists = $this->extractChecklists($rawMarkdown);
 
-        // 3. Compile Markdown to HTML via League CommonMark (with Tables and Footnotes)
+        // 3. Transform checklist items into structured editorial action cards
+        $processedMd = $this->transformPracticeCards($processedMd);
+
+        // 4. Compile Markdown to HTML via League CommonMark (with Tables and Footnotes)
         $html = (string) $this->converter->convert($processedMd);
 
         // 4. Wrap Mermaid diagram blocks with header badge
@@ -161,6 +164,35 @@ class ChapterCompilerService
             extractedChecklists: $extractedChecklists,
             remotionSceneProps: $remotionSceneProps,
         );
+    }
+
+    private function transformPracticeCards(string $markdown): string
+    {
+        $pattern = '/(?:^[-*]\s+\[[ xX]\]\s+.+(?:\r?\n|$))+/m';
+
+        return preg_replace_callback($pattern, function ($matches) {
+            preg_match_all('/^[-*]\s+\[[ xX]\]\s+(.+)$/m', $matches[0], $items);
+            if (empty($items[1])) {
+                return $matches[0];
+            }
+
+            $html = "<div class=\"crow-practice-section\">\n";
+            $html .= "  <div class=\"crow-practice-header\">\n";
+            $html .= "    <span class=\"crow-practice-badge\">🎯 LATIHAN PRAKTIK • AKSI MEJA KERJA</span>\n";
+            $html .= "  </div>\n";
+            $html .= "  <div class=\"crow-practice-grid\">\n";
+            foreach ($items[1] as $idx => $itemText) {
+                $num = str_pad((string) ($idx + 1), 2, '0', STR_PAD_LEFT);
+                $html .= "    <div class=\"crow-practice-card\">\n";
+                $html .= "      <div class=\"crow-practice-num\">{$num}</div>\n";
+                $html .= "      <div class=\"crow-practice-content\">\n\n" . trim($itemText) . "\n\n</div>\n";
+                $html .= "    </div>\n";
+            }
+            $html .= "  </div>\n";
+            $html .= "</div>\n\n";
+
+            return $html;
+        }, $markdown);
     }
 
     private function transformCallouts(string $markdown): string
