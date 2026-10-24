@@ -10,6 +10,7 @@ import { SosSearchModal } from '@/Components/reader/SosSearchModal';
 import { LandscapeAnimationStage } from '@/Components/remotion/LandscapeAnimationStage';
 import { ReaderPageInertiaProps } from '@/types/crow';
 import { ContentRegister, LocaleCode } from '@/types/remotion';
+import { useTranslation } from '@/hooks/useTranslation';
 import { ArrowLeft, ArrowRight, CheckCircle2, Lock } from 'lucide-react';
 
 export default function ChapterView({
@@ -20,6 +21,7 @@ export default function ChapterView({
     currentChapter,
     allChapters,
 }: ReaderPageInertiaProps) {
+    const { t } = useTranslation();
     const [mode, setMode] = useState<ReaderMode>('read');
     const [paperTheme, setPaperTheme] = useState<PaperTheme>('ivory');
     const [fontSize, setFontSize] = useState<'sm' | 'base' | 'lg'>('base');
@@ -184,8 +186,8 @@ export default function ChapterView({
                                             }`}
                                         >
                                             {ch.isFreeSample
-                                                ? (locale === 'en' ? 'Free Sample' : 'Sampel Gratis')
-                                                : (locale === 'en' ? `Chapter ${ch.index}` : `Bab ${ch.index}`)}
+                                                ? t('nav.free_sample')
+                                                : t('nav.chapter', { num: ch.index })}
                                         </span>
                                     </div>
                                 </a>
@@ -220,13 +222,11 @@ export default function ChapterView({
                         </span>
                         <span>•</span>
                         <span>
-                            {locale === 'en'
-                                ? `Chapter ${currentChapter.index} of 14`
-                                : `Bab ${currentChapter.index} dari 14`}
+                            {t('reader.chapter_progress', { current: currentChapter.index, total: 14 })}
                         </span>
                         <span className="hidden sm:inline">•</span>
                         <span className="hidden sm:inline">
-                            {locale === 'en' ? '⏱️ ~5-8 min read' : '⏱️ ~5-8 menit baca'}
+                            {t('reader.read_time')}
                         </span>
                     </div>
 
@@ -257,6 +257,8 @@ export default function ChapterView({
                                     volumeCode={book.volumeCode}
                                     bookTitle={book.title}
                                     bookId={book.id}
+                                    priceSingleIdr={book.priceSingleIdr}
+                                    priceSingleUsd={book.priceSingleUsd}
                                 />
                             )}
                         </div>
@@ -271,7 +273,7 @@ export default function ChapterView({
                                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#E5E0D5] bg-white text-xs sm:text-sm font-semibold text-stone-700 hover:text-[#111113] hover:bg-stone-50 transition-colors min-h-[40px]"
                                 >
                                     <ArrowLeft className="w-4 h-4" />
-                                    <span>{locale === 'en' ? 'Previous Chapter' : 'Bab Sebelumnya'}</span>
+                                    <span>{t('reader.prev_chapter')}</span>
                                 </a>
                             ) : (
                                 <div />
@@ -284,7 +286,7 @@ export default function ChapterView({
                                     }`}
                                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#111113] text-[#FAF8F5] text-xs sm:text-sm font-semibold hover:bg-stone-800 transition-colors min-h-[40px]"
                                 >
-                                    <span>{locale === 'en' ? `Next: Chapter ${nextChapter.index}` : `Lanjut: Bab ${nextChapter.index}`}</span>
+                                    <span>{t('reader.next_chapter', { num: nextChapter.index })}</span>
                                     <ArrowRight className="w-4 h-4" />
                                 </a>
                             )}

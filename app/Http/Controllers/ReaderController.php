@@ -149,6 +149,8 @@ class ReaderController extends Controller
                 'accentHex' => $book->accent_hex,
                 'title' => $book->title($locale, $register),
                 'subtitle' => $book->subtitle($locale, $register),
+                'priceSingleIdr' => $book->price_single_idr,
+                'priceSingleUsd' => (float) $book->price_single_usd,
             ],
             'locale' => $locale,
             'activeRegister' => $register->value,

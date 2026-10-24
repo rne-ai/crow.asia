@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mermaid from 'mermaid';
 import { PaperTheme } from '@/Layouts/FullWidthWorkspaceLayout';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface PreCompiledArticleProps {
     html: string;
@@ -17,6 +18,7 @@ export const PreCompiledArticle: React.FC<PreCompiledArticleProps> = ({
     paperTheme = 'ivory',
     className = '',
 }) => {
+    const { t } = useTranslation();
     const articleRef = useRef<HTMLDivElement>(null);
     const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
@@ -88,7 +90,9 @@ export const PreCompiledArticle: React.FC<PreCompiledArticleProps> = ({
                 btn.type = 'button';
                 btn.className =
                     'crow-copy-btn inline-flex items-center gap-1 ml-auto text-xs font-mono font-bold px-2.5 py-1 rounded-md border border-[#E5E0D5] bg-[#FAF8F5] text-stone-700 hover:text-[#111113] hover:bg-white transition-colors cursor-pointer shrink-0';
-                btn.innerHTML = '📋 Salin Skrip';
+                const copyLabel = t('reader.copy_script');
+                const copiedLabel = t('reader.copied');
+                btn.innerHTML = copyLabel;
                 btn.onclick = (e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -101,9 +105,9 @@ export const PreCompiledArticle: React.FC<PreCompiledArticleProps> = ({
 
                     navigator.clipboard.writeText(cleanText).then(() => {
                         setCopiedIndex(idx);
-                        btn.innerHTML = '✓ Tersalin!';
+                        btn.innerHTML = copiedLabel;
                         setTimeout(() => {
-                            btn.innerHTML = '📋 Salin Skrip';
+                            btn.innerHTML = copyLabel;
                             setCopiedIndex(null);
                         }, 2000);
                     });

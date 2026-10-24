@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { router } from '@inertiajs/react';
 import { ArrowRight, BookOpen, Lock, Loader2, Search, X } from 'lucide-react';
 import { ContentRegister, LocaleCode } from '@/types/remotion';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export interface SearchResultItem {
     book_id: string;
@@ -29,6 +30,7 @@ export const SosSearchModal: React.FC<SosSearchModalProps> = ({
     locale,
     register,
 }) => {
+    const { t } = useTranslation();
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<SearchResultItem[]>([]);
     const [loading, setLoading] = useState(false);
@@ -129,7 +131,7 @@ export const SosSearchModal: React.FC<SosSearchModalProps> = ({
             <div
                 role="dialog"
                 aria-modal="true"
-                aria-label="SOS Topik: Cari Skrip & Langkah Taktis"
+                aria-label={t('reader.sos_search_label')}
                 className="relative w-full max-w-2xl rounded-2xl border border-[#E5E0D5] bg-[#FFFFFF] shadow-2xl overflow-hidden z-10 flex flex-col max-h-[80vh] animate-in fade-in zoom-in-95 duration-100"
             >
                 {/* Search Input Bar */}
@@ -140,7 +142,7 @@ export const SosSearchModal: React.FC<SosSearchModalProps> = ({
                         type="text"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Ketik topik darurat (misal: 'rumus 3k', 'staf defensif', 'evaluasi')..."
+                        placeholder={t('reader.sos_search_placeholder')}
                         className="w-full text-sm sm:text-base outline-none bg-transparent placeholder:text-stone-400 text-[#111113] font-medium"
                     />
                     {loading && <Loader2 className="w-4 h-4 text-[#1D4ED8] animate-spin shrink-0" />}

@@ -7,6 +7,8 @@ export interface ReaderPageInertiaProps {
     accentHex: string;
     title: string;
     subtitle: string;
+    priceSingleIdr?: number;
+    priceSingleUsd?: number;
   };
   locale: LocaleCode;
   activeRegister: ContentRegister;

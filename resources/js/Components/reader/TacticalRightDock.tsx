@@ -2,6 +2,7 @@ import React from 'react';
 import { InContentRegisterToggle } from '@/Components/navigation/InContentRegisterToggle';
 import { PaperTheme } from '@/Layouts/FullWidthWorkspaceLayout';
 import { ContentRegister, LocaleCode } from '@/types/remotion';
+import { useTranslation } from '@/hooks/useTranslation';
 import { Sliders, Type } from 'lucide-react';
 
 interface TacticalRightDockProps {
@@ -25,12 +26,14 @@ export const TacticalRightDock: React.FC<TacticalRightDockProps> = ({
     onFontSizeChange,
     className = '',
 }) => {
+    const { t } = useTranslation();
+
     return (
         <div className={`space-y-5 text-xs text-stone-800 ${className}`}>
             <div className="flex items-center gap-1.5 pb-3 border-b border-[#E5E0D5]">
                 <Sliders className="w-3.5 h-3.5 text-stone-500" />
                 <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-stone-500">
-                    Pengaturan Tampilan
+                    {t('reader.settings_title')}
                 </span>
             </div>
 
@@ -38,7 +41,7 @@ export const TacticalRightDock: React.FC<TacticalRightDockProps> = ({
             {locale === 'id' && (
                 <div className="space-y-2 pb-4 border-b border-[#E5E0D5]">
                     <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-stone-500 block">
-                        Gaya Bahasa Naskah (ID)
+                        {t('reader.register_title')}
                     </span>
                     <InContentRegisterToggle
                         locale={locale}
@@ -52,7 +55,7 @@ export const TacticalRightDock: React.FC<TacticalRightDockProps> = ({
             {/* 2. Paper Theme Controls */}
             <div className="space-y-2 pb-4 border-b border-[#E5E0D5]">
                 <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-stone-500 block">
-                    Tema Kertas Baca
+                    {t('reader.paper_theme_title')}
                 </span>
                 <div className="grid grid-cols-3 gap-1.5">
                     <button
@@ -95,7 +98,7 @@ export const TacticalRightDock: React.FC<TacticalRightDockProps> = ({
             <div className="space-y-2">
                 <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1">
                     <Type className="w-3.5 h-3.5" />
-                    <span>Ukuran Teks Baca</span>
+                    <span>{t('reader.font_size_title')}</span>
                 </span>
                 <div className="grid grid-cols-3 gap-1.5">
                     <button
@@ -107,7 +110,7 @@ export const TacticalRightDock: React.FC<TacticalRightDockProps> = ({
                                 : 'bg-white text-stone-600 border-[#E5E0D5] hover:border-stone-400'
                         }`}
                     >
-                        Kecil
+                        {t('reader.font_sm')}
                     </button>
                     <button
                         type="button"
@@ -118,7 +121,7 @@ export const TacticalRightDock: React.FC<TacticalRightDockProps> = ({
                                 : 'bg-white text-stone-600 border-[#E5E0D5] hover:border-stone-400'
                         }`}
                     >
-                        Standar
+                        {t('reader.font_base')}
                     </button>
                     <button
                         type="button"
@@ -129,7 +132,7 @@ export const TacticalRightDock: React.FC<TacticalRightDockProps> = ({
                                 : 'bg-white text-stone-600 border-[#E5E0D5] hover:border-stone-400'
                         }`}
                     >
-                        Besar
+                        {t('reader.font_lg')}
                     </button>
                 </div>
             </div>
