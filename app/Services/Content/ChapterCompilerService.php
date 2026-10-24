@@ -8,6 +8,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\Extension\TaskList\TaskListExtension;
 use League\CommonMark\MarkdownConverter;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
@@ -40,6 +41,7 @@ class ChapterCompilerService
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new TableExtension());
         $environment->addExtension(new FootnoteExtension());
+        $environment->addExtension(new TaskListExtension());
 
         $this->converter = new MarkdownConverter($environment);
 
@@ -49,6 +51,7 @@ class ChapterCompilerService
             'p', 'ul', 'ol', 'li', 'table', 'thead', 'tbody', 'tr', 'th', 'td',
             'blockquote', 'pre', 'code', 'details', 'summary', 'aside', 'span',
             'sup', 'sub', 'hr', 'strong', 'em', 'a', 'div', 'section', 'ins', 'mark',
+            'input',
         ];
 
         $config = (new HtmlSanitizerConfig())
@@ -67,6 +70,7 @@ class ChapterCompilerService
             ->allowElement('td', ['align', 'class'])
             ->allowElement('ins', ['class'])
             ->allowElement('mark', ['class'])
+            ->allowElement('input', ['type', 'checked', 'disabled', 'class'])
             ->allowAttribute('class', $allowedElements)
             ->allowAttribute('id', $allowedElements)
             ->allowAttribute('role', $allowedElements)
@@ -228,9 +232,12 @@ class ChapterCompilerService
         $checklists = [];
 
         foreach ($matches as $i => $m) {
+            $rawLabel = trim(strip_tags((string) $this->converter->convert(trim($m[2]))));
+            $cleanLabel = html_entity_decode($rawLabel, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
             $checklists[] = [
                 'itemIndex' => $i,
-                'labelHtml' => trim(strip_tags((string) $this->converter->convert(trim($m[2])))),
+                'labelHtml' => $cleanLabel,
                 'isCompleted' => strtolower($m[1]) === 'x',
             ];
         }

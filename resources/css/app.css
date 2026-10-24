@@ -24,6 +24,66 @@
 }
 
 /* ==============================================================================
+   CUSTOM AESTHETIC SCROLLBAR SYSTEM (THIN & ELEGANT)
+   ============================================================================== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(17, 17, 19, 0.18) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(17, 17, 19, 0.18);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(17, 17, 19, 0.35);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Scrollbar Sepia */
+[data-paper-theme="sepia"] * {
+  scrollbar-color: rgba(68, 64, 60, 0.25) transparent;
+}
+[data-paper-theme="sepia"] ::-webkit-scrollbar-thumb {
+  background: rgba(68, 64, 60, 0.25);
+}
+[data-paper-theme="sepia"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(68, 64, 60, 0.45);
+}
+
+/* Scrollbar Obsidian (Dark) */
+[data-paper-theme="obsidian"] * {
+  scrollbar-color: rgba(244, 244, 245, 0.2) transparent;
+}
+[data-paper-theme="obsidian"] ::-webkit-scrollbar-thumb {
+  background: rgba(244, 244, 245, 0.2);
+}
+[data-paper-theme="obsidian"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(244, 244, 245, 0.4);
+}
+
+/* ==============================================================================
    TEMA KERTAS BACA (IVORY / SEPIA / OBSIDIAN)
    ============================================================================== */
 [data-paper-theme="ivory"] {
@@ -193,6 +253,7 @@ article strong {
   color: #FFFFFF;
 }
 
+/* Matched Italic */
 article em {
   font-style: italic;
   font-family: inherit;
@@ -248,6 +309,48 @@ article ol li::marker {
   color: var(--color-crow-ink);
 }
 
+/* Task list checkbox styling inside article */
+article ul:has(input[type="checkbox"]) {
+  list-style-type: none !important;
+  padding-left: 0 !important;
+  margin-left: 0.5rem !important;
+}
+
+article li:has(input[type="checkbox"]) {
+  list-style-type: none !important;
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  padding-left: 0 !important;
+}
+
+article li input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1.5px solid var(--color-crow-border);
+  border-radius: 0.35rem;
+  background-color: #FFFFFF;
+  margin-top: 0.2rem;
+  display: inline-grid;
+  place-content: center;
+  flex-shrink: 0;
+  cursor: default;
+}
+
+article li input[type="checkbox"]:checked {
+  background-color: #10B981;
+  border-color: #10B981;
+}
+
+article li input[type="checkbox"]:checked::before {
+  content: "✓";
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
 [data-paper-theme="obsidian"] article ul li,
 [data-paper-theme="obsidian"] article ol li {
   color: #D4D4D8;
@@ -255,6 +358,11 @@ article ol li::marker {
 
 [data-paper-theme="obsidian"] article ol li::marker {
   color: #F4F4F5;
+}
+
+[data-paper-theme="obsidian"] article li input[type="checkbox"] {
+  background-color: #16181D;
+  border-color: #3F3F46;
 }
 
 /* ==============================================================================
