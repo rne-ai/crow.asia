@@ -1,6 +1,7 @@
 import React from 'react';
 import { Head, router } from '@inertiajs/react';
 import MarketingFullWidthLayout from '@/Layouts/MarketingFullWidthLayout';
+import { useTranslation } from '@/hooks/useTranslation';
 import { BookOpen, CheckCircle, Download, Lock, LogOut, ShieldCheck, User } from 'lucide-react';
 
 interface BookItem {
@@ -34,9 +35,11 @@ export default function Dashboard({
     recentOrders,
     checklistSummary,
 }: DashboardProps) {
+    const { t, locale } = useTranslation();
+
     return (
-        <MarketingFullWidthLayout currentLocale="id">
-            <Head title="Dashboard Pembaca — crow.asia" />
+        <MarketingFullWidthLayout currentLocale={locale}>
+            <Head title={`${t('dashboard.title')} — crow.asia`} />
 
             <div className="w-full max-w-6xl mx-auto py-10 px-4 sm:px-6 space-y-10">
                 {/* Header Profile / Status */}
@@ -48,10 +51,10 @@ export default function Dashboard({
                             </span>
                             <div>
                                 <h1 className="text-xl sm:text-2xl font-black text-[#111113]">
-                                    {user ? `Halo, ${user.name || user.email}` : 'Dashboard Akses Playbook'}
+                                    {t('dashboard.greeting', { name: user?.name || user?.email || 'Reader' })}
                                 </h1>
                                 <p className="text-xs text-stone-500 font-mono">
-                                    {user ? user.email : 'Akses tersimpan di sesi browser Anda'}
+                                    {user?.email}
                                 </p>
                             </div>
                         </div>
@@ -62,7 +65,7 @@ export default function Dashboard({
                             href="/#harga"
                             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] text-xs font-bold text-stone-800 hover:bg-stone-100 transition-colors"
                         >
-                            <span>Beli Playbook Lain</span>
+                            <span>{t('dashboard.buy_more')}</span>
                         </a>
 
                         <button
@@ -71,7 +74,7 @@ export default function Dashboard({
                             className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-[#E5E0D5] bg-white text-xs font-bold text-stone-700 hover:text-red-600 hover:bg-red-50 hover:border-red-200 transition-colors"
                         >
                             <LogOut className="w-3.5 h-3.5" />
-                            <span>Keluar</span>
+                            <span>{t('dashboard.logout')}</span>
                         </button>
                     </div>
                 </div>
@@ -80,8 +83,7 @@ export default function Dashboard({
                 <div className="space-y-4">
                     <div className="flex items-center justify-between">
                         <div>
-                            <h2 className="text-lg sm:text-xl font-extrabold text-[#111113]">Katalog Playbook Anda</h2>
-                            <p className="text-xs text-stone-500">Akses naskah 15 bab penuh, mode animasi 16:9, dan master PDF A5.</p>
+                            <h2 className="text-lg sm:text-xl font-extrabold text-[#111113]">{t('dashboard.my_library')}</h2>
                         </div>
                     </div>
 
@@ -110,12 +112,12 @@ export default function Dashboard({
                                             {book.isUnlocked ? (
                                                 <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                                                     <CheckCircle className="w-3 h-3" />
-                                                    <span>Akses Aktif</span>
+                                                    <span>{locale === 'en' ? 'Active Access' : 'Akses Aktif'}</span>
                                                 </span>
                                             ) : (
                                                 <span className="inline-flex items-center gap-1 text-[11px] font-mono text-stone-500 bg-stone-100 px-2 py-0.5 rounded">
                                                     <Lock className="w-3 h-3" />
-                                                    <span>Terkunci</span>
+                                                    <span>{locale === 'en' ? 'Locked' : 'Terkunci'}</span>
                                                 </span>
                                             )}
                                         </div>
@@ -127,7 +129,7 @@ export default function Dashboard({
 
                                         {book.isUnlocked && (
                                             <div className="pt-2 text-[11px] font-mono text-stone-600">
-                                                <span>Latihan Checklist: <strong>{completedCount}</strong> item selesai</span>
+                                                <span>{locale === 'en' ? 'Checklists completed: ' : 'Latihan Checklist: '}<strong>{completedCount}</strong></span>
                                             </div>
                                         )}
                                     </div>
@@ -136,27 +138,27 @@ export default function Dashboard({
                                         {book.isUnlocked ? (
                                             <>
                                                 <a
-                                                    href={`/read/${book.id}/id/ch-0`}
+                                                    href={`/read/${book.id}/${locale}/ch-0`}
                                                     className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#111113] text-white font-bold text-xs hover:bg-stone-800 transition-colors min-h-[40px]"
                                                 >
                                                     <BookOpen className="w-3.5 h-3.5" />
-                                                    <span>Buka Web Reader (15 Bab)</span>
+                                                    <span>{t('dashboard.open_reader')}</span>
                                                 </a>
                                                 <a
                                                     href={`/download/pdf/${book.id}`}
                                                     className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-[#E5E0D5] bg-[#FAF8F5] text-stone-800 font-semibold text-xs hover:bg-stone-100 transition-colors min-h-[38px]"
                                                 >
                                                     <Download className="w-3.5 h-3.5" />
-                                                    <span>Unduh Master PDF A5</span>
+                                                    <span>{t('dashboard.download_pdf')}</span>
                                                 </a>
                                             </>
                                         ) : (
                                             <a
-                                                href={`/checkout/tier-${book.id}`}
+                                                href={`/checkout/tier-${book.id}?locale=${locale}`}
                                                 className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#111113] text-white font-bold text-xs hover:bg-stone-800 transition-colors min-h-[40px]"
                                             >
                                                 <ShieldCheck className="w-3.5 h-3.5" />
-                                                <span>Beli Akses Playbook</span>
+                                                <span>{t('landing.pricing.cta_buy')}</span>
                                             </a>
                                         )}
                                     </div>
@@ -169,16 +171,16 @@ export default function Dashboard({
                 {/* Section: Order History */}
                 {recentOrders.length > 0 && (
                     <div className="space-y-4 pt-6 border-t border-[#E5E0D5]">
-                        <h2 className="text-base font-bold text-[#111113]">Riwayat Pesanan</h2>
+                        <h2 className="text-base font-bold text-[#111113]">{t('dashboard.recent_orders')}</h2>
                         <div className="rounded-xl border border-[#E5E0D5] bg-white overflow-hidden shadow-2xs">
                             <table className="w-full text-left text-xs font-mono">
                                 <thead className="bg-[#FAF8F5] border-b border-[#E5E0D5] text-stone-500 uppercase">
                                     <tr>
-                                        <th className="p-3">Nomor Order</th>
-                                        <th className="p-3">Paket</th>
+                                        <th className="p-3">{locale === 'en' ? 'Order Number' : 'Nomor Order'}</th>
+                                        <th className="p-3">{locale === 'en' ? 'Tier Package' : 'Paket'}</th>
                                         <th className="p-3">Total</th>
                                         <th className="p-3">Status</th>
-                                        <th className="p-3">Waktu Bayar</th>
+                                        <th className="p-3">{locale === 'en' ? 'Paid At' : 'Waktu Bayar'}</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-[#E5E0D5]">
@@ -188,7 +190,7 @@ export default function Dashboard({
                                             <td className="p-3 font-sans font-medium text-stone-800">{ord.tierName}</td>
                                             <td className="p-3">Rp{ord.amountIdr.toLocaleString('id-ID')}</td>
                                             <td className="p-3">
-                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800">
+                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
                                                     {ord.status}
                                                 </span>
                                             </td>

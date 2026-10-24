@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Head, router } from '@inertiajs/react';
 import MarketingFullWidthLayout from '@/Layouts/MarketingFullWidthLayout';
+import { useTranslation } from '@/hooks/useTranslation';
 import { ArrowLeft, Lock, LogIn, Mail } from 'lucide-react';
 
 interface LoginProps {
@@ -8,6 +9,7 @@ interface LoginProps {
 }
 
 export default function Login({ errors = {} }: LoginProps) {
+    const { t, locale } = useTranslation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [processing, setProcessing] = useState(false);
@@ -26,8 +28,8 @@ export default function Login({ errors = {} }: LoginProps) {
     };
 
     return (
-        <MarketingFullWidthLayout currentLocale="id">
-            <Head title="Masuk ke Akun Pembaca — crow.asia" />
+        <MarketingFullWidthLayout currentLocale={locale}>
+            <Head title={`${t('auth.login_title')} — crow.asia`} />
 
             <div className="w-full max-w-md mx-auto py-16 px-4 sm:px-6">
                 <a
@@ -35,7 +37,7 @@ export default function Login({ errors = {} }: LoginProps) {
                     className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-stone-500 hover:text-[#111113] mb-6"
                 >
                     <ArrowLeft className="w-4 h-4" />
-                    <span>Kembali ke Beranda</span>
+                    <span>{t('auth.back_home')}</span>
                 </a>
 
                 <div className="p-6 sm:p-8 rounded-2xl border border-[#E5E0D5] bg-[#FFFFFF] shadow-sm space-y-6">
@@ -43,9 +45,9 @@ export default function Login({ errors = {} }: LoginProps) {
                         <div className="w-10 h-10 mx-auto rounded-xl bg-[#111113] text-white flex items-center justify-center font-bold">
                             <LogIn className="w-5 h-5" />
                         </div>
-                        <h1 className="text-xl font-black text-[#111113]">Masuk ke crow.asia</h1>
+                        <h1 className="text-xl font-black text-[#111113]">{t('auth.login_title')}</h1>
                         <p className="text-xs text-stone-500">
-                            Akses seluruh playbook yang sudah Anda miliki beserta unduhan PDF.
+                            {t('auth.login_desc')}
                         </p>
                     </div>
 
@@ -58,7 +60,7 @@ export default function Login({ errors = {} }: LoginProps) {
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="space-y-1.5">
                             <label htmlFor="login-email" className="block text-xs font-mono font-bold uppercase text-stone-700">
-                                Alamat Email
+                                {t('auth.email_label')}
                             </label>
                             <div className="relative">
                                 <Mail className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -76,7 +78,7 @@ export default function Login({ errors = {} }: LoginProps) {
 
                         <div className="space-y-1.5">
                             <label htmlFor="login-password" className="block text-xs font-mono font-bold uppercase text-stone-700">
-                                Password
+                                {t('auth.password_label')}
                             </label>
                             <div className="relative">
                                 <Lock className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -98,16 +100,16 @@ export default function Login({ errors = {} }: LoginProps) {
                                 disabled={processing}
                                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#111113] text-white font-bold text-sm hover:bg-stone-800 disabled:opacity-50 transition-colors min-h-[44px]"
                             >
-                                <span>{processing ? 'Memeriksa Kredensial...' : 'Masuk ke Dashboard'}</span>
+                                <span>{processing ? t('auth.checking') : t('auth.login_btn')}</span>
                             </button>
                         </div>
                     </form>
 
                     <div className="pt-4 border-t border-[#E5E0D5] text-center text-xs text-stone-500 space-y-2">
                         <p>
-                            Belum punya playbook?{' '}
+                            {t('auth.no_account')}{' '}
                             <a href="/#harga" className="font-bold text-[#1D4ED8] hover:underline">
-                                Beli paket di sini
+                                {t('auth.buy_here')}
                             </a>
                         </p>
                     </div>

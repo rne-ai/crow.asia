@@ -32,7 +32,7 @@ class CheckoutController extends Controller
                 'priceIdr' => $tier->price_idr,
                 'strikePriceIdr' => $tier->strike_price_idr,
                 'priceUsd' => (float) $tier->price_usd,
-                'features' => $tier->features,
+                'features' => $tier->features($locale),
                 'isBestValue' => $tier->is_best_value,
             ],
             'locale' => $locale,
