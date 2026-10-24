@@ -3,6 +3,7 @@ import { usePage } from '@inertiajs/react';
 import { BookId, LocaleCode } from '@/types/remotion';
 import { GlobalLocaleMenu, SupportedLocaleItem } from './GlobalLocaleMenu';
 import { PaperTheme } from '@/Layouts/FullWidthWorkspaceLayout';
+import { useTranslation } from '@/hooks/useTranslation';
 import { LogIn, Search, User as UserIcon } from 'lucide-react';
 
 interface TopNavbarFullWidthProps {
@@ -19,9 +20,9 @@ interface TopNavbarFullWidthProps {
 }
 
 const BOOKS = [
-    { id: 'book-1' as const, label: 'VOL. 01', title: 'Mahir Memimpin Tim', accent: '#1D4ED8' },
-    { id: 'book-2' as const, label: 'VOL. 02', title: 'Anti-Burnout', accent: '#EA580C' },
-    { id: 'book-3' as const, label: 'VOL. 03', title: 'Orkestrasi', accent: '#0F766E' },
+    { id: 'book-1' as const, label: 'VOL. 01', accent: '#1D4ED8' },
+    { id: 'book-2' as const, label: 'VOL. 02', accent: '#EA580C' },
+    { id: 'book-3' as const, label: 'VOL. 03', accent: '#0F766E' },
 ];
 
 export const TopNavbarFullWidth: React.FC<TopNavbarFullWidthProps> = ({
@@ -36,6 +37,7 @@ export const TopNavbarFullWidth: React.FC<TopNavbarFullWidthProps> = ({
     showDashboardLink = true,
     extraActions,
 }) => {
+    const { t } = useTranslation();
     const pageProps = usePage().props as unknown as { auth?: { user?: { name: string; email: string } | null } };
     const currentUser = user || pageProps?.auth?.user || null;
 
@@ -58,9 +60,10 @@ export const TopNavbarFullWidth: React.FC<TopNavbarFullWidthProps> = ({
                 </a>
 
                 {/* Volume Selector Tabs */}
-                <nav className="hidden md:flex items-center gap-1.5 font-mono text-xs" aria-label="Pilih Volume Playbook">
+                <nav className="hidden md:flex items-center gap-1.5 font-mono text-xs" aria-label="Volume Selector">
                     {BOOKS.map((b) => {
                         const isActive = b.id === currentBookId;
+                        const bookTitle = t(`nav.book_titles.${b.id}`);
                         return (
                             <a
                                 key={b.id}
@@ -70,7 +73,7 @@ export const TopNavbarFullWidth: React.FC<TopNavbarFullWidthProps> = ({
                                         ? 'bg-[#111113] text-[#FAF8F5] font-bold shadow-2xs'
                                         : 'bg-[#FAF8F5] text-stone-600 hover:text-[#111113] border border-[#E5E0D5]'
                                 }`}
-                                title={b.title}
+                                title={bookTitle}
                             >
                                 <span
                                     className="w-1.5 h-1.5 rounded-full"
@@ -94,7 +97,7 @@ export const TopNavbarFullWidth: React.FC<TopNavbarFullWidthProps> = ({
                     >
                         <span className="flex items-center gap-1.5 truncate">
                             <Search className="w-3.5 h-3.5 text-stone-400 shrink-0" />
-                            <span className="truncate">Cari Topik / Skrip...</span>
+                            <span className="truncate">{t('nav.search_placeholder')}</span>
                         </span>
                         <kbd className="hidden md:inline-block font-mono text-[10px] bg-stone-100 border border-stone-200 px-1.5 py-0.5 rounded text-stone-600">
                             Ctrl+K
@@ -112,8 +115,8 @@ export const TopNavbarFullWidth: React.FC<TopNavbarFullWidthProps> = ({
                     <button
                         type="button"
                         onClick={() => onTogglePaperTheme(nextTheme)}
-                        title={`Ganti tema kertas (Saat ini: ${themeLabel})`}
-                        aria-label={`Ganti tema kertas, saat ini: ${themeLabel}`}
+                        title={`${t('nav.change_theme')} (${themeLabel})`}
+                        aria-label={`${t('nav.change_theme')}, ${themeLabel}`}
                         className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-[#E5E0D5] bg-[#FFFFFF] text-xs font-mono text-stone-700 hover:bg-[#FAF8F5] focus-visible:outline-2 focus-visible:outline-[#1D4ED8] transition-colors min-h-[38px]"
                     >
                         <span className="text-xs">🎨</span>
@@ -133,10 +136,10 @@ export const TopNavbarFullWidth: React.FC<TopNavbarFullWidthProps> = ({
                     <a
                         href="/dashboard"
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-[#111113] text-[#FAF8F5] hover:bg-stone-800 focus-visible:outline-2 focus-visible:outline-[#1D4ED8] transition-colors min-h-[38px]"
-                        title={`Dashboard (${currentUser.email})`}
+                        title={`${t('nav.dashboard')} (${currentUser.email})`}
                     >
                         <UserIcon className="w-3.5 h-3.5" />
-                        <span className="hidden md:inline">Dashboard</span>
+                        <span className="hidden md:inline">{t('nav.dashboard')}</span>
                     </a>
                 ) : (
                     <a
@@ -144,7 +147,7 @@ export const TopNavbarFullWidth: React.FC<TopNavbarFullWidthProps> = ({
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg border border-[#E5E0D5] bg-[#FFFFFF] text-[#111113] hover:bg-[#FAF8F5] focus-visible:outline-2 focus-visible:outline-[#1D4ED8] transition-colors min-h-[38px]"
                     >
                         <LogIn className="w-3.5 h-3.5 text-stone-500" />
-                        <span>Masuk</span>
+                        <span>{t('nav.login')}</span>
                     </a>
                 )}
             </div>

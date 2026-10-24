@@ -3,6 +3,7 @@ import { usePage } from '@inertiajs/react';
 import { BookOpen, Compass, LogIn, ShieldCheck, User as UserIcon } from 'lucide-react';
 import { GlobalLocaleMenu } from '@/Components/navigation/GlobalLocaleMenu';
 import { LocaleCode } from '@/types/remotion';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface MarketingFullWidthLayoutProps {
     children: React.ReactNode;
@@ -15,6 +16,7 @@ export default function MarketingFullWidthLayout({
     currentLocale = 'id',
     headerRight,
 }: MarketingFullWidthLayoutProps) {
+    const { t } = useTranslation();
     const pageProps = usePage().props as unknown as { auth?: { user?: { name: string; email: string } | null } };
     const currentUser = pageProps?.auth?.user || null;
 
@@ -31,7 +33,7 @@ export default function MarketingFullWidthLayout({
                             <span className="text-xl">🦅</span>
                             <span>crow<span className="text-[#1D4ED8]">.asia</span></span>
                             <span className="hidden sm:inline-block text-[11px] font-mono uppercase tracking-wider bg-[#E5E0D5]/60 text-[#111113] px-2 py-0.5 rounded border border-[#E5E0D5]">
-                                Playbook Taktis
+                                {t('landing.badge')}
                             </span>
                         </a>
 
@@ -40,25 +42,13 @@ export default function MarketingFullWidthLayout({
                                 href="#katalog"
                                 className="hover:text-[#111113] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] rounded px-1 py-0.5 transition-colors"
                             >
-                                3 Playbook
-                            </a>
-                            <a
-                                href="#diagnosis"
-                                className="hover:text-[#111113] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] rounded px-1 py-0.5 transition-colors"
-                            >
-                                Diagnosis 45 Detik
-                            </a>
-                            <a
-                                href="#demo-skrip"
-                                className="hover:text-[#111113] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] rounded px-1 py-0.5 transition-colors"
-                            >
-                                Demo Skrip 1-on-1
+                                {t('nav.playbooks_catalog')}
                             </a>
                             <a
                                 href="#harga"
                                 className="hover:text-[#111113] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] rounded px-1 py-0.5 transition-colors"
                             >
-                                Paket Harga
+                                {t('nav.pricing')}
                             </a>
                         </nav>
                     </div>
@@ -76,7 +66,7 @@ export default function MarketingFullWidthLayout({
                                         className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-[#111113] text-[#FAF8F5] hover:bg-stone-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] transition-colors min-h-[38px]"
                                     >
                                         <UserIcon className="w-3.5 h-3.5" />
-                                        <span>Dashboard</span>
+                                        <span>{t('nav.dashboard')}</span>
                                     </a>
                                 ) : (
                                     <a
@@ -84,7 +74,7 @@ export default function MarketingFullWidthLayout({
                                         className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg border border-[#E5E0D5] bg-[#FFFFFF] text-[#111113] hover:bg-[#FAF8F5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] transition-colors min-h-[38px]"
                                     >
                                         <LogIn className="w-3.5 h-3.5 text-stone-500" />
-                                        <span>Masuk</span>
+                                        <span>{t('nav.login')}</span>
                                     </a>
                                 )}
                             </>
@@ -113,13 +103,13 @@ export default function MarketingFullWidthLayout({
 
                     <div className="flex flex-wrap gap-4 text-xs font-mono text-stone-600">
                         <span className="inline-flex items-center gap-1 bg-[#FAF8F5] px-2.5 py-1 rounded border border-[#E5E0D5]">
-                            <Compass className="w-3.5 h-3.5 text-[#1D4ED8]" /> VOL.01 Mahir Memimpin
+                            <Compass className="w-3.5 h-3.5 text-[#1D4ED8]" /> {t('nav.book_titles.book-1')}
                         </span>
                         <span className="inline-flex items-center gap-1 bg-[#FAF8F5] px-2.5 py-1 rounded border border-[#E5E0D5]">
-                            <ShieldCheck className="w-3.5 h-3.5 text-[#EA580C]" /> VOL.02 Anti-Burnout
+                            <ShieldCheck className="w-3.5 h-3.5 text-[#EA580C]" /> {t('nav.book_titles.book-2')}
                         </span>
                         <span className="inline-flex items-center gap-1 bg-[#FAF8F5] px-2.5 py-1 rounded border border-[#E5E0D5]">
-                            <BookOpen className="w-3.5 h-3.5 text-[#0F766E]" /> VOL.03 Orkestrasi
+                            <BookOpen className="w-3.5 h-3.5 text-[#0F766E]" /> {t('nav.book_titles.book-3')}
                         </span>
                     </div>
                 </div>
