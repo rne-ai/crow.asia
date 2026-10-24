@@ -7,6 +7,7 @@ import { PreCompiledArticle } from '@/Components/reader/PreCompiledArticle';
 import { TacticalRightDock } from '@/Components/reader/TacticalRightDock';
 import { PaywallModal } from '@/Components/reader/PaywallModal';
 import { SosSearchModal } from '@/Components/reader/SosSearchModal';
+import { LandscapeAnimationStage } from '@/Components/remotion/LandscapeAnimationStage';
 import { ReaderPageInertiaProps } from '@/types/crow';
 import { ContentRegister, LocaleCode } from '@/types/remotion';
 import { ArrowLeft, ArrowRight, CheckCircle2, Lock } from 'lucide-react';
@@ -258,22 +259,25 @@ export default function ChapterView({
                         </div>
                     </div>
                 ) : (
-                    /* Mode 2: Placeholder for Remotion Stage (Fully detailed in TASK-08) */
-                    <div className="w-full aspect-video rounded-2xl border border-[#E5E0D5] bg-[#FFFFFF] p-8 flex flex-col items-center justify-center text-center space-y-4">
-                        <span className="text-3xl">🎬</span>
-                        <div className="space-y-1">
-                            <h3 className="font-bold text-lg text-[#111113]">Mode Animasi Landscape 16:9</h3>
-                            <p className="text-xs text-stone-500 max-w-md">
-                                Kanvas interaktif @remotion/player v4.0 dengan 4 step markers dan simulasi percakapan tim.
-                            </p>
-                        </div>
-                        <button
-                            type="button"
-                            onClick={() => setMode('read')}
-                            className="px-4 py-2 rounded-lg bg-[#111113] text-[#FAF8F5] text-xs font-semibold"
-                        >
-                            Kembali ke Mode Baca
-                        </button>
+                    /* Mode 2: Landscape 16:9 Animation Stage */
+                    <div className="space-y-6">
+                        <LandscapeAnimationStage
+                            storyProps={{
+                                ...currentChapter.remotionConfig.sceneProps,
+                                teammateName: teammateName.trim() || currentChapter.remotionConfig.sceneProps.teammateName,
+                            }}
+                            durationInFrames={currentChapter.remotionConfig.durationInFrames}
+                            optionalYoutube={currentChapter.optionalYoutube}
+                        />
+
+                        {/* Paywall Gate for locked chapters in Animation mode */}
+                        {!currentChapter.hasAccess && (
+                            <PaywallModal
+                                volumeCode={book.volumeCode}
+                                bookTitle={book.title}
+                                bookId={book.id}
+                            />
+                        )}
                     </div>
                 )}
             </div>
