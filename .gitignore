@@ -1,0 +1,70 @@
+# ==============================================================================
+# Laravel & Backend
+# ==============================================================================
+/vendor/
+/storage/*.key
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+
+# ==============================================================================
+# Frontend & Build Assets (Inertia React / Vite / Next.js)
+# ==============================================================================
+node_modules/
+/public/build/
+/public/hot
+/public/storage
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Next.js & Deployment
+.next/
+out/
+.vercel
+
+# ==============================================================================
+# Environment & Secrets
+# ==============================================================================
+.env
+.env.*
+.env.local
+.env.*.local
+.env.backup
+.env.production
+!.env.example
+
+# ==============================================================================
+# Sistem Operasi & Editor
+# ==============================================================================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ==============================================================================
+# Catatan, Brainstorming & AI Tools
+# ==============================================================================
+.agy/
+.antigravity/
+.brainstorming/
+.cursor/
+.kiro/
+.notes/
+.opencode/
+.superpowers/
+notes/
+docs/superpowers/
+docs/project-docs/
+docs/notes/
