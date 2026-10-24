@@ -35,4 +35,15 @@ return [
         ],
     ],
 
+    'mayar' => [
+        'api_key' => env('MAYAR_API_KEY', 'mock_key_crow_dev'),
+        'webhook_token' => env('MAYAR_WEBHOOK_TOKEN', 'crow_webhook_secret_123'),
+        'base_url' => env('MAYAR_BASE_URL', 'https://api.mayar.id/hl/v2'),
+    ],
+
+    'r2' => [
+        'bucket' => env('CLOUDFLARE_R2_BUCKET', 'crow-asia-playbooks'),
+        'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
+    ],
+
 ];
