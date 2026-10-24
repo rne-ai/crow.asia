@@ -35,6 +35,7 @@ class EntitlementSyncService
             }
 
             $order->user_id = $user->id;
+            $order->setRelation('user', $user);
             $order->save();
         }
 

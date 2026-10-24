@@ -79,7 +79,7 @@ class CheckoutController extends Controller
     /**
      * Development mock payment simulator: instantly marks order as PAID and redirects to dashboard.
      */
-    public function update(string $orderNumber, EntitlementSyncService $syncService): RedirectResponse
+    public function update(string $orderNumber, EntitlementSyncService $syncService, Request $request): RedirectResponse
     {
         $order = Order::query()->where('order_number', $orderNumber)->firstOrFail();
 
@@ -88,9 +88,11 @@ class CheckoutController extends Controller
         $order->save();
 
         $syncService->syncEntitlements($order);
+        $order->refresh();
 
-        if (!Auth::check() && $order->user) {
+        if ($order->user) {
             Auth::login($order->user);
+            $request->session()->regenerate();
         }
 
         return redirect()->route('dashboard')->with('success', "Pembayaran simulasi order {$order->order_number} berhasil!");
