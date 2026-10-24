@@ -532,7 +532,6 @@ export default function Landing({
                                                     accentHex: b.accentHex,
                                                     illustrationPath: `/illustrations/${b.id}/portrait.png`,
                                                     chaptersLabel: t('landing.catalog.chapters_count', { count: 15 }),
-                                                    spineLabel: 'CROW PLAYBOOK',
                                                     editionLabel: 'ID + EN',
                                                 }}
                                                 className="w-full max-w-[280px]"
@@ -568,32 +567,20 @@ export default function Landing({
                                             </p>
                                         </div>
 
-                                        {/* Features List */}
-                                        <ul className="space-y-2 text-xs text-stone-700 pt-1">
-                                            {features.slice(0, 3).map((feat, fIdx) => (
-                                                <li key={fIdx} className="flex items-start gap-2">
-                                                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                                                    <span className="leading-snug">{feat}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
+                                        {/* Editorial CTA Narrative Paragraph */}
+                                        <p className="text-xs text-stone-600 leading-relaxed font-normal pt-1">
+                                            {t(`landing.catalog.cta_paragraphs.${b.id}`)}
+                                        </p>
                                     </div>
 
-                                    {/* Action Buttons */}
-                                    <div className="pt-4 border-t border-[#E5E0D5] grid grid-cols-2 gap-2">
+                                    {/* Single Action Button: Mulai Membaca */}
+                                    <div className="pt-4 border-t border-[#E5E0D5]">
                                         <a
                                             href={`/read/${b.id}/${locale}/ch-0`}
-                                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl border border-[#E5E0D5] bg-[#FFFFFF] text-[#111113] font-bold text-xs hover:bg-[#FAF8F5] transition-colors min-h-[40px]"
+                                            className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#111113] text-[#FAF8F5] font-bold text-xs sm:text-sm hover:bg-stone-800 transition-colors shadow-2xs min-h-[44px]"
                                         >
-                                            <BookOpen className="w-3.5 h-3.5" />
-                                            <span>{t('landing.catalog.read_free_sample')}</span>
-                                        </a>
-
-                                        <a
-                                            href={`/checkout/tier-${b.id}?locale=${locale}`}
-                                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-[#111113] text-[#FAF8F5] font-bold text-xs hover:bg-stone-800 transition-colors min-h-[40px]"
-                                        >
-                                            <span>{t('landing.catalog.buy_now')}</span>
+                                            <BookOpen className="w-4 h-4" />
+                                            <span>{t('landing.catalog.start_reading')}</span>
                                         </a>
                                     </div>
                                 </div>

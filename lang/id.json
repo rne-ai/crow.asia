@@ -43,11 +43,17 @@
       "key_frameworks": "Kerangka Kunci:",
       "single_access": "Akses Tunggal:",
       "chapters_count": ":count Bab + PDF",
+      "start_reading": "Mulai Membaca",
       "read_free_sample": "Baca Gratis Bab 1",
       "buy_now": "Beli →",
       "curriculum_tag_book-1": "PEMIMPIN TIM BARU",
       "curriculum_tag_book-2": "KETAHANAN DIRI",
-      "curriculum_tag_book-3": "MANAJER DIVISI"
+      "curriculum_tag_book-3": "MANAJER DIVISI",
+      "cta_paragraphs": {
+        "book-1": "Kuasai 4 percakapan kunci dan rumus kesiapan L1–L4 untuk mengubah staf pasif menjadi mandiri, menyelaraskan target tanpa micromanagement, dan memimpin 1-on-1 dengan percaya diri sejak hari pertama.",
+        "book-2": "Terapkan teknik perisai kaca dan audit kalender 3P untuk menghentikan kebiasaan mengambil alih tugas staf, menolak interupsi tanpa merusak relasi, dan menjaga energi kepemimpinan tetap stabil jangka panjang.",
+        "book-3": "Tingkatkan kapasitas dari mengelola eksekusi teknis menjadi arsitek kepemimpinan: latih para team lead di bawah Anda, hilangkan ego antar-tim dengan rumus 3S, dan selaraskan visi eksekutif secara presisi."
+      }
     },
     "quiz": {
       "header_badge": "DIAGNOSIS 45 DETIK",
