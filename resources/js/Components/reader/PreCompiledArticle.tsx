@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Check, Copy } from 'lucide-react';
+import mermaid from 'mermaid';
+import { PaperTheme } from '@/Layouts/FullWidthWorkspaceLayout';
 
 interface PreCompiledArticleProps {
     html: string;
     teammateName?: string;
     fontSize?: 'sm' | 'base' | 'lg';
+    paperTheme?: PaperTheme;
     className?: string;
 }
 
@@ -12,12 +14,13 @@ export const PreCompiledArticle: React.FC<PreCompiledArticleProps> = ({
     html,
     teammateName = '',
     fontSize = 'base',
+    paperTheme = 'ivory',
     className = '',
 }) => {
     const articleRef = useRef<HTMLDivElement>(null);
     const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
-    // Instant Script Personalizer DOM Update (< 2ms)
+    // 1. Instant Script Personalizer DOM Update (< 2ms)
     useEffect(() => {
         if (!articleRef.current) return;
         const tokens = articleRef.current.querySelectorAll<HTMLElement>('.teammate-token');
@@ -27,7 +30,51 @@ export const PreCompiledArticle: React.FC<PreCompiledArticleProps> = ({
         });
     }, [teammateName, html]);
 
-    // Attach copy button to each script drawer (<details class="crow-script-drawer">)
+    // 2. Render Mermaid Diagrams Client-Side
+    useEffect(() => {
+        if (!articleRef.current) return;
+
+        const isDark = paperTheme === 'obsidian';
+        const isSepia = paperTheme === 'sepia';
+
+        try {
+            mermaid.initialize({
+                startOnLoad: false,
+                securityLevel: 'loose',
+                theme: isDark ? 'dark' : 'base',
+                fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+                themeVariables: {
+                    fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+                    primaryColor: isDark ? '#1E293B' : isSepia ? '#FAF4E6' : '#EFF6FF',
+                    primaryTextColor: isDark ? '#F8FAFC' : '#0F172A',
+                    primaryBorderColor: isDark ? '#475569' : '#93C5FD',
+                    lineColor: isDark ? '#94A3B8' : '#334155',
+                    secondaryColor: isDark ? '#334155' : '#F1F5F9',
+                    tertiaryColor: isDark ? '#1E293B' : '#FFFFFF',
+                    edgeLabelBackground: isDark ? '#1E293B' : '#FFFFFF',
+                },
+            });
+
+            // Find all mermaid diagram containers
+            const mermaidContainers = articleRef.current.querySelectorAll('.crow-mermaid-block .mermaid, pre.mermaid');
+            if (mermaidContainers.length > 0) {
+                // Clear any previous processed flag
+                mermaidContainers.forEach((el) => {
+                    el.removeAttribute('data-processed');
+                });
+
+                mermaid.run({
+                    nodes: Array.from(mermaidContainers) as HTMLElement[],
+                }).catch((err) => {
+                    console.warn('Mermaid rendering notice:', err);
+                });
+            }
+        } catch (err) {
+            console.warn('Mermaid initialization notice:', err);
+        }
+    }, [html, paperTheme]);
+
+    // 3. Attach Copy Button to each Script Drawer (<details class="crow-script-drawer">)
     useEffect(() => {
         if (!articleRef.current) return;
         const drawers = articleRef.current.querySelectorAll<HTMLDetailsElement>('details.crow-script-drawer');
@@ -40,7 +87,7 @@ export const PreCompiledArticle: React.FC<PreCompiledArticleProps> = ({
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className =
-                    'crow-copy-btn inline-flex items-center gap-1 ml-auto text-xs font-mono font-medium px-2 py-0.5 rounded border border-[#E5E0D5] bg-[#FAF8F5] text-stone-700 hover:text-[#111113] hover:bg-white transition-colors cursor-pointer';
+                    'crow-copy-btn inline-flex items-center gap-1 ml-auto text-xs font-mono font-bold px-2.5 py-1 rounded-md border border-[#E5E0D5] bg-[#FAF8F5] text-stone-700 hover:text-[#111113] hover:bg-white transition-colors cursor-pointer shrink-0';
                 btn.innerHTML = '📋 Salin Skrip';
                 btn.onclick = (e) => {
                     e.preventDefault();
@@ -72,16 +119,16 @@ export const PreCompiledArticle: React.FC<PreCompiledArticleProps> = ({
 
     const fontSizeClass =
         fontSize === 'sm'
-            ? 'text-sm leading-relaxed'
+            ? 'text-sm'
             : fontSize === 'lg'
-            ? 'text-lg leading-loose'
-            : 'text-base leading-relaxed';
+            ? 'text-lg'
+            : 'text-base';
 
     return (
         <div className={`w-full ${className}`}>
             <article
                 ref={articleRef}
-                className={`max-w-[72ch] mx-auto prose prose-stone font-sans ${fontSizeClass} selection:bg-[#FFE66D] selection:text-[#111113]`}
+                className={`max-w-[72ch] mx-auto prose font-sans ${fontSizeClass} selection:bg-[#FFE66D] selection:text-[#111113]`}
                 dangerouslySetInnerHTML={{ __html: html }}
             />
         </div>

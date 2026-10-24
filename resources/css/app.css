@@ -23,7 +23,9 @@
   --color-vol-3-emerald: #0F766E;
 }
 
-/* Tema Kertas Baca pada Container Reader */
+/* ==============================================================================
+   TEMA KERTAS BACA (IVORY / SEPIA / OBSIDIAN)
+   ============================================================================== */
 [data-paper-theme="ivory"] {
   background-color: var(--color-crow-ivory);
   color: var(--color-crow-ink);
@@ -39,14 +41,449 @@
   color: #F4F4F5;
 }
 
-[data-paper-theme="obsidian"] .crow-callout,
+/* Tactile Paper Sheet Surfaces */
+.reading-sheet {
+  background-color: #FFFFFF;
+  border-color: #E5E0D5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 20px 40px -15px rgba(0, 0, 0, 0.03);
+}
+
+[data-paper-theme="sepia"] .reading-sheet {
+  background-color: #FBF6EA;
+  border-color: #E2D9C3;
+  box-shadow: 0 1px 3px rgba(28, 25, 23, 0.04);
+}
+
+[data-paper-theme="obsidian"] .reading-sheet {
+  background-color: #181A20;
+  border-color: #2D3139;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* ==============================================================================
+   TYPOGRAPHY & ARTIKEL BACAAN EDITORIAL (TACTILE CROW STUDIO)
+   ============================================================================== */
+article.prose {
+  color: var(--color-crow-ink);
+  line-height: 1.85;
+  font-size: 1.0625rem;
+}
+
+/* Elevated Lead Paragraph */
+article.prose > p:first-of-type {
+  font-size: 1.1875rem;
+  line-height: 1.85;
+  color: #18181B;
+  font-weight: 500;
+  margin-bottom: 1.75rem;
+}
+
+[data-paper-theme="sepia"] article.prose > p:first-of-type {
+  color: #1C1917;
+}
+
+[data-paper-theme="obsidian"] article.prose > p:first-of-type {
+  color: #F4F4F5;
+}
+
+/* Headings */
+article h1, article h2, article h3, article h4 {
+  color: var(--color-crow-ink);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+article h2 {
+  font-size: 1.625rem;
+  line-height: 1.35;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--color-crow-border);
+}
+
+article h3 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  margin-top: 2.25rem;
+  margin-bottom: 0.875rem;
+  color: var(--color-crow-ink);
+}
+
+article h4 {
+  font-size: 1.0625rem;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+[data-paper-theme="obsidian"] article h1,
+[data-paper-theme="obsidian"] article h2,
+[data-paper-theme="obsidian"] article h3,
+[data-paper-theme="obsidian"] article h4 {
+  color: #F4F4F5;
+  border-bottom-color: #2D3139;
+}
+
+article p {
+  margin: 1.35rem 0;
+  line-height: 1.85;
+  color: #27272A;
+}
+
+[data-paper-theme="sepia"] article p {
+  color: #1C1917;
+}
+
+[data-paper-theme="obsidian"] article p {
+  color: #D4D4D8;
+}
+
+article strong {
+  font-weight: 800;
+  color: var(--color-crow-ink);
+}
+
+[data-paper-theme="obsidian"] article strong {
+  color: #FFFFFF;
+}
+
+article em {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-size: 1.05em;
+}
+
+/* Highlighting */
+article mark, article ins {
+  background-color: var(--color-crow-gold);
+  color: #111113;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.3rem;
+  text-decoration: none;
+}
+
+/* ==============================================================================
+   LISTS & BULLET POINTS
+   ============================================================================== */
+article ul {
+  list-style-type: disc !important;
+  margin: 1.35rem 0 1.6rem 2rem !important;
+  padding-left: 0.5rem !important;
+}
+
+article ul li {
+  margin: 0.65rem 0 !important;
+  padding-left: 0.375rem !important;
+  line-height: 1.75 !important;
+  color: #27272A;
+}
+
+article ol {
+  list-style-type: decimal !important;
+  margin: 1.35rem 0 1.6rem 2rem !important;
+  padding-left: 0.5rem !important;
+}
+
+article ol li {
+  margin: 0.65rem 0 !important;
+  padding-left: 0.375rem !important;
+  line-height: 1.75 !important;
+  color: #27272A;
+}
+
+article ul li::marker {
+  color: var(--color-vol-1-cobalt);
+  font-size: 1.1em;
+}
+
+article ol li::marker {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  color: var(--color-crow-ink);
+}
+
+[data-paper-theme="obsidian"] article ul li,
+[data-paper-theme="obsidian"] article ol li {
+  color: #D4D4D8;
+}
+
+[data-paper-theme="obsidian"] article ol li::marker {
+  color: #F4F4F5;
+}
+
+/* ==============================================================================
+   TABEL GFM EDITORIAL (RESPONSIVE & CLEAN)
+   ============================================================================== */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  margin: 2.25rem 0;
+  border-radius: 0.875rem;
+  border: 1px solid var(--color-crow-border);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+article table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  background-color: #FFFFFF;
+}
+
+article thead {
+  background-color: #FAF8F5;
+  border-bottom: 2px solid var(--color-crow-border);
+}
+
+article th {
+  padding: 1rem 1.25rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-crow-ink);
+  text-align: left;
+  border-bottom: 2px solid var(--color-crow-border);
+}
+
+article td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-crow-border);
+  color: #27272A;
+  vertical-align: top;
+}
+
+article tbody tr:last-child td {
+  border-bottom: none;
+}
+
+article tbody tr:nth-child(even) {
+  background-color: #FAFAF9;
+}
+
+article tbody tr:hover {
+  background-color: #F5F5F4;
+}
+
+/* Sepia Theme Tables */
+[data-paper-theme="sepia"] .table-responsive {
+  border-color: #E2D9C3;
+}
+[data-paper-theme="sepia"] article table {
+  background-color: #FAF4E6;
+}
+[data-paper-theme="sepia"] article thead {
+  background-color: #EFE4CC;
+  border-bottom-color: #E2D9C3;
+}
+[data-paper-theme="sepia"] article td {
+  border-color: #E2D9C3;
+  color: #1C1917;
+}
+[data-paper-theme="sepia"] article tbody tr:nth-child(even) {
+  background-color: #F5EBCE;
+}
+
+/* Obsidian Theme Tables */
+[data-paper-theme="obsidian"] .table-responsive {
+  border-color: #2D3139;
+}
+[data-paper-theme="obsidian"] article table {
+  background-color: #16181D;
+}
+[data-paper-theme="obsidian"] article thead {
+  background-color: #1F2228;
+  border-bottom-color: #2D3139;
+}
+[data-paper-theme="obsidian"] article th {
+  color: #F4F4F5;
+}
+[data-paper-theme="obsidian"] article td {
+  border-bottom-color: #2D3139;
+  color: #D4D4D8;
+}
+[data-paper-theme="obsidian"] article tbody tr:nth-child(even) {
+  background-color: #1A1D23;
+}
+
+/* ==============================================================================
+   CALLOUTS EDITORIAL & TACTICAL CARDS
+   ============================================================================== */
+.crow-callout {
+  margin: 2.25rem 0;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0.875rem;
+  border: 1px solid var(--color-crow-border);
+  border-left-width: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.crow-callout-title {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.625rem;
+  text-transform: uppercase;
+}
+
+.crow-callout-note {
+  border-left-color: var(--color-vol-1-cobalt);
+  background-color: #F8FAFC;
+}
+.crow-callout-note .crow-callout-title {
+  color: var(--color-vol-1-cobalt);
+}
+
+.crow-callout-tip {
+  border-left-color: var(--color-vol-3-emerald);
+  background-color: #F0FDF4;
+}
+.crow-callout-tip .crow-callout-title {
+  color: var(--color-vol-3-emerald);
+}
+
+.crow-callout-important {
+  border-left-color: var(--color-vol-2-terracotta);
+  background-color: #FFF7ED;
+}
+.crow-callout-important .crow-callout-title {
+  color: var(--color-vol-2-terracotta);
+}
+
+.crow-callout-warning {
+  border-left-color: #D97706;
+  background-color: #FFFBEB;
+}
+.crow-callout-warning .crow-callout-title {
+  color: #B45309;
+}
+
+.crow-callout-caution {
+  border-left-color: #DC2626;
+  background-color: #FEF2F2;
+}
+.crow-callout-caution .crow-callout-title {
+  color: #B91C1C;
+}
+
+[data-paper-theme="obsidian"] .crow-callout {
+  background-color: #1A1C20;
+  border-color: #2D3139;
+  border-left-width: 6px;
+}
+
+/* ==============================================================================
+   MERMAID DIAGRAM BLOCK (ARCHITECTURAL WHITEBOARD)
+   ============================================================================== */
+.crow-mermaid-block {
+  margin: 2.5rem 0;
+  padding: 1.5rem;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-crow-border);
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  overflow-x: auto;
+}
+
+.crow-mermaid-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-crow-border);
+}
+
+.crow-mermaid-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-vol-1-cobalt);
+  background-color: rgba(29, 78, 216, 0.08);
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  border: 1px solid rgba(29, 78, 216, 0.2);
+}
+
+.crow-mermaid-block pre.mermaid {
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  display: flex;
+  justify-content: center;
+  border: none;
+}
+
+[data-paper-theme="sepia"] .crow-mermaid-block {
+  background-color: #FAF4E6;
+  border-color: #E2D9C3;
+}
+
+[data-paper-theme="obsidian"] .crow-mermaid-block {
+  background-color: #16181D;
+  border-color: #2D3139;
+}
+
+/* ==============================================================================
+   SCRIPT DRAWER (<details>) & PERSONALIZER TOKEN
+   ============================================================================== */
+details.crow-script-drawer {
+  margin: 1.75rem 0;
+  padding: 1.25rem 1.5rem;
+  background-color: #FAF8F5;
+  border: 1px solid var(--color-crow-border);
+  border-left: 5px solid var(--color-crow-gold);
+  border-radius: 0.875rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+details.crow-script-drawer summary {
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 0.9375rem;
+  color: var(--color-crow-ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+details.crow-script-drawer summary:focus-visible {
+  outline: 2px solid var(--color-vol-1-cobalt);
+  outline-offset: 2px;
+}
+
+details.crow-script-drawer pre {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-crow-border);
+  border-radius: 0.625rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #18181B;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
 [data-paper-theme="obsidian"] details.crow-script-drawer {
   background-color: #1A1C20;
+  border-color: #2D3139;
+  border-left-color: var(--color-crow-gold);
+}
+
+[data-paper-theme="obsidian"] details.crow-script-drawer pre {
+  background-color: #121316;
   border-color: #2D3139;
   color: #F4F4F5;
 }
 
-/* Styling Token Nama Anggota Tim (.teammate-token) */
 .teammate-token {
   display: inline-block;
   padding: 0 0.35rem;
@@ -54,47 +491,43 @@
   background-color: var(--color-crow-gold);
   color: #111113;
   font-family: var(--font-mono);
-  font-weight: 700;
+  font-weight: 800;
 }
 
-/* Highlight styling for search results */
-mark {
-  background-color: var(--color-crow-gold);
-  color: var(--color-crow-ink);
+/* ==============================================================================
+   FOOTNOTES SECTION
+   ============================================================================== */
+article .footnotes {
+  margin-top: 3.5rem;
+  padding-top: 1.75rem;
+  border-top: 2px dashed var(--color-crow-border);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: #52525B;
+}
+
+article .footnotes hr {
+  display: none;
+}
+
+article a.footnote-ref {
+  display: inline-block;
+  padding: 0 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   font-weight: 700;
+  color: var(--color-vol-1-cobalt);
+  text-decoration: none;
+  background-color: rgba(29, 78, 216, 0.08);
   border-radius: 0.25rem;
-  padding: 0 0.25rem;
+  margin: 0 0.15rem;
+  vertical-align: super;
 }
 
-/* Callouts Taktis */
-.crow-callout {
-  margin: 1.5rem 0;
-  padding: 1rem 1.25rem;
-  border-left: 4px solid var(--color-crow-ink);
-  background-color: #FFFFFF;
-  border-radius: 0.375rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-}
-.crow-callout-note { border-left-color: var(--color-vol-1-cobalt); }
-.crow-callout-tip { border-left-color: var(--color-vol-3-emerald); }
-.crow-callout-important { border-left-color: var(--color-vol-2-terracotta); }
-.crow-callout-warning { border-left-color: #D97706; }
-.crow-callout-caution { border-left-color: #DC2626; }
-
-/* Script Drawer */
-details.crow-script-drawer {
-  margin: 1.25rem 0;
-  padding: 0.75rem 1rem;
-  background-color: #FFFFFF;
-  border: 1px solid var(--color-crow-border);
-  border-radius: 0.5rem;
-}
-details.crow-script-drawer summary {
-  cursor: pointer;
-  font-weight: 600;
-  outline: none;
-}
-details.crow-script-drawer summary:focus-visible {
-  outline: 2px solid var(--color-vol-1-cobalt);
-  outline-offset: 2px;
+article a.footnote-backref {
+  font-family: var(--font-mono);
+  color: var(--color-vol-1-cobalt);
+  text-decoration: none;
+  margin-left: 0.35rem;
+  font-weight: 800;
 }

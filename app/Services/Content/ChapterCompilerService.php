@@ -4,20 +4,51 @@ namespace App\Services\Content;
 
 use App\Enums\ContentRegister;
 use Illuminate\Support\Str;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Footnote\FootnoteExtension;
+use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\MarkdownConverter;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 
 class ChapterCompilerService
 {
     private HtmlSanitizer $sanitizer;
+    private MarkdownConverter $converter;
 
     public function __construct()
     {
+        // 1. Configure League CommonMark with GFM Tables & Footnotes
+        $environment = new Environment([
+            'footnote' => [
+                'backref_class' => 'footnote-backref',
+                'backref_symbol' => '↩',
+                'container_add_hr' => true,
+                'container_class' => 'footnotes',
+                'ref_class' => 'footnote-ref',
+            ],
+            'table' => [
+                'wrap' => [
+                    'enabled' => true,
+                    'tag' => 'div',
+                    'attributes' => ['class' => 'table-responsive'],
+                ],
+            ],
+        ]);
+
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new TableExtension());
+        $environment->addExtension(new FootnoteExtension());
+
+        $this->converter = new MarkdownConverter($environment);
+
+        // 2. Configure Symfony HtmlSanitizer
         $allowedElements = [
             'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
             'p', 'ul', 'ol', 'li', 'table', 'thead', 'tbody', 'tr', 'th', 'td',
             'blockquote', 'pre', 'code', 'details', 'summary', 'aside', 'span',
-            'sup', 'sub', 'hr', 'strong', 'em', 'a', 'div', 'section',
+            'sup', 'sub', 'hr', 'strong', 'em', 'a', 'div', 'section', 'ins', 'mark',
         ];
 
         $config = (new HtmlSanitizerConfig())
@@ -26,8 +57,21 @@ class ChapterCompilerService
             ->allowElement('details', ['class', 'open', 'data-copy-script'])
             ->allowElement('summary', ['class'])
             ->allowElement('span', ['class', 'data-default'])
+            ->allowElement('pre', ['class'])
+            ->allowElement('code', ['class'])
+            ->allowElement('sup', ['id'])
+            ->allowElement('div', ['class', 'id', 'role'])
+            ->allowElement('li', ['class', 'id', 'role'])
+            ->allowElement('a', ['class', 'id', 'role', 'rev', 'href'])
+            ->allowElement('th', ['align', 'class'])
+            ->allowElement('td', ['align', 'class'])
+            ->allowElement('ins', ['class'])
+            ->allowElement('mark', ['class'])
             ->allowAttribute('class', $allowedElements)
             ->allowAttribute('id', $allowedElements)
+            ->allowAttribute('role', $allowedElements)
+            ->allowAttribute('rev', ['a'])
+            ->allowAttribute('align', ['th', 'td'])
             ->allowAttribute('data-default', ['span'])
             ->allowAttribute('data-copy-script', ['details'])
             ->allowRelativeLinks()
@@ -50,13 +94,23 @@ class ChapterCompilerService
         // 1. Transform GitHub alerts/callouts before markdown rendering
         $processedMd = $this->transformCallouts($rawMarkdown);
 
+        // Strip duplicate initial heading if it matches or starts with ##
+        $processedMd = preg_replace('/^##\s+.*?\r?\n+/m', '', $processedMd, 1);
+
         // 2. Extract checklists from raw markdown
         $extractedChecklists = $this->extractChecklists($rawMarkdown);
 
-        // 3. Compile Markdown to HTML
-        $html = Str::markdown($processedMd);
+        // 3. Compile Markdown to HTML via League CommonMark (with Tables and Footnotes)
+        $html = (string) $this->converter->convert($processedMd);
 
-        // 4. Transform <details> drawers to include tactical classes & copy script attribute
+        // 4. Wrap Mermaid diagram blocks with header badge
+        $html = preg_replace(
+            '/<pre><code class="language-mermaid">(.*?)<\/code><\/pre>/s',
+            '<div class="crow-mermaid-block"><div class="crow-mermaid-header"><span class="crow-mermaid-badge">📊 DIAGRAM ALUR KERJA • SKEMA TAKTIS</span></div><pre class="mermaid">$1</pre></div>',
+            $html
+        );
+
+        // 5. Transform <details> script drawers to include tactical classes & copy script attribute
         $html = preg_replace_callback(
             '/<details(\s*[^>]*)>/i',
             function ($matches) {
@@ -72,19 +126,19 @@ class ChapterCompilerService
             $html
         );
 
-        // 5. Replace teammate token placeholders
+        // 6. Replace teammate token placeholders
         $html = $this->replaceTeammateTokens($html, $defaultName);
 
-        // 6. Strict HTML sanitization
+        // 7. Strict HTML sanitization
         $compiledHtml = $this->sanitizer->sanitize($html);
 
-        // 7. Check if chapter has script drawers
+        // 8. Check if chapter has script drawers
         $hasScripts = str_contains($compiledHtml, 'crow-script-drawer');
 
-        // 8. Generate safe preview HTML (first 3 block paragraphs/blockquotes)
+        // 9. Generate safe preview HTML (first 3 block paragraphs/blockquotes)
         $safePreviewHtml = $this->generateSafePreview($compiledHtml);
 
-        // 9. Auto-extract Remotion 4-step scene props
+        // 10. Auto-extract Remotion 4-step scene props
         $remotionSceneProps = $this->extractRemotionSceneProps(
             rawMarkdown: $rawMarkdown,
             bookId: $bookId,
@@ -108,19 +162,35 @@ class ChapterCompilerService
     private function transformCallouts(string $markdown): string
     {
         return preg_replace_callback(
-            '/^>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*?)\n((?:^>.*(?:\n|$))*)/m',
+            '/^>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](?:\s+(.+?))?\r?\n((?:^>.*(?:\r?\n|$))*)/m',
             function ($matches) {
                 $type = strtolower($matches[1]);
-                $title = trim($matches[2]);
-                $lines = explode("\n", $matches[3]);
+                $title = isset($matches[2]) ? trim($matches[2]) : '';
+                $title = trim(ltrim($title, '> '));
+
+                $lines = preg_split('/\r?\n/', $matches[3]);
                 $bodyLines = [];
                 foreach ($lines as $line) {
-                    $bodyLines[] = preg_replace('/^>\s?/', '', $line);
+                    $cleaned = preg_replace('/^>\s?/', '', $line);
+                    if ($cleaned !== null && $cleaned !== '') {
+                        $bodyLines[] = $cleaned;
+                    }
                 }
                 $body = trim(implode("\n", $bodyLines));
-                $header = $title ? "**{$matches[1]}: {$title}**\n\n" : "**{$matches[1]}**\n\n";
 
-                return "<aside class=\"crow-callout crow-callout-{$type}\">\n\n" . $header . $body . "\n\n</aside>\n";
+                $iconMap = [
+                    'note' => '📌',
+                    'tip' => '💡',
+                    'important' => '⚡',
+                    'warning' => '⚠️',
+                    'caution' => '🛑',
+                ];
+                $icon = $iconMap[$type] ?? '📌';
+                $typeLabel = strtoupper($matches[1]);
+
+                $headerText = $title ? "{$icon} {$typeLabel}: {$title}" : "{$icon} {$typeLabel}";
+
+                return "<aside class=\"crow-callout crow-callout-{$type}\">\n\n<div class=\"crow-callout-title\">{$headerText}</div>\n\n{$body}\n\n</aside>\n\n";
             },
             $markdown
         );
@@ -160,7 +230,7 @@ class ChapterCompilerService
         foreach ($matches as $i => $m) {
             $checklists[] = [
                 'itemIndex' => $i,
-                'labelHtml' => trim(strip_tags(Str::markdown(trim($m[2])))),
+                'labelHtml' => trim(strip_tags((string) $this->converter->convert(trim($m[2])))),
                 'isCompleted' => strtolower($m[1]) === 'x',
             ];
         }
@@ -178,19 +248,15 @@ class ChapterCompilerService
         string $teammateName,
         array $extractedChecklists,
     ): array {
-        // Find subheadings
         preg_match_all('/^###\s+(.+)$/m', $rawMarkdown, $subheadMatches);
         $subheads = $subheadMatches[1] ?? [];
 
-        // Step 0: Masalah & Konteks Lapangan
         $step0Headline = $subheads[0] ?? 'Masalah & Konteks Lapangan';
         $step0Sub = 'Tantangan nyata yang dihadapi saat memimpin tim di lapangan.';
 
-        // Step 1: Kerangka Taktis Utama
         $step1Headline = $subheads[1] ?? 'Kerangka Taktis';
         $step1Sub = 'Rumus dan langkah terstruktur untuk mengeksekusi solusi.';
 
-        // Step 2: Simulasi Skrip 1-on-1
         $step2Headline = 'Simulasi Skrip 1-on-1';
         $step2Sub = 'Praktik percakapan empat mata yang siap disalin dan diterapkan.';
         $leaderText = "Halo {{teammateName}}, yuk kita selaraskan target dan ekspektasi kerjaan ini.";
@@ -204,7 +270,6 @@ class ChapterCompilerService
             }
         }
 
-        // Step 3: Target Praktik & Checklist
         $step3Headline = 'Target Praktik Minggu Ini';
         $step3Sub = 'Langkah konkret yang harus dituntaskan langsung di meja kerja.';
         $bullets = [];

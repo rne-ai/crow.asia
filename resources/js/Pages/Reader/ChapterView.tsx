@@ -197,37 +197,54 @@ export default function ChapterView({
             <Head title={`${currentChapter.title} — ${book.volumeCode}`} />
 
             <div className="w-full max-w-4xl mx-auto space-y-6 pb-20">
-                {/* Chapter Header & Mode Switcher */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E5E0D5]">
-                    <div>
-                        <span className="text-xs font-mono uppercase tracking-wider text-stone-500 font-semibold">
-                            {book.volumeCode} • Bab {currentChapter.index} dari 14
+                {/* Chapter Top Bar & Mode Switcher */}
+                <div className="flex flex-wrap items-center justify-between gap-4 py-2">
+                    <div className="flex items-center gap-2 text-xs font-mono text-stone-500">
+                        <span
+                            className="px-2.5 py-0.5 rounded text-white font-bold"
+                            style={{ backgroundColor: book.accentHex }}
+                        >
+                            {book.volumeCode}
                         </span>
-                        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111113] tracking-tight mt-1">
-                            {currentChapter.title}
-                        </h1>
+                        <span>•</span>
+                        <span>Bab {currentChapter.index} dari 14</span>
+                        <span className="hidden sm:inline">•</span>
+                        <span className="hidden sm:inline">⏱️ ~5-8 menit baca</span>
                     </div>
 
-                    <ReaderModeSwitch mode={mode} onModeChange={setMode} className="shrink-0 self-start sm:self-auto" />
+                    <ReaderModeSwitch mode={mode} onModeChange={setMode} className="shrink-0" />
                 </div>
 
                 {/* Main Content Area */}
                 {mode === 'read' ? (
                     <div className="space-y-6">
-                        <PreCompiledArticle
-                            html={currentChapter.displayHtml}
-                            teammateName={teammateName}
-                            fontSize={fontSize}
-                        />
+                        <div className="reading-sheet rounded-2xl border p-6 sm:p-10 lg:p-14">
+                            {/* Chapter Title inside the reading sheet */}
+                            <div className="pb-8 mb-8 border-b border-[#E5E0D5]">
+                                <span className="text-xs font-mono font-bold uppercase tracking-wider text-stone-400 block mb-2">
+                                    {book.volumeCode} — PANDUAN TAKTIS MEJA KERJA
+                                </span>
+                                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#111113] tracking-tight leading-[1.2]">
+                                    {currentChapter.title}
+                                </h1>
+                            </div>
 
-                        {/* Paywall Gate for locked chapters */}
-                        {!currentChapter.hasAccess && (
-                            <PaywallModal
-                                volumeCode={book.volumeCode}
-                                bookTitle={book.title}
-                                bookId={book.id}
+                            <PreCompiledArticle
+                                html={currentChapter.displayHtml}
+                                teammateName={teammateName}
+                                fontSize={fontSize}
+                                paperTheme={paperTheme}
                             />
-                        )}
+
+                            {/* Paywall Gate for locked chapters */}
+                            {!currentChapter.hasAccess && (
+                                <PaywallModal
+                                    volumeCode={book.volumeCode}
+                                    bookTitle={book.title}
+                                    bookId={book.id}
+                                />
+                            )}
+                        </div>
 
                         {/* Chapter Navigation Footer (Prev / Next) */}
                         <div className="pt-8 border-t border-[#E5E0D5] flex items-center justify-between gap-4">
