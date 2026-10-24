@@ -1,0 +1,191 @@
+import React, { useEffect, useState } from 'react';
+import {
+    ChevronLeft,
+    ChevronRight,
+    Menu,
+    Sliders,
+    X
+} from 'lucide-react';
+
+export type PaperTheme = 'ivory' | 'sepia' | 'obsidian';
+
+interface FullWidthWorkspaceLayoutProps {
+    children: React.ReactNode;
+    topNavbar?: React.ReactNode;
+    leftSidebar?: React.ReactNode;
+    rightDock?: React.ReactNode;
+    paperTheme?: PaperTheme;
+    onTogglePaperTheme?: (theme: PaperTheme) => void;
+    onOpenSearch?: () => void;
+}
+
+export default function FullWidthWorkspaceLayout({
+    children,
+    topNavbar,
+    leftSidebar,
+    rightDock,
+    paperTheme = 'ivory',
+    onOpenSearch,
+}: FullWidthWorkspaceLayoutProps) {
+    const [leftOpen, setLeftOpen] = useState(true);
+    const [rightOpen, setRightOpen] = useState(true);
+    const [mobileDrawer, setMobileDrawer] = useState<'none' | 'left' | 'right'>('none');
+
+    // Global keyboard shortcuts (Ctrl+\ for sidebar toggle, Ctrl+K for search)
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === '\\') {
+                e.preventDefault();
+                setLeftOpen((prev) => !prev);
+            } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                if (onOpenSearch) {
+                    e.preventDefault();
+                    onOpenSearch();
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [onOpenSearch]);
+
+    return (
+        <div
+            data-paper-theme={paperTheme}
+            className="min-h-screen w-full flex flex-col font-sans transition-colors duration-200 selection:bg-[#FFE66D] selection:text-[#111113]"
+        >
+            {/* Top Navbar Full-Width */}
+            {topNavbar && (
+                <header className="sticky top-0 z-30 w-full border-b border-[#E5E0D5] bg-inherit backdrop-blur-md">
+                    <div className="w-full px-4 lg:px-6 h-14 flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                            {/* Mobile Hamburger for Left Drawer */}
+                            <button
+                                type="button"
+                                onClick={() => setMobileDrawer('left')}
+                                aria-label="Buka Daftar Bab"
+                                className="lg:hidden p-2 rounded-md hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-[#1D4ED8] min-h-[44px] min-w-[44px] flex items-center justify-center"
+                            >
+                                <Menu className="w-5 h-5" />
+                            </button>
+
+                            {/* Desktop Toggle Left Rail */}
+                            <button
+                                type="button"
+                                onClick={() => setLeftOpen((prev) => !prev)}
+                                aria-label={leftOpen ? 'Tutup Daftar Bab (Ctrl+\\)' : 'Buka Daftar Bab (Ctrl+\\)'}
+                                title="Toggle Sidebar (Ctrl+\)"
+                                className="hidden lg:flex items-center justify-center p-2 rounded-md hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-[#1D4ED8] text-stone-600 hover:text-stone-900 transition-colors"
+                            >
+                                {leftOpen ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                            </button>
+                        </div>
+
+                        {/* Top Navbar Custom Content */}
+                        <div className="flex-1 flex items-center justify-between min-w-0">
+                            {topNavbar}
+                        </div>
+
+                        {/* Mobile Toggle for Right Tactical Dock */}
+                        {rightDock && (
+                            <button
+                                type="button"
+                                onClick={() => setMobileDrawer('right')}
+                                aria-label="Buka Pengaturan Baca & Skrip"
+                                className="xl:hidden p-2 rounded-md hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-[#1D4ED8] min-h-[44px] min-w-[44px] flex items-center justify-center text-stone-700"
+                            >
+                                <Sliders className="w-5 h-5" />
+                            </button>
+                        )}
+                    </div>
+                </header>
+            )}
+
+            {/* Main 3-Pane Body (Full-Width Desktop) */}
+            <div className="w-full flex-1 flex relative overflow-hidden">
+                {/* 1. Left Rail (Sidebar) - Desktop */}
+                {leftSidebar && (
+                    <aside
+                        className={`hidden lg:block shrink-0 border-r border-[#E5E0D5] transition-all duration-200 overflow-y-auto bg-inherit ${
+                            leftOpen ? 'w-72 xl:w-80' : 'w-0 border-r-0'
+                        }`}
+                        style={{ height: 'calc(100vh - 3.5rem)' }}
+                    >
+                        {leftOpen && <div className="p-4">{leftSidebar}</div>}
+                    </aside>
+                )}
+
+                {/* 2. Center Canvas (Fluid Full-Width) */}
+                <main className="flex-1 min-w-0 overflow-y-auto px-4 sm:px-6 lg:px-10 xl:px-12 py-6">
+                    {children}
+                </main>
+
+                {/* 3. Right Rail (Tactical Dock) - Desktop */}
+                {rightDock && (
+                    <aside
+                        className={`hidden xl:block shrink-0 border-l border-[#E5E0D5] transition-all duration-200 overflow-y-auto bg-inherit ${
+                            rightOpen ? 'w-72 2xl:w-80' : 'w-0 border-l-0'
+                        }`}
+                        style={{ height: 'calc(100vh - 3.5rem)' }}
+                    >
+                        {rightOpen && <div className="p-4">{rightDock}</div>}
+                    </aside>
+                )}
+            </div>
+
+            {/* Mobile / Tablet Slide-Over Drawers */}
+            {mobileDrawer !== 'none' && (
+                <div className="fixed inset-0 z-50 flex">
+                    {/* Backdrop */}
+                    <div
+                        className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity"
+                        onClick={() => setMobileDrawer('none')}
+                        aria-hidden="true"
+                    />
+
+                    {/* Left Drawer */}
+                    {mobileDrawer === 'left' && leftSidebar && (
+                        <div
+                            data-paper-theme={paperTheme}
+                            className="relative w-80 max-w-[85vw] h-full shadow-2xl flex flex-col z-10 bg-inherit border-r border-[#E5E0D5]"
+                        >
+                            <div className="p-4 border-b border-[#E5E0D5] flex items-center justify-between">
+                                <span className="font-bold text-sm">Daftar Bab</span>
+                                <button
+                                    type="button"
+                                    onClick={() => setMobileDrawer('none')}
+                                    className="p-2 rounded-md hover:bg-black/5 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                                    aria-label="Tutup"
+                                >
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
+                            <div className="flex-1 overflow-y-auto p-4">{leftSidebar}</div>
+                        </div>
+                    )}
+
+                    {/* Right Drawer */}
+                    {mobileDrawer === 'right' && rightDock && (
+                        <div
+                            data-paper-theme={paperTheme}
+                            className="relative ml-auto w-80 max-w-[85vw] h-full shadow-2xl flex flex-col z-10 bg-inherit border-l border-[#E5E0D5]"
+                        >
+                            <div className="p-4 border-b border-[#E5E0D5] flex items-center justify-between">
+                                <span className="font-bold text-sm">Pengaturan & Skrip</span>
+                                <button
+                                    type="button"
+                                    onClick={() => setMobileDrawer('none')}
+                                    className="p-2 rounded-md hover:bg-black/5 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                                    aria-label="Tutup"
+                                >
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
+                            <div className="flex-1 overflow-y-auto p-4">{rightDock}</div>
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+}
