@@ -1,0 +1,174 @@
+{
+  "nav": {
+    "brand": "crow.asia",
+    "playbooks_catalog": "Playbooks Catalog",
+    "pricing": "Pricing Tiers",
+    "search_placeholder": "Search topics & scripts...",
+    "change_theme": "Change paper theme",
+    "login": "Sign In",
+    "dashboard": "Dashboard",
+    "logout": "Sign Out",
+    "free_sample": "Free Sample",
+    "chapter": "Chapter :num",
+    "read_free_sample": "Read Chapters 0 & 1",
+    "chapters_list": "PLAYBOOK CHAPTER LIST",
+    "back_to_home": "Back to Home",
+    "book_titles": {
+      "book-1": "VOL. 01: Mastering Team Leadership",
+      "book-2": "VOL. 02: Anti-Burnout Leadership",
+      "book-3": "VOL. 03: Orchestrating Leaders"
+    }
+  },
+  "landing": {
+    "badge": "TACTICAL FIELD PLAYBOOK 2026",
+    "hero": {
+      "title_casual": "Stepped Into Leadership or Drowning in Team Fires?",
+      "title_casual_highlight": "Here Is Your Tactical Desk Fieldbook.",
+      "title_standard": "Stepped Into Leadership or Drowning in Team Fires?",
+      "title_standard_highlight": "Here Is Your Tactical Desk Fieldbook.",
+      "title": "Stepped Into Leadership or Drowning in Team Fires?",
+      "title_highlight": "Here Is Your Tactical Desk Fieldbook.",
+      "desc_casual": "No fluffy motivational theories. Real tactical 1-on-1 playbooks, task calibration frameworks (L1–L4), and copy-paste scripts to build autonomous teams without burning out.",
+      "desc_standard": "No fluffy motivational theories. Real tactical 1-on-1 playbooks, task calibration frameworks (L1–L4), and copy-paste scripts to build autonomous teams without burning out.",
+      "desc": "No fluffy motivational theories. Real tactical 1-on-1 playbooks, task calibration frameworks (L1–L4), and copy-paste scripts to build autonomous teams without burning out.",
+      "cta_read_free": "Read Free: Chapters 0 & 1",
+      "cta_view_bundle": "View Bundle Packs",
+      "showcase_loading": "Loading 16:9 Remotion Showcase..."
+    },
+    "quiz": {
+      "header_badge": "TACTICAL NEEDS DIAGNOSIS",
+      "title": "45-Second Diagnostic: Find Your Immediate Field Playbook",
+      "desc": "Answer 3 workplace scenarios below to pinpoint your exact volume and emergency chapter.",
+      "step_1_meta": "QUESTION 01 / 03",
+      "step_1_cat": "CURRENT TEAM STATE",
+      "step_1_q": "What situation gives you the biggest headache this week?",
+      "step_1_o1": "• \"I have to micromanage staff details because tasks go off-track otherwise.\"",
+      "step_1_o2": "• \"My own deliverables stall because all day is eaten by meetings and team fires.\"",
+      "step_1_o3": "• \"I lead other managers, but they still toss strategic decisions back up to me.\"",
+      "step_2_meta": "QUESTION 02 / 03",
+      "step_2_cat": "COMMUNICATION SCENARIO",
+      "step_2_q": "Which desk conversation script do you urgently need right now?",
+      "step_2_o1": "• \"Delivering critical feedback when work deviates without breaking morale.\"",
+      "step_2_o2": "• \"Setting boundary shields and negotiating unplanned upper-management interrupts.\"",
+      "step_2_o3": "• \"Delegating strategic ownership to subordinate leads without micromanagement.\"",
+      "step_3_meta": "QUESTION 03 / 03",
+      "step_3_cat": "30-DAY TARGET OUTCOME",
+      "step_3_q": "What crucial outcome do you want to achieve within the next 30 days?",
+      "step_3_o1": "• \"Team aligns on 3K targets early and operates autonomously on L1–L4 calibration.\"",
+      "step_3_o2": "• \"Implementing 30/70 bandwidth caps, trimming wasteful meetings, restoring energy.\"",
+      "step_3_o3": "• \"Aligning multi-team OKRs and grooming direct leads for succession.\"",
+      "result_badge": "YOUR DIAGNOSIS RECOMMENDATION",
+      "result_title": "You Most Urgently Need :volume",
+      "result_desc": "Based on your inputs, this playbook delivers immediate tactical tools for your team friction.",
+      "cta_open_recommended": "Open Recommended Playbook",
+      "cta_repeat_quiz": "Retake Diagnostic Quiz"
+    },
+    "demo": {
+      "badge": "INTERACTIVE SCRIPT DEMO",
+      "title": "1-on-1 Workspace Script Simulator",
+      "desc": "Change staff name below to see dynamic token injection in real tactical phrasing.",
+      "teammate_label": "TEAMMATE NAME",
+      "sample_script_casual": "Did you notice two deliverables slipped during the last sprint cycle? In your assessment, what was the primary blocker, :name?",
+      "sample_script_standard": "Did you notice two deliverables slipped during the last sprint cycle? In your assessment, what was the primary blocker, :name?",
+      "sample_script": "Did you notice two deliverables slipped during the last sprint cycle? In your assessment, what was the primary blocker, :name?",
+      "copy_script": "Copy This Script",
+      "copied": "✓ Script Copied!"
+    },
+    "pricing": {
+      "badge": "LIFETIME ONE-TIME INVESTMENT",
+      "title": "Choose Your Field Playbook",
+      "desc": "Lifetime access. Includes manuscript updates, 16:9 animation stage, and print-ready A5 master PDF.",
+      "best_value_badge": "★ BEST VALUE (SAVE 33%)",
+      "single_badge": "SINGLE VOLUME",
+      "per_lifetime": "/ lifetime",
+      "cta_buy": "Get Playbook Access"
+    },
+    "faq": {
+      "badge": "FREQUENTLY ASKED QUESTIONS",
+      "title": "Product Details & Playbook Format",
+      "items": [
+        {
+          "q": "Is this a physical book or a digital web platform?",
+          "a": "crow.asia is a high-speed (< 25ms) web-first interactive field playbook. Read seamlessly across mobile and desktop without installs, with 16:9 Remotion animations, cloud checklists, and download-ready A5 Master PDFs."
+        },
+        {
+          "q": "What is the difference between Casual and Standard registers?",
+          "a": "All strategies and frameworks are 100% identical. In Indonesian, Casual uses informal peer phrasing (Gue/Lo) for startup cultures, while Standard uses formal professional phrasing (Saya/Kamu). Non-Indonesian editions use standard international English."
+        },
+        {
+          "q": "How long does access last after payment?",
+          "a": "Access is lifetime for your account. All future manuscript updates and checklist sync are included with zero monthly subscriptions."
+        },
+        {
+          "q": "What payment methods are supported?",
+          "a": "We accept Credit/Debit Cards, QRIS, Virtual Accounts, and international payments with instant automated activation."
+        }
+      ]
+    }
+  },
+  "reader": {
+    "prev_chapter": "Previous Chapter",
+    "next_chapter": "Next: Chapter :num",
+    "chapter_progress": "Chapter :current of :total",
+    "read_time": "⏱️ ~5-8 min read",
+    "copy_script": "📋 Copy Script",
+    "copied": "✓ Copied!",
+    "footnotes_title": "📚 Footnotes & Citations",
+    "footnotes_hint": "Click to expand notes",
+    "settings_title": "Display Preferences",
+    "register_title": "Language Register (ID)",
+    "paper_theme_title": "Paper Theme",
+    "font_size_title": "Reading Font Size",
+    "font_sm": "Small",
+    "font_base": "Standard",
+    "font_lg": "Large",
+    "sos_search_label": "Topic SOS: Instant Script & Tactics Search",
+    "sos_search_placeholder": "Type an emergency topic (e.g. '3k formula', 'defensive staff', 'evaluation')...",
+    "sos_empty": "No matching topics or scripts found."
+  },
+  "paywall": {
+    "badge": "Exclusive to Registered Readers",
+    "title": "Unlock Full Access: :volume — :title",
+    "description": "Chapters 0 and 1 are free samples. Unlock Chapters 2 through 14 complete with 16:9 interactive animation stages, 1-on-1 scripts, and printable A5 master PDFs.",
+    "feature_1": "15 Complete Chapters",
+    "feature_2": "16:9 Animation Canvas",
+    "feature_3": "A5 Master PDF",
+    "cta_buy": "Unlock Playbook Access (:price)",
+    "cta_login": "Already Purchased? Sign In"
+  },
+  "checkout": {
+    "title": "Complete Playbook Access",
+    "order_summary": "Order Summary",
+    "customer_info": "Customer Information",
+    "email_label": "Email Address",
+    "email_hint": "Your playbook access and PDF files will be linked to this email.",
+    "pay_cta": "Proceed to Secure Payment (:price)",
+    "instant_access": "Instant Activation & Lifetime Access",
+    "back_to_pricing": "Back to Pricing Tiers"
+  },
+  "dashboard": {
+    "title": "Reader Dashboard",
+    "greeting": "Hello, :name",
+    "my_library": "My Playbook Library",
+    "open_reader": "Open Web Reader",
+    "download_pdf": "Download Master PDF A5",
+    "recent_orders": "Order History",
+    "buy_more": "Explore Other Playbooks",
+    "logout": "Sign Out"
+  },
+  "auth": {
+    "login_title": "Sign in to crow.asia",
+    "login_desc": "Access all your owned playbooks and PDF downloads.",
+    "email_label": "Email Address",
+    "password_label": "Password",
+    "login_btn": "Sign In to Dashboard",
+    "checking": "Checking Credentials...",
+    "no_account": "Don't have a playbook yet?",
+    "buy_here": "Get a package here",
+    "back_home": "Back to Home"
+  },
+  "compiler": {
+    "mermaid_badge": "📊 WORKFLOW DIAGRAM • TACTICAL SCHEMA",
+    "practice_badge": "🎯 PRACTICE ACTIONS • WORKSPACE STEPS"
+  }
+}

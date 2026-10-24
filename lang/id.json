@@ -1,0 +1,174 @@
+{
+  "nav": {
+    "brand": "crow.asia",
+    "playbooks_catalog": "Katalog Playbook",
+    "pricing": "Paket Harga",
+    "search_placeholder": "Cari Topik / Skrip...",
+    "change_theme": "Ganti tema kertas",
+    "login": "Masuk",
+    "dashboard": "Dashboard",
+    "logout": "Keluar",
+    "free_sample": "Sampel Gratis",
+    "chapter": "Bab :num",
+    "read_free_sample": "Baca Bab 0 & 1",
+    "chapters_list": "DAFTAR BAB PLAYBOOK",
+    "back_to_home": "Kembali ke Beranda",
+    "book_titles": {
+      "book-1": "VOL. 01: Mahir Memimpin Tim",
+      "book-2": "VOL. 02: Anti-Burnout",
+      "book-3": "VOL. 03: Orkestrasi"
+    }
+  },
+  "landing": {
+    "badge": "TACTICAL FIELD PLAYBOOK 2026",
+    "hero": {
+      "title_casual": "Baru Jadi Leader atau Mulai Kewalahan Ngurusin Tim?",
+      "title_casual_highlight": "Ini Contekan Meja Kerja Lo.",
+      "title_standard": "Baru Diangkat Menjadi Pemimpin atau Menghadapi Beban Tim?",
+      "title_standard_highlight": "Panduan Meja Kerja Taktis Anda.",
+      "title": "Baru Diangkat Menjadi Pemimpin atau Menghadapi Beban Tim?",
+      "title_highlight": "Panduan Meja Kerja Taktis Anda.",
+      "desc_casual": "Bukan teori motivasi bertele-tele. Ini playbook 1-on-1 konkret, rumus kalibrasi tugas (L1–L4), dan skrip siap salin buat bikin tim mandiri tanpa lo harus burnout.",
+      "desc_standard": "Bukan sekadar wacana motivasi kepemimpinan. Ini buku pedoman 1-on-1 taktis, formula kalibrasi tugas (L1–L4), dan skrip teruji untuk membangun tim mandiri secara berkelanjutan.",
+      "desc": "Bukan sekadar wacana motivasi kepemimpinan. Ini buku pedoman 1-on-1 taktis, formula kalibrasi tugas (L1–L4), dan skrip teruji untuk membangun tim mandiri secara berkelanjutan.",
+      "cta_read_free": "Baca Gratis Bab 0 & 1",
+      "cta_view_bundle": "Lihat Paket Bundel",
+      "showcase_loading": "Memuat Showcase Remotion 16:9..."
+    },
+    "quiz": {
+      "header_badge": "DIAGNOSIS KEBUTUHAN TAKTIS",
+      "title": "Kuis 45 Detik: Temukan Contekan Meja Kerja yang Tepat",
+      "desc": "Jawab 3 situasi lapangan di bawah untuk mendapatkan rekomendasi volume playbook dan bab darurat spesifik.",
+      "step_1_meta": "PERTANYAAN 01 / 03",
+      "step_1_cat": "KONDISI TIM SAAT INI",
+      "step_1_q": "Apa situasi yang paling sering bikin Anda pusing minggu ini?",
+      "step_1_o1": "• \"Saya harus ngawasin detail kerjaan staf karena kalau dilepas hasilnya berantakan.\"",
+      "step_1_o2": "• \"Kerjaan sendiri nggak beres-beres karena seharian rapat dan menengahi drama anggota tim.\"",
+      "step_1_o3": "• \"Saya memimpin manajer/lead lain, tapi mereka masih lempar keputusan strategis ke saya.\"",
+      "step_2_meta": "PERTANYAAN 02 / 03",
+      "step_2_cat": "SKENARIO KOMUNIKASI",
+      "step_2_q": "Percakapan meja kerja mana yang paling ingin Anda kuasai skripnya sekarang?",
+      "step_2_o1": "• \"Memberikan teguran atau koreksi saat kerjaan melenceng tanpa merusak mental staf.\"",
+      "step_2_o2": "• \"Menetapkan batasan beban kerja (Boundary Shield) dan menolak interupsi tak terencana dari atasan.\"",
+      "step_2_o3": "• \"Mendelegasikan kepemilikan keputusan strategis ke manajer di bawah saya tanpa micromanagement.\"",
+      "step_3_meta": "PERTANYAAN 03 / 03",
+      "step_3_cat": "HASIL TARGET 30 HARI",
+      "step_3_q": "Perubahan paling krusial apa yang ingin Anda wujudkan dalam 1 bulan ke depan?",
+      "step_3_o1": "• \"Tim bisa menyepakati target Rumus 3K di awal dan beroperasi mandiri sesuai kalibrasi L1–L4.\"",
+      "step_3_o2": "• \"Menerapkan formula beban 30/70, memangkas rapat mubazir, dan mengembalikan energi tim.\"",
+      "step_3_o3": "• \"Menyelaraskan OKR multi-tim dan membuat suksesi lead di bawah saya siap promosi.\"",
+      "result_badge": "HASIL REKOMENDASI DIAGNOSIS ANDA",
+      "result_title": "Anda Paling Membutuhkan :volume",
+      "result_desc": "Berdasarkan jawaban Anda, playbook ini menyediakan instrumen taktis langsung untuk mengatasi friksi tim Anda.",
+      "cta_open_recommended": "Buka Playbook Rekomendasi",
+      "cta_repeat_quiz": "Ulangi Kuis Diagnosis"
+    },
+    "demo": {
+      "badge": "DEMO SKRIP INTERAKTIF",
+      "title": "Simulasi Skrip 1-on-1 Meja Kerja",
+      "desc": "Ganti nama staf di bawah untuk melihat bagaimana token otomatis disematkan ke dalam kalimat skrip taktis.",
+      "teammate_label": "NAMA ANGGOTA TIM",
+      "sample_script_casual": "Lo perhatiin nggak, di sprint kemarin ada 2 delivery yang geser? Menurut lo, apa blocker terbesarnya, :name?",
+      "sample_script_standard": "Apakah Anda memperhatikan ada 2 deliverable yang tertunda pada siklus kerja kemarin? Menurut analisis Anda, apa kendala utamanya, :name?",
+      "sample_script": "Apakah Anda memperhatikan ada 2 deliverable yang tertunda pada siklus kerja kemarin? Menurut analisis Anda, apa kendala utamanya, :name?",
+      "copy_script": "Salin Skrip Ini",
+      "copied": "✓ Skrip Berhasil Disalin!"
+    },
+    "pricing": {
+      "badge": "INVESTASI SEKALI SEUMUR HIDUP",
+      "title": "Pilih Paket Meja Kerja Anda",
+      "desc": "Akses seumur hidup (lifetime). Termasuk pembaruan naskah, kanvas animasi 16:9, dan master PDF A5.",
+      "best_value_badge": "★ PILIHAN TERBAIK (HEMAT 33%)",
+      "single_badge": "SATUAN",
+      "per_lifetime": "/ selamanya",
+      "cta_buy": "Beli Akses Playbook"
+    },
+    "faq": {
+      "badge": "PERTANYAAN SERING DIAJUKAN",
+      "title": "Informasi Produk & Format Playbook",
+      "items": [
+        {
+          "q": "Apakah formatnya buku fisik yang dikirim atau web digital?",
+          "a": "crow.asia adalah field playbook interaktif web-first berkecepatan tinggi (< 25ms). Anda dapat membacanya langsung di browser HP maupun laptop tanpa perlu instal aplikasi, lengkap dengan animasi interaktif Remotion 16:9, checklist cloud, dan file Master PDF A5 siap unduh atau cetak mandiri."
+        },
+        {
+          "q": "Apa perbedaan versi Kasual (Gue/Lo) dan Standar (Saya/Kamu)?",
+          "a": "Substansi strategi, rumus kepemimpinan, dan studi kasusnya 100% identik. Perbedaannya hanya pada ragam bahasa komunikasi agar pas dengan kultur kantor Anda: gaya Kasual memakai sapaan Gue/Lo yang akrab, sedangkan Standar memakai Saya/Kamu yang formal dan santun."
+        },
+        {
+          "q": "Berapa lama masa berlaku akses setelah pembayaran?",
+          "a": "Akses berlaku seumur hidup (lifetime access) untuk akun Anda. Seluruh pembaruan naskah di masa depan dan sinkronisasi checklist progres dapat terus diakses tanpa biaya langganan bulanan."
+        },
+        {
+          "q": "Metode pembayaran apa saja yang diterima?",
+          "a": "Kami menggunakan Mayar.id dengan dukungan QRIS instan (GoPay, OVO, Dana, ShopeePay), Transfer Bank / Virtual Account (BCA, Mandiri, BRI, BNI, Permata), dan Kartu Kredit dengan aktivasi akses instan otomatis."
+        }
+      ]
+    }
+  },
+  "reader": {
+    "prev_chapter": "Bab Sebelumnya",
+    "next_chapter": "Lanjut: Bab :num",
+    "chapter_progress": "Bab :current dari :total",
+    "read_time": "⏱️ ~5-8 menit baca",
+    "copy_script": "📋 Salin Skrip",
+    "copied": "✓ Tersalin!",
+    "footnotes_title": "📚 Catatan Kaki & Rujukan Riset",
+    "footnotes_hint": "Klik untuk buka catatan",
+    "settings_title": "Pengaturan Tampilan",
+    "register_title": "Gaya Bahasa Naskah (ID)",
+    "paper_theme_title": "Tema Kertas Baca",
+    "font_size_title": "Ukuran Teks Baca",
+    "font_sm": "Kecil",
+    "font_base": "Standar",
+    "font_lg": "Besar",
+    "sos_search_label": "SOS Topik: Cari Skrip & Langkah Taktis",
+    "sos_search_placeholder": "Ketik topik darurat (misal: 'rumus 3k', 'staf defensif', 'evaluasi')...",
+    "sos_empty": "Tidak ada topik atau skrip yang cocok."
+  },
+  "paywall": {
+    "badge": "Akses Khusus Pembaca Resmi",
+    "title": "Buka Akses Penuh: :volume — :title",
+    "description": "Bab 0 dan Bab 1 dapat dibaca gratis. Untuk membuka Bab 2 hingga Bab 14 lengkap beserta kanvas interaktif Remotion 16:9, skrip 1-on-1, dan master PDF A5, silakan dapatkan akses playbook ini.",
+    "feature_1": "15 Bab Lengkap",
+    "feature_2": "Mode Animasi 16:9",
+    "feature_3": "Master PDF A5",
+    "cta_buy": "Buka Akses Playbook (:price)",
+    "cta_login": "Sudah Membeli? Masuk"
+  },
+  "checkout": {
+    "title": "Selesaikan Akses Playbook",
+    "order_summary": "Ringkasan Pembelian",
+    "customer_info": "Informasi Pembeli",
+    "email_label": "Alamat Email",
+    "email_hint": "Akses playbook dan file PDF akan ditautkan ke email ini.",
+    "pay_cta": "Lanjut ke Pembayaran Aman (:price)",
+    "instant_access": "Aktivasi Instan & Akses Seumur Hidup",
+    "back_to_pricing": "Kembali ke Paket Harga"
+  },
+  "dashboard": {
+    "title": "Dashboard Pembaca",
+    "greeting": "Halo, :name",
+    "my_library": "Pustaka Playbook Saya",
+    "open_reader": "Buka Web Reader",
+    "download_pdf": "Unduh Master PDF A5",
+    "recent_orders": "Riwayat Transaksi",
+    "buy_more": "Beli Playbook Lain",
+    "logout": "Keluar"
+  },
+  "auth": {
+    "login_title": "Masuk ke crow.asia",
+    "login_desc": "Akses seluruh playbook yang sudah Anda miliki beserta unduhan PDF.",
+    "email_label": "Alamat Email",
+    "password_label": "Password",
+    "login_btn": "Masuk ke Dashboard",
+    "checking": "Memeriksa Kredensial...",
+    "no_account": "Belum punya playbook?",
+    "buy_here": "Beli paket di sini",
+    "back_home": "Kembali ke Beranda"
+  },
+  "compiler": {
+    "mermaid_badge": "📊 DIAGRAM ALUR KERJA • SKEMA TAKTIS",
+    "practice_badge": "🎯 LATIHAN PRAKTIK • AKSI MEJA KERJA"
+  }
+}
