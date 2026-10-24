@@ -49,6 +49,11 @@
       "curriculum_tag_book-1": "FIRST-TIME LEAD",
       "curriculum_tag_book-2": "LEADERSHIP RESILIENCE",
       "curriculum_tag_book-3": "DIVISION MANAGER",
+      "cover_titles": {
+        "book-1": { "top": "MASTERING", "bottom": "TEAM LEADERSHIP" },
+        "book-2": { "top": "ENDURANCE IN", "bottom": "TEAM LEADERSHIP" },
+        "book-3": { "top": "LEADING", "bottom": "OTHER LEADERS" }
+      },
       "cta_paragraphs": {
         "book-1": "Master the 4 core conversations and L1–L4 readiness calibration to turn passive staff into autonomous performers, align goals without micromanagement, and lead 1-on-1s with confidence from day one.",
         "book-2": "Apply the glass shield technique and 3P calendar audit to stop rescuing staff tasks, decline ad-hoc interrupts without damaging rapport, and sustain your executive stamina long-term.",

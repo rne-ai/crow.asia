@@ -62,6 +62,7 @@ export default function Landing({
 }: LandingProps) {
     const { t, currency, formatPrice } = useTranslation();
     const [activeVolume, setActiveVolume] = useState<BookId>('book-1');
+    const [hoveredBookId, setHoveredBookId] = useState<BookId | null>(null);
     const [mounted, setMounted] = useState(false);
 
     // Kuis Diagnosis State (3 Questions)
@@ -512,18 +513,20 @@ export default function Landing({
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
                         {books.map((b) => {
-                            const tier = pricingTiers.find((t) => t.id === `tier-${b.id}`);
-                            const features = tier?.features || [];
+                            const isHovered = hoveredBookId === b.id;
 
                             return (
                                 <div
                                     key={b.id}
+                                    onMouseEnter={() => setHoveredBookId(b.id)}
+                                    onMouseLeave={() => setHoveredBookId(null)}
                                     className="rounded-2xl border border-[#E5E0D5] bg-[#FFFFFF] p-5 sm:p-6 flex flex-col justify-between space-y-5 hover:border-stone-400 transition-all shadow-sm group"
                                 >
                                     <div className="space-y-4">
                                         {/* Remotion Animated Book Cover with Hover Trigger */}
                                         <div className="w-full flex justify-center pb-2">
                                             <RemotionBookCoverPlayer
+                                                isHovered={isHovered}
                                                 bookProps={{
                                                     bookId: b.id,
                                                     volumeCode: b.volumeCode,
@@ -531,6 +534,8 @@ export default function Landing({
                                                     subtitle: b.subtitle,
                                                     accentHex: b.accentHex,
                                                     illustrationPath: `/illustrations/${b.id}/portrait.png`,
+                                                    coverTitleTop: t(`landing.catalog.cover_titles.${b.id}.top`),
+                                                    coverTitleBottom: t(`landing.catalog.cover_titles.${b.id}.bottom`),
                                                     chaptersLabel: t('landing.catalog.chapters_count', { count: 15 }),
                                                     editionLabel: 'ID + EN',
                                                 }}

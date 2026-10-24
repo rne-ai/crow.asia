@@ -9,6 +9,8 @@ export interface BookCoverProps {
     subtitle: string;
     accentHex: string;
     illustrationPath: string;
+    coverTitleTop?: string;
+    coverTitleBottom?: string;
     chaptersLabel?: string;
     editionLabel?: string;
 }
@@ -19,6 +21,8 @@ export const BookCoverRemotionComp: React.FC<BookCoverProps> = ({
     subtitle,
     accentHex,
     illustrationPath,
+    coverTitleTop,
+    coverTitleBottom,
     chaptersLabel = '15 Bab + PDF',
     editionLabel = 'ID + EN',
 }) => {
@@ -45,28 +49,12 @@ export const BookCoverRemotionComp: React.FC<BookCoverProps> = ({
     const sheenX = interpolate(sheenProgress, [0, 0.5, 1], [-160, 140, 260]);
     const sheenOpacity = interpolate(sheenProgress, [0, 0.25, 0.5, 0.75, 1], [0, 0.35, 0.15, 0, 0]);
 
-    // Book specific bold titles as requested
-    const renderCoverTitle = () => {
-        if (bookId === 'book-1') {
-            return (
-                <>
-                    MAHIR<br />MEMIMPIN TIM
-                </>
-            );
-        }
-        if (bookId === 'book-2') {
-            return (
-                <>
-                    NAFAS PANJANG<br />MEMIMPIN TIM
-                </>
-            );
-        }
-        return (
-            <>
-                MEMIMPIN<br />PARA LEADER
-            </>
-        );
-    };
+    // Fallback titles if not provided via props
+    const defaultTop = bookId === 'book-1' ? 'MAHIR' : bookId === 'book-2' ? 'NAFAS PANJANG' : 'MEMIMPIN';
+    const defaultBottom = bookId === 'book-1' ? 'MEMIMPIN TIM' : bookId === 'book-2' ? 'MEMIMPIN TIM' : 'PARA LEADER';
+
+    const topText = coverTitleTop || defaultTop;
+    const bottomText = coverTitleBottom || defaultBottom;
 
     return (
         <div
@@ -78,9 +66,8 @@ export const BookCoverRemotionComp: React.FC<BookCoverProps> = ({
                 borderRadius: '4px 16px 16px 4px',
                 backgroundColor: '#111113',
                 fontFamily: 'Plus Jakarta Sans, sans-serif',
-                boxShadow:
-                    '0 20px 40px -12px rgba(0,0,0,0.45), inset -3px 0 6px rgba(255,255,255,0.15), inset 3px 0 8px rgba(0,0,0,0.5)',
-                borderRight: '3px solid rgba(245, 240, 230, 0.35)',
+                boxShadow: '0 20px 40px -12px rgba(0, 0, 0, 0.5), inset 2px 0 6px rgba(0, 0, 0, 0.6)',
+                border: 'none',
             }}
         >
             {/* Background Layer: Full-Bleed Animated Papercraft Portrait */}
@@ -103,7 +90,7 @@ export const BookCoverRemotionComp: React.FC<BookCoverProps> = ({
                 />
             </div>
 
-            {/* Closed-Book Spine Crease Shadow Overlay (Left Edge) */}
+            {/* Closed-Book Spine Crease Shadow Overlay (Left Edge - Darkening Only, No White Streak) */}
             <div
                 style={{
                     position: 'absolute',
@@ -112,7 +99,7 @@ export const BookCoverRemotionComp: React.FC<BookCoverProps> = ({
                     left: 0,
                     width: '12%',
                     background:
-                        'linear-gradient(to right, rgba(0,0,0,0.65) 0%, rgba(255,255,255,0.2) 22%, rgba(0,0,0,0.3) 45%, transparent 100%)',
+                        'linear-gradient(to right, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.25) 50%, transparent 100%)',
                     zIndex: 15,
                     pointerEvents: 'none',
                 }}
@@ -210,7 +197,9 @@ export const BookCoverRemotionComp: React.FC<BookCoverProps> = ({
                         textShadow: '0 3px 10px rgba(0,0,0,0.8)',
                     }}
                 >
-                    {renderCoverTitle()}
+                    {topText}
+                    <br />
+                    {bottomText}
                 </h2>
 
                 <p

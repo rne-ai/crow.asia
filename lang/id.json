@@ -49,6 +49,11 @@
       "curriculum_tag_book-1": "PEMIMPIN TIM BARU",
       "curriculum_tag_book-2": "KETAHANAN DIRI",
       "curriculum_tag_book-3": "MANAJER DIVISI",
+      "cover_titles": {
+        "book-1": { "top": "MAHIR", "bottom": "MEMIMPIN TIM" },
+        "book-2": { "top": "NAFAS PANJANG", "bottom": "MEMIMPIN TIM" },
+        "book-3": { "top": "MEMIMPIN", "bottom": "PARA LEADER" }
+      },
       "cta_paragraphs": {
         "book-1": "Kuasai 4 percakapan kunci dan rumus kesiapan L1–L4 untuk mengubah staf pasif menjadi mandiri, menyelaraskan target tanpa micromanagement, dan memimpin 1-on-1 dengan percaya diri sejak hari pertama.",
         "book-2": "Terapkan teknik perisai kaca dan audit kalender 3P untuk menghentikan kebiasaan mengambil alih tugas staf, menolak interupsi tanpa merusak relasi, dan menjaga energi kepemimpinan tetap stabil jangka panjang.",
