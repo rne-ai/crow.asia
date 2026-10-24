@@ -227,8 +227,9 @@ export default function Landing({
             <section id="diagnosis" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FFFFFF]">
                 <div className="w-full max-w-4xl mx-auto space-y-8">
                     <div className="text-center space-y-2">
-                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#1D4ED8] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-                            {t('landing.quiz.header_badge')}
+                        <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-[#1D4ED8] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+                            <span>✨</span>
+                            <span>{t('landing.quiz.header_badge')}</span>
                         </span>
                         <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111113]">
                             {t('landing.quiz.title')}
@@ -238,25 +239,29 @@ export default function Landing({
                         </p>
                     </div>
 
-                    <div className="p-6 sm:p-8 rounded-2xl border border-[#E5E0D5] bg-[#FAF8F5] shadow-sm space-y-6">
-                        {/* Progress Indicator */}
-                        <div className="flex items-center gap-2">
-                            {[1, 2, 3].map((step) => (
-                                <div
-                                    key={step}
-                                    className={`h-2 flex-1 rounded-full transition-colors ${
-                                        quizCurrentStep >= step ? 'bg-[#1D4ED8]' : 'bg-[#E5E0D5]'
-                                    }`}
-                                />
-                            ))}
-                        </div>
+                    <div className="p-6 sm:p-8 rounded-2xl border border-[#E5E0D5] bg-[#FFFFFF] shadow-sm space-y-6">
+                        {quizCurrentStep <= 3 && (
+                            /* Top Bar inside Quiz Card */
+                            <div className="flex items-center justify-between pb-4 border-b border-[#E5E0D5]/70">
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-blue-200 bg-blue-50/50 text-xs font-semibold text-[#1D4ED8]">
+                                    <span>✨</span>
+                                    <span>{t('landing.quiz.card_badge')}</span>
+                                </span>
+
+                                <div className="flex items-center gap-2.5 text-xs font-mono text-stone-500">
+                                    <span>{t('landing.quiz.step_indicator', { current: quizCurrentStep, total: 3 })}</span>
+                                    <div className="w-16 h-2 rounded-full bg-stone-100 border border-stone-200 overflow-hidden">
+                                        <div
+                                            className="h-full bg-[#111113] rounded-full transition-all duration-300"
+                                            style={{ width: `${(quizCurrentStep / 3) * 100}%` }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
                         {quizCurrentStep === 1 && (
                             <div className="space-y-4">
-                                <div className="flex items-center justify-between text-xs font-mono text-stone-500">
-                                    <span>{t('landing.quiz.step_1_meta')}</span>
-                                    <span>{t('landing.quiz.step_1_cat')}</span>
-                                </div>
                                 <h3 className="font-extrabold text-base sm:text-lg text-[#111113]">
                                     {t('landing.quiz.step_1_q')}
                                 </h3>
@@ -267,10 +272,15 @@ export default function Landing({
                                             setQuizAnswers((prev) => ({ ...prev, 1: 'book-1' }));
                                             setQuizCurrentStep(2);
                                         }}
-                                        className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#1D4ED8] hover:bg-blue-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
+                                        className="w-full text-left p-3.5 sm:p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#111113] hover:bg-[#FAF8F5] transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[48px] flex items-center justify-between group shadow-2xs"
                                     >
-                                        <span>{t('landing.quiz.step_1_o1')}</span>
-                                        <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
+                                        <span className="flex items-center gap-3 min-w-0">
+                                            <span className="w-7 h-7 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] group-hover:bg-white group-hover:border-[#111113] flex items-center justify-center font-mono font-bold text-xs text-stone-700 shrink-0 transition-colors">
+                                                A
+                                            </span>
+                                            <span className="leading-snug">{t('landing.quiz.step_1_o1')}</span>
+                                        </span>
+                                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-[#111113] group-hover:translate-x-0.5 transition-all shrink-0 ml-3" />
                                     </button>
                                     <button
                                         type="button"
@@ -278,10 +288,15 @@ export default function Landing({
                                             setQuizAnswers((prev) => ({ ...prev, 1: 'book-2' }));
                                             setQuizCurrentStep(2);
                                         }}
-                                        className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#EA580C] hover:bg-orange-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
+                                        className="w-full text-left p-3.5 sm:p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#111113] hover:bg-[#FAF8F5] transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[48px] flex items-center justify-between group shadow-2xs"
                                     >
-                                        <span>{t('landing.quiz.step_1_o2')}</span>
-                                        <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
+                                        <span className="flex items-center gap-3 min-w-0">
+                                            <span className="w-7 h-7 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] group-hover:bg-white group-hover:border-[#111113] flex items-center justify-center font-mono font-bold text-xs text-stone-700 shrink-0 transition-colors">
+                                                B
+                                            </span>
+                                            <span className="leading-snug">{t('landing.quiz.step_1_o2')}</span>
+                                        </span>
+                                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-[#111113] group-hover:translate-x-0.5 transition-all shrink-0 ml-3" />
                                     </button>
                                     <button
                                         type="button"
@@ -289,10 +304,15 @@ export default function Landing({
                                             setQuizAnswers((prev) => ({ ...prev, 1: 'book-3' }));
                                             setQuizCurrentStep(2);
                                         }}
-                                        className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#0F766E] hover:bg-teal-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
+                                        className="w-full text-left p-3.5 sm:p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#111113] hover:bg-[#FAF8F5] transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[48px] flex items-center justify-between group shadow-2xs"
                                     >
-                                        <span>{t('landing.quiz.step_1_o3')}</span>
-                                        <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
+                                        <span className="flex items-center gap-3 min-w-0">
+                                            <span className="w-7 h-7 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] group-hover:bg-white group-hover:border-[#111113] flex items-center justify-center font-mono font-bold text-xs text-stone-700 shrink-0 transition-colors">
+                                                C
+                                            </span>
+                                            <span className="leading-snug">{t('landing.quiz.step_1_o3')}</span>
+                                        </span>
+                                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-[#111113] group-hover:translate-x-0.5 transition-all shrink-0 ml-3" />
                                     </button>
                                 </div>
                             </div>
@@ -300,10 +320,6 @@ export default function Landing({
 
                         {quizCurrentStep === 2 && (
                             <div className="space-y-4">
-                                <div className="flex items-center justify-between text-xs font-mono text-stone-500">
-                                    <span>{t('landing.quiz.step_2_meta')}</span>
-                                    <span>{t('landing.quiz.step_2_cat')}</span>
-                                </div>
                                 <h3 className="font-extrabold text-base sm:text-lg text-[#111113]">
                                     {t('landing.quiz.step_2_q')}
                                 </h3>
@@ -314,10 +330,15 @@ export default function Landing({
                                             setQuizAnswers((prev) => ({ ...prev, 2: 'book-1' }));
                                             setQuizCurrentStep(3);
                                         }}
-                                        className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#1D4ED8] hover:bg-blue-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
+                                        className="w-full text-left p-3.5 sm:p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#111113] hover:bg-[#FAF8F5] transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[48px] flex items-center justify-between group shadow-2xs"
                                     >
-                                        <span>{t('landing.quiz.step_2_o1')}</span>
-                                        <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
+                                        <span className="flex items-center gap-3 min-w-0">
+                                            <span className="w-7 h-7 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] group-hover:bg-white group-hover:border-[#111113] flex items-center justify-center font-mono font-bold text-xs text-stone-700 shrink-0 transition-colors">
+                                                A
+                                            </span>
+                                            <span className="leading-snug">{t('landing.quiz.step_2_o1')}</span>
+                                        </span>
+                                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-[#111113] group-hover:translate-x-0.5 transition-all shrink-0 ml-3" />
                                     </button>
                                     <button
                                         type="button"
@@ -325,10 +346,15 @@ export default function Landing({
                                             setQuizAnswers((prev) => ({ ...prev, 2: 'book-2' }));
                                             setQuizCurrentStep(3);
                                         }}
-                                        className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#EA580C] hover:bg-orange-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
+                                        className="w-full text-left p-3.5 sm:p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#111113] hover:bg-[#FAF8F5] transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[48px] flex items-center justify-between group shadow-2xs"
                                     >
-                                        <span>{t('landing.quiz.step_2_o2')}</span>
-                                        <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
+                                        <span className="flex items-center gap-3 min-w-0">
+                                            <span className="w-7 h-7 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] group-hover:bg-white group-hover:border-[#111113] flex items-center justify-center font-mono font-bold text-xs text-stone-700 shrink-0 transition-colors">
+                                                B
+                                            </span>
+                                            <span className="leading-snug">{t('landing.quiz.step_2_o2')}</span>
+                                        </span>
+                                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-[#111113] group-hover:translate-x-0.5 transition-all shrink-0 ml-3" />
                                     </button>
                                     <button
                                         type="button"
@@ -336,10 +362,15 @@ export default function Landing({
                                             setQuizAnswers((prev) => ({ ...prev, 2: 'book-3' }));
                                             setQuizCurrentStep(3);
                                         }}
-                                        className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#0F766E] hover:bg-teal-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
+                                        className="w-full text-left p-3.5 sm:p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#111113] hover:bg-[#FAF8F5] transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[48px] flex items-center justify-between group shadow-2xs"
                                     >
-                                        <span>{t('landing.quiz.step_2_o3')}</span>
-                                        <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
+                                        <span className="flex items-center gap-3 min-w-0">
+                                            <span className="w-7 h-7 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] group-hover:bg-white group-hover:border-[#111113] flex items-center justify-center font-mono font-bold text-xs text-stone-700 shrink-0 transition-colors">
+                                                C
+                                            </span>
+                                            <span className="leading-snug">{t('landing.quiz.step_2_o3')}</span>
+                                        </span>
+                                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-[#111113] group-hover:translate-x-0.5 transition-all shrink-0 ml-3" />
                                     </button>
                                 </div>
                             </div>
@@ -347,10 +378,6 @@ export default function Landing({
 
                         {quizCurrentStep === 3 && (
                             <div className="space-y-4">
-                                <div className="flex items-center justify-between text-xs font-mono text-stone-500">
-                                    <span>{t('landing.quiz.step_3_meta')}</span>
-                                    <span>{t('landing.quiz.step_3_cat')}</span>
-                                </div>
                                 <h3 className="font-extrabold text-base sm:text-lg text-[#111113]">
                                     {t('landing.quiz.step_3_q')}
                                 </h3>
@@ -361,10 +388,15 @@ export default function Landing({
                                             setQuizAnswers((prev) => ({ ...prev, 3: 'book-1' }));
                                             setQuizCurrentStep(4);
                                         }}
-                                        className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#1D4ED8] hover:bg-blue-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
+                                        className="w-full text-left p-3.5 sm:p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#111113] hover:bg-[#FAF8F5] transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[48px] flex items-center justify-between group shadow-2xs"
                                     >
-                                        <span>{t('landing.quiz.step_3_o1')}</span>
-                                        <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
+                                        <span className="flex items-center gap-3 min-w-0">
+                                            <span className="w-7 h-7 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] group-hover:bg-white group-hover:border-[#111113] flex items-center justify-center font-mono font-bold text-xs text-stone-700 shrink-0 transition-colors">
+                                                A
+                                            </span>
+                                            <span className="leading-snug">{t('landing.quiz.step_3_o1')}</span>
+                                        </span>
+                                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-[#111113] group-hover:translate-x-0.5 transition-all shrink-0 ml-3" />
                                     </button>
                                     <button
                                         type="button"
@@ -372,10 +404,15 @@ export default function Landing({
                                             setQuizAnswers((prev) => ({ ...prev, 3: 'book-2' }));
                                             setQuizCurrentStep(4);
                                         }}
-                                        className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#EA580C] hover:bg-orange-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
+                                        className="w-full text-left p-3.5 sm:p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#111113] hover:bg-[#FAF8F5] transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[48px] flex items-center justify-between group shadow-2xs"
                                     >
-                                        <span>{t('landing.quiz.step_3_o2')}</span>
-                                        <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
+                                        <span className="flex items-center gap-3 min-w-0">
+                                            <span className="w-7 h-7 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] group-hover:bg-white group-hover:border-[#111113] flex items-center justify-center font-mono font-bold text-xs text-stone-700 shrink-0 transition-colors">
+                                                B
+                                            </span>
+                                            <span className="leading-snug">{t('landing.quiz.step_3_o2')}</span>
+                                        </span>
+                                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-[#111113] group-hover:translate-x-0.5 transition-all shrink-0 ml-3" />
                                     </button>
                                     <button
                                         type="button"
@@ -383,10 +420,15 @@ export default function Landing({
                                             setQuizAnswers((prev) => ({ ...prev, 3: 'book-3' }));
                                             setQuizCurrentStep(4);
                                         }}
-                                        className="w-full text-left p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#0F766E] hover:bg-teal-50/40 transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[44px] flex items-center justify-between"
+                                        className="w-full text-left p-3.5 sm:p-4 rounded-xl border border-[#E5E0D5] bg-white hover:border-[#111113] hover:bg-[#FAF8F5] transition-all font-medium text-xs sm:text-sm text-stone-800 min-h-[48px] flex items-center justify-between group shadow-2xs"
                                     >
-                                        <span>{t('landing.quiz.step_3_o3')}</span>
-                                        <ArrowRight className="w-4 h-4 text-stone-400 shrink-0 ml-2" />
+                                        <span className="flex items-center gap-3 min-w-0">
+                                            <span className="w-7 h-7 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] group-hover:bg-white group-hover:border-[#111113] flex items-center justify-center font-mono font-bold text-xs text-stone-700 shrink-0 transition-colors">
+                                                C
+                                            </span>
+                                            <span className="leading-snug">{t('landing.quiz.step_3_o3')}</span>
+                                        </span>
+                                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-[#111113] group-hover:translate-x-0.5 transition-all shrink-0 ml-3" />
                                     </button>
                                 </div>
                             </div>
