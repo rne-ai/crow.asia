@@ -58,6 +58,25 @@ class PricingTier extends Model
         return $this->descriptions[$locale] ?? $this->descriptions['id'] ?? '';
     }
 
+    /**
+     * @return array<int, string>
+     */
+    public function features(string $locale = 'id'): array
+    {
+        $raw = $this->getAttribute('features');
+        if (!is_array($raw)) {
+            return [];
+        }
+
+        // Handle legacy flat array: ["feature 1", "feature 2"]
+        if (array_is_list($raw)) {
+            return $raw;
+        }
+
+        // Handle multi-locale object: {"id": [...], "en": [...]}
+        return $raw[$locale] ?? $raw['id'] ?? (is_array(reset($raw)) ? reset($raw) : []);
+    }
+
     public function includesBook(string $bookId): bool
     {
         return in_array($bookId, $this->included_book_ids ?? [], true);
