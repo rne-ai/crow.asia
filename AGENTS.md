@@ -125,3 +125,49 @@ Artefak internal tidak boleh disimpan di `books/` kecuali file tersebut memang d
 Source code, configuration, documentation, tests, assets, dan file lain yang memang diperlukan oleh aplikasi tetap boleh di-track apabila merupakan bagian yang disengaja dari project.
 
 Agent bertanggung jawab memastikan working tree tetap bersih dari artefak internal sebelum melakukan commit atau meminta user melakukan commit/push.
+
+---
+
+## 8. Interaksi Database Melalui MCP DBX (Wajib)
+
+Setiap operasi inspeksi skema, eksplorasi data, dan verifikasi query database **WAJIB menggunakan tools MCP `dbx`** (melalui runtime `execute` Code Mode):
+
+1. **Koneksi Terdaftar**: Gunakan koneksi `crow.asia - dbcrow` (atau fallback `Local` dengan parameter `database: 'dbcrow'`).
+2. **Penggunaan Tools**:
+   - `tools.dbx.dbx_execute_query`: Untuk menjalankan query SELECT atau validasi data.
+   - `tools.dbx.dbx_describe_table`: Untuk memeriksa struktur kolom dan tipe data tabel.
+   - `tools.dbx.dbx_list_tables`: Untuk memverifikasi daftar tabel dalam skema `public`.
+   - `tools.dbx.dbx_get_schema_context`: Untuk mendapatkan konteks relasi antartabel saat menyusun query.
+3. **Larangan**: Hindari penggunaan tool CLI terminal ad-hoc (`psql` interaktif) untuk query/inspeksi database jika dapat diselesaikan secara presisi melalui `tools.dbx.*`.
+
+---
+
+## 9. Disiplin Koding: Ponytail Mode (Wajib)
+
+Pengerjaan kode di repository ini menerapkan disiplin **Ponytail (Level: Full)**:
+
+1. **Solusi Terkecil yang Tuntas**: Tulis kode seminimal mungkin yang menyelesaikan masalah secara utuh. Hindari abstraksi prematur, wrapper yang tidak perlu, opsi "untuk nanti", atau konfigurasi berlebih yang belum diminta.
+2. **Kaidah Bugfix & Refactor**: Selalu periksa seluruh pemanggil (caller) sebelum mengedit kode bersama. Pertahankan error handling dan validasi di boundary kepercayaan.
+3. **Format Ringkasan di Akhir Respon**: Setiap penyelesaian task diakhiri dengan 1-2 baris catatan ringkas:
+   - *Skipped*: Apa yang sengaja dilewati atau belum diperiksa.
+   - *Risk*: Risiko teknis atau dependensi yang wajib diketahui pengguna.
+
+---
+
+## 10. Standar Kualitas Desain & Bebas Slop: Antislop Mode (Wajib)
+
+Seluruh implementasi antarmuka (frontend/UI/UX) wajib mengikuti filter **Antislop (Mode: During)**:
+
+1. **Craftsmanship Over Cliché**:
+   - Dilarang menggunakan gradasi ungu-biru generik, border pill berlebihan di semua komponen, efek glow/neon berlebihan, atau ilustrasi 3D blob klise.
+   - Gunakan palet resmi *Tactile Crow Studio* (`--color-crow-ink`, `--color-crow-ivory`, `--color-crow-border`, `--color-crow-gold`, dan aksen warna volume buku).
+2. **Functional Completeness**:
+   - Dilarang menyajikan elemen interaktif palsu / mati (tombol, dropdown, link tanpa aksi nyata).
+   - Wajib menyertakan tiga state dasar pada komponen data: *Empty state*, *Loading state*, dan *Error state*.
+3. **Aksesibilitas & Keterbacaan (WCAG AA)**:
+   - Kontras teks normal minimal 4.5:1 terhadap latar belakang kertas.
+   - Seluruh kontrol interaktif wajib dapat dinavigasi via keyboard (`Tab`, `Enter`, `Space`, `Escape`) dengan focus ring tegas.
+   - Touch target di layar mobile/tablet minimal 44x44px.
+4. **Purpose-Gate**:
+   - Setiap keputusan visual harus memiliki alasan kegunaan atau hierarki yang jelas.
+
