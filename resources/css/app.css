@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../../storage/framework/views/*.php";
+@source "../views/**/*.blade.php";
+@source "../js/**/*.{ts,tsx}";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Newsreader", "Source Serif 4", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-hand: "Patrick Hand", cursive;
+
+  --color-crow-ink: #111113;
+  --color-crow-ivory: #FAF8F5;
+  --color-crow-sepia: #F4ECD8;
+  --color-crow-obsidian: #121316;
+  --color-crow-border: #E5E0D5;
+  --color-crow-gold: #FFE66D;
+
+  --color-vol-1-cobalt: #1D4ED8;
+  --color-vol-2-terracotta: #EA580C;
+  --color-vol-3-emerald: #0F766E;
+}
+
+/* Tema Kertas Baca pada Container Reader */
+[data-paper-theme="ivory"] {
+  background-color: var(--color-crow-ivory);
+  color: var(--color-crow-ink);
+}
+
+[data-paper-theme="sepia"] {
+  background-color: var(--color-crow-sepia);
+  color: #1C1917;
+}
+
+[data-paper-theme="obsidian"] {
+  background-color: var(--color-crow-obsidian);
+  color: #F4F4F5;
+}
+
+/* Styling Token Nama Anggota Tim (.teammate-token) */
+.teammate-token {
+  display: inline-block;
+  padding: 0 0.35rem;
+  border-radius: 0.375rem;
+  background-color: var(--color-crow-gold);
+  color: var(--color-crow-ink);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
