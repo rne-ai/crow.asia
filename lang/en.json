@@ -1,8 +1,8 @@
 {
   "nav": {
     "brand": "crow.asia",
+    "leadership_diagnosis": "Leadership Diagnosis",
     "playbooks_catalog": "Playbooks Catalog",
-    "diagnosis": "45-Sec Diagnostic",
     "pricing": "Pricing Tiers",
     "search_placeholder": "Search topics & scripts...",
     "change_theme": "Change paper theme",

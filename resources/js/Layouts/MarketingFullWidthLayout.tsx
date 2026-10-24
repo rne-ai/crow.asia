@@ -32,23 +32,20 @@ export default function MarketingFullWidthLayout({
                         >
                             <span className="text-xl">🦅</span>
                             <span>crow<span className="text-[#1D4ED8]">.asia</span></span>
-                            <span className="hidden sm:inline-block text-[11px] font-mono uppercase tracking-wider bg-[#E5E0D5]/60 text-[#111113] px-2 py-0.5 rounded border border-[#E5E0D5]">
-                                {t('landing.badge')}
-                            </span>
                         </a>
 
                         <nav className="hidden md:flex items-center gap-5 text-sm font-medium text-stone-700">
+                            <a
+                                href="#diagnosis"
+                                className="hover:text-[#111113] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] rounded px-1 py-0.5 transition-colors"
+                            >
+                                {t('nav.leadership_diagnosis')}
+                            </a>
                             <a
                                 href="#katalog"
                                 className="hover:text-[#111113] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] rounded px-1 py-0.5 transition-colors"
                             >
                                 {t('nav.playbooks_catalog')}
-                            </a>
-                            <a
-                                href="#diagnosis"
-                                className="hover:text-[#111113] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] rounded px-1 py-0.5 transition-colors"
-                            >
-                                {t('nav.diagnosis')}
                             </a>
                             <a
                                 href="#harga"
