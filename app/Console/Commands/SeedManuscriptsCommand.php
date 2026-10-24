@@ -36,8 +36,9 @@ class SeedManuscriptsCommand extends Command
     ): int {
         $this->info('Starting manuscript ingestion for crow.asia...');
 
-        // 1. Seed or update 3 Master Books
+        // 1. Seed or update 3 Master Books & Pricing Tiers
         $this->seedBooks();
+        $this->seedPricingTiers();
 
         // 2. Define the 9 manuscript files mapping
         $manuscripts = [
@@ -208,6 +209,93 @@ class SeedManuscriptsCommand extends Command
 
         foreach ($booksData as $b) {
             Book::query()->updateOrCreate(['id' => $b['id']], $b);
+        }
+    }
+
+    private function seedPricingTiers(): void
+    {
+        $tiers = [
+            [
+                'id' => 'tier-book-1',
+                'names' => ['id' => 'VOL. 01: Mahir Memimpin Tim', 'en' => 'VOL. 01: Mastering Team Leadership'],
+                'descriptions' => ['id' => 'Bikin Tim Mandiri Tanpa Perlu Disuapin', 'en' => 'Transition from IC to High-Impact Team Lead'],
+                'features' => [
+                    '15 Bab Lengkap VOL. 01',
+                    'Mode Animasi 16:9 & Skrip 1-on-1',
+                    'Master PDF A5 Siap Cetak',
+                    'Akses Selamanya & Update Naskah',
+                ],
+                'badges' => null,
+                'price_idr' => 149000,
+                'strike_price_idr' => null,
+                'price_usd' => 9.99,
+                'included_book_ids' => ['book-1'],
+                'sort_order' => 1,
+                'is_best_value' => false,
+                'is_active' => true,
+            ],
+            [
+                'id' => 'tier-book-2',
+                'names' => ['id' => 'VOL. 02: Napas Panjang Memimpin', 'en' => 'VOL. 02: Endurance in Team Leadership'],
+                'descriptions' => ['id' => 'Biar Nggak Boncos Energi & Tetap Waras', 'en' => 'Anti-Burnout & Sustainable Cadence'],
+                'features' => [
+                    '15 Bab Lengkap VOL. 02',
+                    'Mode Animasi 16:9 & Skrip 1-on-1',
+                    'Master PDF A5 Siap Cetak',
+                    'Akses Selamanya & Update Naskah',
+                ],
+                'badges' => null,
+                'price_idr' => 149000,
+                'strike_price_idr' => null,
+                'price_usd' => 9.99,
+                'included_book_ids' => ['book-2'],
+                'sort_order' => 2,
+                'is_best_value' => false,
+                'is_active' => true,
+            ],
+            [
+                'id' => 'tier-book-3',
+                'names' => ['id' => 'VOL. 03: Memimpin Para Leader', 'en' => 'VOL. 03: Leading Other Leaders'],
+                'descriptions' => ['id' => 'Orkestrasi Multi-Tim & Penyelarasan Eksekutif', 'en' => 'Orchestrating Senior Leads & Directors'],
+                'features' => [
+                    '15 Bab Lengkap VOL. 03',
+                    'Mode Animasi 16:9 & Skrip 1-on-1',
+                    'Master PDF A5 Siap Cetak',
+                    'Akses Selamanya & Update Naskah',
+                ],
+                'badges' => null,
+                'price_idr' => 149000,
+                'strike_price_idr' => null,
+                'price_usd' => 9.99,
+                'included_book_ids' => ['book-3'],
+                'sort_order' => 3,
+                'is_best_value' => false,
+                'is_active' => true,
+            ],
+            [
+                'id' => 'bundle-all-3',
+                'names' => ['id' => 'Paket Trilogi Lengkap (VOL 1-3)', 'en' => 'Complete Trilogy Bundle (VOL 1-3)'],
+                'descriptions' => ['id' => 'Akses Seumur Hidup ke Seluruh 3 Playbook', 'en' => 'Full Lifetime Access to All 3 Playbooks'],
+                'features' => [
+                    'Seluruh 45 Bab Lengkap (3 Volume)',
+                    'Panggung Animasi Remotion 16:9 Penuh',
+                    '3 Master PDF A5 Siap Cetak',
+                    'Simulasi Skrip 1-on-1 & Checklist Cloud',
+                    'Hemat Rp148.000 (Diskon Bundel 33%)',
+                ],
+                'badges' => ['label' => 'Best Value', 'color' => '#1D4ED8'],
+                'price_idr' => 299000,
+                'strike_price_idr' => 447000,
+                'price_usd' => 19.99,
+                'included_book_ids' => ['book-1', 'book-2', 'book-3'],
+                'sort_order' => 4,
+                'is_best_value' => true,
+                'is_active' => true,
+            ],
+        ];
+
+        foreach ($tiers as $t) {
+            \App\Models\PricingTier::query()->updateOrCreate(['id' => $t['id']], $t);
         }
     }
 

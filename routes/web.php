@@ -1,14 +1,12 @@
 <?php
 
 use App\Http\Controllers\ChecklistController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ReaderController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Landing');
-});
+Route::get('/', [LandingController::class, 'index'])->name('home');
 
 // Web Reader Routes
 Route::get('/read/{bookId}', function (string $bookId) {
