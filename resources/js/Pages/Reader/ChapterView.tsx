@@ -183,7 +183,9 @@ export default function ChapterView({
                                                 isCurrent ? 'text-stone-300' : 'text-stone-400'
                                             }`}
                                         >
-                                            {ch.isFreeSample ? 'Sampel Gratis' : `Bab ${ch.index}`}
+                                            {ch.isFreeSample
+                                                ? (locale === 'en' ? 'Free Sample' : 'Sampel Gratis')
+                                                : (locale === 'en' ? `Chapter ${ch.index}` : `Bab ${ch.index}`)}
                                         </span>
                                     </div>
                                 </a>
@@ -217,9 +219,15 @@ export default function ChapterView({
                             {book.volumeCode}
                         </span>
                         <span>•</span>
-                        <span>Bab {currentChapter.index} dari 14</span>
+                        <span>
+                            {locale === 'en'
+                                ? `Chapter ${currentChapter.index} of 14`
+                                : `Bab ${currentChapter.index} dari 14`}
+                        </span>
                         <span className="hidden sm:inline">•</span>
-                        <span className="hidden sm:inline">⏱️ ~5-8 menit baca</span>
+                        <span className="hidden sm:inline">
+                            {locale === 'en' ? '⏱️ ~5-8 min read' : '⏱️ ~5-8 menit baca'}
+                        </span>
                     </div>
 
                     <ReaderModeSwitch mode={mode} onModeChange={setMode} className="shrink-0" />
@@ -231,9 +239,6 @@ export default function ChapterView({
                         <div className="reading-sheet rounded-2xl border p-6 sm:p-10 lg:p-14">
                             {/* Chapter Title inside the reading sheet */}
                             <div className="pb-8 mb-8 border-b border-[#E5E0D5]">
-                                <span className="text-xs font-mono font-bold uppercase tracking-wider text-stone-400 block mb-2">
-                                    {book.volumeCode} — PANDUAN TAKTIS MEJA KERJA
-                                </span>
                                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#111113] tracking-tight leading-[1.2]">
                                     {currentChapter.title}
                                 </h1>
@@ -266,7 +271,7 @@ export default function ChapterView({
                                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#E5E0D5] bg-white text-xs sm:text-sm font-semibold text-stone-700 hover:text-[#111113] hover:bg-stone-50 transition-colors min-h-[40px]"
                                 >
                                     <ArrowLeft className="w-4 h-4" />
-                                    <span>Bab Sebelumnya</span>
+                                    <span>{locale === 'en' ? 'Previous Chapter' : 'Bab Sebelumnya'}</span>
                                 </a>
                             ) : (
                                 <div />
@@ -279,7 +284,7 @@ export default function ChapterView({
                                     }`}
                                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#111113] text-[#FAF8F5] text-xs sm:text-sm font-semibold hover:bg-stone-800 transition-colors min-h-[40px]"
                                 >
-                                    <span>Lanjut: Bab {nextChapter.index}</span>
+                                    <span>{locale === 'en' ? `Next: Chapter ${nextChapter.index}` : `Lanjut: Bab ${nextChapter.index}`}</span>
                                     <ArrowRight className="w-4 h-4" />
                                 </a>
                             )}
