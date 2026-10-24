@@ -57,6 +57,15 @@
   font-weight: 700;
 }
 
+/* Highlight styling for search results */
+mark {
+  background-color: var(--color-crow-gold);
+  color: var(--color-crow-ink);
+  font-weight: 700;
+  border-radius: 0.25rem;
+  padding: 0 0.25rem;
+}
+
 /* Callouts Taktis */
 .crow-callout {
   margin: 1.5rem 0;

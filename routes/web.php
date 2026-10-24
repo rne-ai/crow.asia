@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\ReaderController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,3 +21,6 @@ Route::get('/read/{bookId}/{locale}/{chapterSlug}', [ReaderController::class, 's
 
 // Checklist API
 Route::post('/api/checklists/toggle', [ChecklistController::class, 'toggle'])->name('checklists.toggle');
+
+// Hybrid Search API (SOS Topik Ctrl+K)
+Route::get('/api/search', [SearchController::class, 'search'])->name('api.search');
