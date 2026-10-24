@@ -722,24 +722,116 @@ details.crow-script-drawer pre {
 /* ==============================================================================
    FOOTNOTES SECTION
    ============================================================================== */
-article .footnotes {
+/* ==============================================================================
+   COLLAPSIBLE FOOTNOTES DRAWER (<details class="crow-footnotes-drawer">)
+   ============================================================================== */
+details.crow-footnotes-drawer {
   margin-top: 3.5rem;
-  padding-top: 1.75rem;
-  border-top: 2px dashed var(--color-crow-border);
+  border: 1px solid var(--color-crow-border);
+  border-radius: 0.875rem;
+  background-color: #FAF8F5;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+details.crow-footnotes-drawer summary.crow-footnotes-summary {
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FAF8F5;
+  font-family: var(--font-mono);
   font-size: 0.8125rem;
-  line-height: 1.65;
+  font-weight: 800;
+  color: var(--color-crow-ink);
+  outline: none;
+  user-select: none;
+}
+
+details.crow-footnotes-drawer summary.crow-footnotes-summary:focus-visible {
+  outline: 2px solid var(--color-vol-1-cobalt);
+  outline-offset: -2px;
+}
+
+details.crow-footnotes-drawer .crow-footnotes-title {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+details.crow-footnotes-drawer .crow-footnotes-hint {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #71717A;
+  font-family: var(--font-sans);
+}
+
+details.crow-footnotes-drawer[open] summary.crow-footnotes-summary {
+  border-bottom: 1px solid var(--color-crow-border);
+}
+
+details.crow-footnotes-drawer .footnotes {
+  margin-top: 0;
+  padding: 1.25rem 1.5rem;
+  border-top: none;
+  font-size: 0.8125rem;
+  line-height: 1.7;
   color: #52525B;
+  background-color: #FFFFFF;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-article .footnotes a {
+details.crow-footnotes-drawer .footnotes ol {
+  margin: 0 !important;
+  padding-left: 1.25rem !important;
+}
+
+details.crow-footnotes-drawer .footnotes li {
+  margin: 0.75rem 0 !important;
+}
+
+details.crow-footnotes-drawer .footnotes a {
   overflow-wrap: anywhere;
   word-break: break-all;
 }
 
-article .footnotes hr {
+details.crow-footnotes-drawer .footnotes hr {
   display: none;
+}
+
+/* Sepia Footnotes */
+[data-paper-theme="sepia"] details.crow-footnotes-drawer {
+  background-color: #EFE4CC;
+  border-color: #E2D9C3;
+}
+[data-paper-theme="sepia"] details.crow-footnotes-drawer summary.crow-footnotes-summary {
+  background-color: #EFE4CC;
+  color: #1C1917;
+}
+[data-paper-theme="sepia"] details.crow-footnotes-drawer[open] summary.crow-footnotes-summary {
+  border-bottom-color: #E2D9C3;
+}
+[data-paper-theme="sepia"] details.crow-footnotes-drawer .footnotes {
+  background-color: #FAF4E6;
+  color: #292524;
+}
+
+/* Obsidian Footnotes */
+[data-paper-theme="obsidian"] details.crow-footnotes-drawer {
+  background-color: #1F2228;
+  border-color: #2D3139;
+}
+[data-paper-theme="obsidian"] details.crow-footnotes-drawer summary.crow-footnotes-summary {
+  background-color: #1F2228;
+  color: #F4F4F5;
+}
+[data-paper-theme="obsidian"] details.crow-footnotes-drawer[open] summary.crow-footnotes-summary {
+  border-bottom-color: #2D3139;
+}
+[data-paper-theme="obsidian"] details.crow-footnotes-drawer .footnotes {
+  background-color: #16181D;
+  color: #A1A1AA;
 }
 
 article a.footnote-ref {

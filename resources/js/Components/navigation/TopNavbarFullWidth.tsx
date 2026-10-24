@@ -1,8 +1,9 @@
 import React from 'react';
+import { usePage } from '@inertiajs/react';
 import { BookId, LocaleCode } from '@/types/remotion';
 import { GlobalLocaleMenu, SupportedLocaleItem } from './GlobalLocaleMenu';
 import { PaperTheme } from '@/Layouts/FullWidthWorkspaceLayout';
-import { Search, User as UserIcon } from 'lucide-react';
+import { LogIn, Search, User as UserIcon } from 'lucide-react';
 
 interface TopNavbarFullWidthProps {
     currentLocale: LocaleCode;
@@ -35,6 +36,9 @@ export const TopNavbarFullWidth: React.FC<TopNavbarFullWidthProps> = ({
     showDashboardLink = true,
     extraActions,
 }) => {
+    const pageProps = usePage().props as unknown as { auth?: { user?: { name: string; email: string } | null } };
+    const currentUser = user || pageProps?.auth?.user || null;
+
     const nextTheme: PaperTheme =
         paperTheme === 'ivory' ? 'sepia' : paperTheme === 'sepia' ? 'obsidian' : 'ivory';
 
@@ -124,15 +128,23 @@ export const TopNavbarFullWidth: React.FC<TopNavbarFullWidthProps> = ({
                     onLocaleChange={onLocaleChange}
                 />
 
-                {/* Dashboard / User Link */}
-                {showDashboardLink && (
+                {/* User / Auth Link */}
+                {currentUser ? (
                     <a
                         href="/dashboard"
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-[#111113] text-[#FAF8F5] hover:bg-stone-800 focus-visible:outline-2 focus-visible:outline-[#1D4ED8] transition-colors min-h-[38px]"
-                        title={user ? `Dashboard (${user.email})` : 'Dashboard Pembeli'}
+                        title={`Dashboard (${currentUser.email})`}
                     >
                         <UserIcon className="w-3.5 h-3.5" />
                         <span className="hidden md:inline">Dashboard</span>
+                    </a>
+                ) : (
+                    <a
+                        href="/login"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg border border-[#E5E0D5] bg-[#FFFFFF] text-[#111113] hover:bg-[#FAF8F5] focus-visible:outline-2 focus-visible:outline-[#1D4ED8] transition-colors min-h-[38px]"
+                    >
+                        <LogIn className="w-3.5 h-3.5 text-stone-500" />
+                        <span>Masuk</span>
                     </a>
                 )}
             </div>

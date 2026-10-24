@@ -115,6 +115,17 @@ export const PreCompiledArticle: React.FC<PreCompiledArticleProps> = ({
                 summary.appendChild(btn);
             }
         });
+
+        // 4. Auto-expand footnotes drawer when footnote reference link is clicked
+        const footnoteLinks = articleRef.current.querySelectorAll<HTMLAnchorElement>('a.footnote-ref');
+        footnoteLinks.forEach((link) => {
+            link.onclick = () => {
+                const drawer = articleRef.current?.querySelector<HTMLDetailsElement>('details.crow-footnotes-drawer');
+                if (drawer && !drawer.open) {
+                    drawer.open = true;
+                }
+            };
+        });
     }, [html]);
 
     return (

@@ -117,7 +117,16 @@ class ChapterCompilerService
             $html
         );
 
-        // 5. Transform <details> script drawers to include tactical classes & copy script attribute
+        // 5. Wrap footnotes into an elegant collapsible drawer (closed by default)
+        $footnoteLabel = ($locale === 'en') ? '📚 Footnotes & Citations' : '📚 Catatan Kaki & Rujukan Riset';
+        $footnoteHint = ($locale === 'en') ? 'Click to expand' : 'Klik untuk buka catatan';
+        $html = preg_replace(
+            '/<div class="footnotes"([^>]*)>(.*?)<\/div>/s',
+            '<details class="crow-footnotes-drawer"><summary class="crow-footnotes-summary"><span class="crow-footnotes-title">' . $footnoteLabel . '</span><span class="crow-footnotes-hint">' . $footnoteHint . '</span></summary><div class="footnotes"$1>$2</div></details>',
+            $html
+        );
+
+        // 6. Transform <details> script drawers to include tactical classes & copy script attribute
         $html = preg_replace_callback(
             '/<details(\s*[^>]*)>/i',
             function ($matches) {

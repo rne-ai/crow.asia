@@ -1,5 +1,6 @@
 import React from 'react';
-import { BookOpen, Compass, ShieldCheck } from 'lucide-react';
+import { usePage } from '@inertiajs/react';
+import { BookOpen, Compass, LogIn, ShieldCheck, User as UserIcon } from 'lucide-react';
 import { GlobalLocaleMenu } from '@/Components/navigation/GlobalLocaleMenu';
 import { LocaleCode } from '@/types/remotion';
 
@@ -14,6 +15,9 @@ export default function MarketingFullWidthLayout({
     currentLocale = 'id',
     headerRight,
 }: MarketingFullWidthLayoutProps) {
+    const pageProps = usePage().props as unknown as { auth?: { user?: { name: string; email: string } | null } };
+    const currentUser = pageProps?.auth?.user || null;
+
     return (
         <div className="min-h-screen w-full flex flex-col bg-[#FAF8F5] text-[#111113] font-sans antialiased selection:bg-[#FFE66D] selection:text-[#111113]">
             {/* Top Navbar Full-Width */}
@@ -65,13 +69,25 @@ export default function MarketingFullWidthLayout({
                         {headerRight ? (
                             headerRight
                         ) : (
-                            <a
-                                href="/read/book-1/id/ch-0"
-                                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-[#111113] text-[#FAF8F5] hover:bg-stone-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] transition-colors min-h-[38px]"
-                            >
-                                <BookOpen className="w-4 h-4" />
-                                <span>Baca Bab 0 & 1</span>
-                            </a>
+                            <>
+                                {currentUser ? (
+                                    <a
+                                        href="/dashboard"
+                                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-[#111113] text-[#FAF8F5] hover:bg-stone-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] transition-colors min-h-[38px]"
+                                    >
+                                        <UserIcon className="w-3.5 h-3.5" />
+                                        <span>Dashboard</span>
+                                    </a>
+                                ) : (
+                                    <a
+                                        href="/login"
+                                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg border border-[#E5E0D5] bg-[#FFFFFF] text-[#111113] hover:bg-[#FAF8F5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] transition-colors min-h-[38px]"
+                                    >
+                                        <LogIn className="w-3.5 h-3.5 text-stone-500" />
+                                        <span>Masuk</span>
+                                    </a>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>

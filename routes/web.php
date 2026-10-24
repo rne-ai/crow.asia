@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
@@ -11,6 +12,11 @@ use App\Http\Controllers\Webhooks\MayarWebhookController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'index'])->name('home');
+
+// Auth Routes (Login / Logout)
+Route::get('/login', [AuthController::class, 'create'])->name('login');
+Route::post('/login', [AuthController::class, 'store']);
+Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
 // Checkout & Payment Routes
 Route::get('/checkout/{tierId}', [CheckoutController::class, 'show'])->name('checkout.show');

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import MarketingFullWidthLayout from '@/Layouts/MarketingFullWidthLayout';
-import { BookOpen, CheckCircle, Download, Lock, ShieldCheck, User } from 'lucide-react';
+import { BookOpen, CheckCircle, Download, Lock, LogOut, ShieldCheck, User } from 'lucide-react';
 
 interface BookItem {
     id: string;
@@ -64,6 +64,15 @@ export default function Dashboard({
                         >
                             <span>Beli Playbook Lain</span>
                         </a>
+
+                        <button
+                            type="button"
+                            onClick={() => router.post('/logout')}
+                            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-[#E5E0D5] bg-white text-xs font-bold text-stone-700 hover:text-red-600 hover:bg-red-50 hover:border-red-200 transition-colors"
+                        >
+                            <LogOut className="w-3.5 h-3.5" />
+                            <span>Keluar</span>
+                        </button>
                     </div>
                 </div>
 
