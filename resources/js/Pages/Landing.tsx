@@ -225,7 +225,7 @@ export default function Landing({
 
                         {/* Volume Switcher Tabs for 16:9 Player */}
                         <div className="flex items-center justify-center gap-2 font-mono text-xs">
-                            <span className="text-stone-400 hidden sm:inline">Pratinjau Animasi:</span>
+                            <span className="text-stone-400 hidden sm:inline">{t('landing.hero.preview_animation')}</span>
                             {books.map((b) => (
                                 <button
                                     key={b.id}
@@ -452,7 +452,7 @@ export default function Landing({
 
                                 <div className="flex flex-wrap gap-2 text-xs font-mono">
                                     <span className="bg-[#FAF8F5] border border-[#E5E0D5] px-2.5 py-1 rounded text-stone-700">
-                                        Kerangka: {recommendedBook.keyFrameworks.join(' • ')}
+                                        {t('landing.quiz.frameworks_label', { frameworks: recommendedBook.keyFrameworks.join(' • ') })}
                                     </span>
                                 </div>
 
@@ -508,7 +508,7 @@ export default function Landing({
                                     type="text"
                                     value={demoTeammate}
                                     onChange={(e) => setDemoTeammate(e.target.value)}
-                                    placeholder="Contoh: Rina, Budi, Dimas"
+                                    placeholder={t('landing.demo.name_placeholder')}
                                     className="w-full px-3 py-2 text-sm rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] focus:outline-none focus:border-[#1D4ED8] focus:ring-1 focus:ring-[#1D4ED8]"
                                 />
                             </div>
@@ -517,7 +517,7 @@ export default function Landing({
                             {locale === 'id' && (
                                 <div className="space-y-1.5 self-stretch sm:self-auto">
                                     <span className="text-xs font-mono font-bold uppercase text-stone-500 block">
-                                        Pilihan Gaya Bahasa:
+                                        {t('landing.demo.register_label')}
                                     </span>
                                     <InContentRegisterToggle
                                         locale={locale}
@@ -533,7 +533,7 @@ export default function Landing({
                             <div className="flex items-center justify-between">
                                 <span className="font-mono text-xs font-bold text-stone-500 flex items-center gap-1.5">
                                     <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                                    <span>CONTEKAN DIALOG OBROLAN 1 (RUMUS 3K)</span>
+                                    <span>{t('landing.demo.script_dialog_title')}</span>
                                 </span>
                                 <button
                                     type="button"
@@ -566,13 +566,13 @@ export default function Landing({
                 <div className="w-full max-w-6xl mx-auto space-y-10">
                     <div className="text-center space-y-2">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-stone-500">
-                            TRILOGI TAKTIS KEPEMIMPINAN
+                            {t('landing.catalog.badge')}
                         </span>
                         <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111113]">
-                            Tiga Volume Mandiri untuk Setiap Fase Karier
+                            {t('landing.catalog.title')}
                         </h2>
                         <p className="text-sm text-stone-600 max-w-lg mx-auto">
-                            Dirancang agar dapat dibaca terpisah sesuai friksi paling mendesak di tim Anda saat ini.
+                            {t('landing.catalog.desc')}
                         </p>
                     </div>
 
@@ -590,7 +590,9 @@ export default function Landing({
                                         >
                                             {b.volumeCode}
                                         </span>
-                                        <span className="text-xs font-mono text-stone-500">15 Bab</span>
+                                        <span className="text-xs font-mono text-stone-500">
+                                            {t('landing.catalog.chapters_count', { count: 15 })}
+                                        </span>
                                     </div>
 
                                     <div className="space-y-1.5">
@@ -604,7 +606,7 @@ export default function Landing({
 
                                     <div className="pt-2 border-t border-[#E5E0D5] space-y-2">
                                         <span className="text-[11px] font-mono font-bold uppercase text-stone-400 block">
-                                            Cocok Untuk:
+                                            {t('landing.catalog.suitable_for')}
                                         </span>
                                         <div className="flex flex-wrap gap-1.5">
                                             {b.targetRoles.map((role, rIdx) => (
@@ -620,7 +622,7 @@ export default function Landing({
 
                                     <div className="space-y-1">
                                         <span className="text-[11px] font-mono font-bold uppercase text-stone-400 block">
-                                            Kerangka Kunci:
+                                            {t('landing.catalog.key_frameworks')}
                                         </span>
                                         <p className="text-xs font-mono text-stone-700">
                                             {b.keyFrameworks.join(' • ')}
@@ -630,7 +632,9 @@ export default function Landing({
 
                                 <div className="pt-4 border-t border-[#E5E0D5] flex items-center justify-between">
                                     <div className="space-y-0.5">
-                                        <span className="text-[10px] font-mono text-stone-400 uppercase block">Akses Tunggal:</span>
+                                        <span className="text-[10px] font-mono text-stone-400 uppercase block">
+                                            {t('landing.catalog.single_access')}
+                                        </span>
                                         <span className="text-base font-extrabold text-[#111113]">
                                             {formatPrice(b.priceSingleIdr, b.priceSingleUsd)}
                                         </span>

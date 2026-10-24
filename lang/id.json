@@ -33,7 +33,17 @@
       "desc": "Bukan sekadar wacana motivasi kepemimpinan. Ini buku pedoman 1-on-1 taktis, formula kalibrasi tugas (L1–L4), dan skrip teruji untuk membangun tim mandiri secara berkelanjutan.",
       "cta_read_free": "Baca Gratis Bab 0 & 1",
       "cta_view_bundle": "Lihat Paket Bundel",
+      "preview_animation": "Pratinjau Animasi:",
       "showcase_loading": "Memuat Showcase Remotion 16:9..."
+    },
+    "catalog": {
+      "badge": "TRILOGI TAKTIS KEPEMIMPINAN",
+      "title": "Tiga Volume Mandiri untuk Setiap Fase Karier",
+      "desc": "Dirancang agar dapat dibaca terpisah sesuai friksi paling mendesak di tim Anda saat ini.",
+      "suitable_for": "Cocok Untuk:",
+      "key_frameworks": "Kerangka Kunci:",
+      "single_access": "Akses Tunggal:",
+      "chapters_count": ":count Bab"
     },
     "quiz": {
       "header_badge": "DIAGNOSIS KEBUTUHAN TAKTIS",
@@ -60,6 +70,7 @@
       "result_badge": "HASIL REKOMENDASI DIAGNOSIS ANDA",
       "result_title": "Anda Paling Membutuhkan :volume",
       "result_desc": "Berdasarkan jawaban Anda, playbook ini menyediakan instrumen taktis langsung untuk mengatasi friksi tim Anda.",
+      "frameworks_label": "Kerangka: :frameworks",
       "cta_open_recommended": "Buka Playbook Rekomendasi",
       "cta_repeat_quiz": "Ulangi Kuis Diagnosis"
     },
@@ -68,6 +79,9 @@
       "title": "Simulasi Skrip 1-on-1 Meja Kerja",
       "desc": "Ganti nama staf di bawah untuk melihat bagaimana token otomatis disematkan ke dalam kalimat skrip taktis.",
       "teammate_label": "NAMA ANGGOTA TIM",
+      "script_dialog_title": "CONTEKAN DIALOG OBROLAN 1 (RUMUS 3K)",
+      "register_label": "Pilihan Gaya Bahasa:",
+      "name_placeholder": "Contoh: Rina, Budi, Dimas",
       "sample_script_casual": "Lo perhatiin nggak, di sprint kemarin ada 2 delivery yang geser? Menurut lo, apa blocker terbesarnya, :name?",
       "sample_script_standard": "Apakah Anda memperhatikan ada 2 deliverable yang tertunda pada siklus kerja kemarin? Menurut analisis Anda, apa kendala utamanya, :name?",
       "sample_script": "Apakah Anda memperhatikan ada 2 deliverable yang tertunda pada siklus kerja kemarin? Menurut analisis Anda, apa kendala utamanya, :name?",

@@ -33,7 +33,17 @@
       "desc": "No fluffy motivational theories. Real tactical 1-on-1 playbooks, task calibration frameworks (L1–L4), and copy-paste scripts to build autonomous teams without burning out.",
       "cta_read_free": "Read Free: Chapters 0 & 1",
       "cta_view_bundle": "View Bundle Packs",
+      "preview_animation": "Animation Preview:",
       "showcase_loading": "Loading 16:9 Remotion Showcase..."
+    },
+    "catalog": {
+      "badge": "TACTICAL LEADERSHIP TRILOGY",
+      "title": "Three Standalone Volumes for Every Career Stage",
+      "desc": "Designed to be read independently based on the most pressing friction in your team right now.",
+      "suitable_for": "Target Roles:",
+      "key_frameworks": "Key Frameworks:",
+      "single_access": "Single Volume:",
+      "chapters_count": ":count Chapters"
     },
     "quiz": {
       "header_badge": "TACTICAL NEEDS DIAGNOSIS",
@@ -60,6 +70,7 @@
       "result_badge": "YOUR DIAGNOSIS RECOMMENDATION",
       "result_title": "You Most Urgently Need :volume",
       "result_desc": "Based on your inputs, this playbook delivers immediate tactical tools for your team friction.",
+      "frameworks_label": "Key Frameworks: :frameworks",
       "cta_open_recommended": "Open Recommended Playbook",
       "cta_repeat_quiz": "Retake Diagnostic Quiz"
     },
@@ -68,6 +79,9 @@
       "title": "1-on-1 Workspace Script Simulator",
       "desc": "Change staff name below to see dynamic token injection in real tactical phrasing.",
       "teammate_label": "TEAMMATE NAME",
+      "script_dialog_title": "CONVERSATION SCRIPT 1 (3K FORMULA)",
+      "register_label": "Language Register:",
+      "name_placeholder": "e.g. Sarah, Alex, David",
       "sample_script_casual": "Did you notice two deliverables slipped during the last sprint cycle? In your assessment, what was the primary blocker, :name?",
       "sample_script_standard": "Did you notice two deliverables slipped during the last sprint cycle? In your assessment, what was the primary blocker, :name?",
       "sample_script": "Did you notice two deliverables slipped during the last sprint cycle? In your assessment, what was the primary blocker, :name?",
