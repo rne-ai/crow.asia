@@ -23,9 +23,13 @@
   "landing": {
     "badge": "TACTICAL FIELD PLAYBOOK 2026",
     "hero": {
-      "title": "Baru Diangkat Menjadi Pemimpin atau Menghadapi Beban Tim?",
-      "title_highlight": "Panduan Meja Kerja Taktis Anda.",
-      "desc": "Bukan sekadar wacana motivasi kepemimpinan. Ini buku pedoman 1-on-1 taktis, formula kalibrasi tugas (L1–L4), dan skrip teruji untuk membangun tim mandiri secara berkelanjutan.",
+      "title_prefix": "Panduan Taktis",
+      "title_mark": "Memimpin Tim",
+      "title_middle": "& Menjaga",
+      "title_scribble": "Ketahanan Diri",
+      "title_suffix": "Tanpa Teori Bertele-tele.",
+      "title": "Panduan Taktis Memimpin Tim & Menjaga Ketahanan Diri Tanpa Teori Bertele-tele.",
+      "desc": "Dirancang untuk pemimpin tim baru hingga manajer divisi. Berisi kerangka kerja teruji (CCL, Harvard, Gallup), puluhan skrip percakapan empat mata siap salin, bagan alur interaktif, serta latihan 30 hari yang langsung bisa dipraktikkan.",
       "cta_read_free": "Baca Gratis Bab 0 & 1",
       "cta_view_bundle": "Lihat Paket Bundel",
       "preview_animation": "Pratinjau Animasi:",

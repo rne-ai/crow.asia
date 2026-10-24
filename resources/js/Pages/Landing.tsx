@@ -118,9 +118,32 @@ export default function Landing({
                             </div>
                         </div>
 
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#111113] leading-[1.12]">
-                            {heroTitle}
-                            <span className="block text-[#1D4ED8] mt-2">{heroHighlight}</span>
+                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#111113] leading-[1.18]">
+                            {t('landing.hero.title_prefix')}{' '}
+                            <mark className="crow-hero-mark">
+                                {t('landing.hero.title_mark')}
+                            </mark>{' '}
+                            {t('landing.hero.title_middle')}{' '}
+                            <span className="crow-scribble-container">
+                                <span>{t('landing.hero.title_scribble')}</span>
+                                <svg
+                                    className="crow-scribble-svg"
+                                    viewBox="0 0 240 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M3 15C45 4 150 2 236 12C180 18 100 22 25 19C70 14 175 16 230 18"
+                                        stroke="#059669"
+                                        strokeWidth="3.2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="crow-scribble-path"
+                                    />
+                                </svg>
+                            </span>{' '}
+                            {t('landing.hero.title_suffix')}
                         </h1>
 
                         <p className="text-base sm:text-lg text-stone-600 max-w-xl leading-relaxed">
