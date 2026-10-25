@@ -83,6 +83,15 @@ class PricingTier extends Model
         return in_array($bookId, $this->included_book_ids ?? [], true);
     }
 
+    public function getStrikePriceUsdAttribute(): ?float
+    {
+        if ($this->id === 'bundle-all-3' || $this->strike_price_idr !== null) {
+            return 20.97;
+        }
+
+        return null;
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true)->orderBy('sort_order');

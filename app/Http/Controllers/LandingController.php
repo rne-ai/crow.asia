@@ -50,6 +50,7 @@ class LandingController extends Controller
             'badges' => $t->badges,
             'priceIdr' => $t->price_idr,
             'strikePriceIdr' => $t->strike_price_idr,
+            'strikePriceUsd' => $t->strike_price_usd ? (float) $t->strike_price_usd : null,
             'priceUsd' => (float) $t->price_usd,
             'includedBookIds' => $t->included_book_ids,
             'isBestValue' => $t->is_best_value,
