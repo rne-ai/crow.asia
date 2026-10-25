@@ -4,7 +4,7 @@ import { LocaleCode } from '@/types/remotion';
 type TranslationReplacements = Record<string, string | number>;
 
 export interface UseTranslationReturn {
-    t: (key: string, replacements?: TranslationReplacements) => string;
+    t: (key: string, replacements?: TranslationReplacements) => any;
     locale: LocaleCode;
     currency: 'IDR' | 'USD';
     formatPrice: (amountIdr: number, amountUsd?: number | null) => string;
@@ -21,7 +21,7 @@ export function useTranslation(): UseTranslationReturn {
     const locale = (pageProps?.locale || 'id') as LocaleCode;
     const currency = (pageProps?.currency || (locale === 'id' ? 'IDR' : 'USD')) as 'IDR' | 'USD';
 
-    const t = (key: string, replacements?: TranslationReplacements): string => {
+    const t = (key: string, replacements?: TranslationReplacements): any => {
         const segments = key.split('.');
         let current: any = translations;
 
@@ -34,9 +34,17 @@ export function useTranslation(): UseTranslationReturn {
             }
         }
 
-        let result = typeof current === 'string' ? current : key;
+        if (current === null || current === undefined) {
+            return key;
+        }
 
-        if (replacements && typeof result === 'string') {
+        if (typeof current !== 'string') {
+            return current;
+        }
+
+        let result = current;
+
+        if (replacements) {
             for (const [rKey, rVal] of Object.entries(replacements)) {
                 result = result.replaceAll(`:${rKey}`, String(rVal));
                 result = result.replaceAll(`{${rKey}}`, String(rVal));

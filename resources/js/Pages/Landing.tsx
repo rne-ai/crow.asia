@@ -166,7 +166,6 @@ export default function Landing({
                                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-[#E5E0D5] bg-[#FFFFFF] text-[#111113] font-bold text-sm hover:bg-stone-50 transition-colors focus-visible:outline-2 focus-visible:outline-[#1D4ED8] shadow-2xs min-h-[44px]"
                             >
                                 <span>{t('landing.hero.cta_find_book')}</span>
-                                <ArrowRight className="w-4 h-4 text-stone-400" />
                             </a>
                         </div>
                     </div>
@@ -179,7 +178,7 @@ export default function Landing({
             </section>
 
             {/* 2. KUIS DIAGNOSIS TAKTIS 45 DETIK */}
-            <section id="diagnosis" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FFFFFF]">
+            <section id="diagnosis" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FFFFFF] scroll-mt-16">
                 <div className="w-full max-w-4xl mx-auto space-y-8">
                     <div className="text-center space-y-2">
                         <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-[#1D4ED8] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
@@ -449,7 +448,7 @@ export default function Landing({
             </section>
 
             {/* 3. KATALOG 3 VOLUME PLAYBOOK (Image 3) */}
-            <section id="katalog" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FAF8F5]">
+            <section id="katalog" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FAF8F5] scroll-mt-16">
                 <div className="w-full max-w-6xl mx-auto space-y-10">
                     <div className="text-center space-y-2">
                         <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-stone-600 bg-white px-3 py-1 rounded-full border border-[#E5E0D5]">
@@ -554,7 +553,7 @@ export default function Landing({
             </section>
 
             {/* 4. PRICING TIERS & BUNDLE (Image 4) */}
-            <section id="harga" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FFFFFF]">
+            <section id="harga" className="w-full py-16 px-4 sm:px-6 lg:px-10 border-b border-[#E5E0D5] bg-[#FFFFFF] scroll-mt-16">
                 <div className="w-full max-w-6xl mx-auto space-y-12">
                     <div className="text-center space-y-2">
                         <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
