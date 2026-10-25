@@ -39,6 +39,7 @@ interface PricingTierItem {
     badges: { label?: string; color?: string } | null;
     priceIdr: number;
     strikePriceIdr: number | null;
+    strikePriceUsd?: number | null;
     priceUsd: number;
     includedBookIds: string[];
     isBestValue: boolean;
@@ -107,7 +108,7 @@ export default function Landing({
 
     return (
         <MarketingFullWidthLayout currentLocale={locale}>
-            <Head title="crow.asia — Pan-Asian Interactive Leadership Field Playbook Platform" />
+            <Head title={t('landing.meta_title')} />
 
             {/* 1. HERO SECTION (Split 50/50 Desktop Full-Width) */}
             <section className="w-full border-b border-[#E5E0D5] bg-[#FAF8F5] py-12 lg:py-16 px-4 sm:px-6 lg:px-10">
@@ -491,7 +492,7 @@ export default function Landing({
                                                     coverTitleTop: t(`landing.catalog.cover_titles.${b.id}.top`),
                                                     coverTitleBottom: t(`landing.catalog.cover_titles.${b.id}.bottom`),
                                                     chaptersLabel: t('landing.catalog.chapters_count_label'),
-                                                    editionLabel: 'ID + EN',
+                                                    editionLabel: t('landing.catalog.edition_label'),
                                                 }}
                                                 className="w-full max-w-[280px]"
                                             />
@@ -611,17 +612,11 @@ export default function Landing({
                                 <div className="w-full lg:w-72 p-6 rounded-xl border border-[#E5E0D5] bg-[#FAF8F5] flex flex-col justify-between space-y-4 shrink-0 text-center sm:text-left">
                                     <div className="space-y-1">
                                         <div className="flex items-center justify-center sm:justify-start gap-2">
-                                            {currency === 'IDR' ? (
-                                                <span className="text-xs line-through text-stone-400 font-mono">
-                                                    Rp 237.000
-                                                </span>
-                                            ) : (
-                                                <span className="text-xs line-through text-stone-400 font-mono">
-                                                    $20.97
-                                                </span>
-                                            )}
+                                            <span className="text-xs line-through text-stone-400 font-mono">
+                                                {formatPrice(bundleTier.strikePriceIdr ?? 237000, bundleTier.strikePriceUsd ?? 20.97)}
+                                            </span>
                                             <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                                                {currency === 'IDR' ? t('landing.pricing.save_badge', { amount: 'Rp 88.000' }) : t('landing.pricing.save_badge', { amount: '$8.98' })}
+                                                {t('landing.pricing.bundle.save_badge')}
                                             </span>
                                         </div>
 
@@ -732,25 +727,16 @@ export default function Landing({
                                                 <tr key={rIdx}>
                                                     <td className="p-3.5 font-bold text-stone-900 bg-[#FAF8F5]/40">{row.name}</td>
                                                     <td className={`p-3.5 text-center ${isLastRow ? 'font-bold text-stone-900' : ''}`}>
-                                                        {isLastRow ? formatPrice(59000, 4.99) : row.b1}
+                                                        {row.b1}
                                                     </td>
                                                     <td className={`p-3.5 text-center ${isLastRow ? 'font-bold text-stone-900' : ''}`}>
-                                                        {isLastRow ? formatPrice(79000, 6.99) : row.b2}
+                                                        {row.b2}
                                                     </td>
                                                     <td className={`p-3.5 text-center ${isLastRow ? 'font-bold text-stone-900' : ''}`}>
-                                                        {isLastRow ? formatPrice(99000, 8.99) : row.b3}
+                                                        {row.b3}
                                                     </td>
                                                     <td className={`p-3.5 text-center bg-amber-50/40 border-x-2 ${isLastRow ? 'border-b-2 font-black text-sm text-[#111113]' : 'font-bold text-[#111113]'} border-amber-400`}>
-                                                        {isLastRow ? (
-                                                            <>
-                                                                {formatPrice(149000, 11.99)}{' '}
-                                                                <span className="text-[10px] font-normal text-emerald-700 block">
-                                                                    ({currency === 'IDR' ? 'Hemat Rp88.000' : 'Save $8.98'})
-                                                                </span>
-                                                            </>
-                                                        ) : (
-                                                            row.bundle
-                                                        )}
+                                                        {row.bundle}
                                                     </td>
                                                 </tr>
                                             );

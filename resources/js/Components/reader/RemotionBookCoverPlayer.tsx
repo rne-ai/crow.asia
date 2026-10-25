@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Player, PlayerRef } from '@remotion/player';
 import { BookCoverProps, BookCoverRemotionComp } from '@/Components/remotion/compositions/BookCoverRemotionComp';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface RemotionBookCoverPlayerProps {
     bookProps: BookCoverProps;
@@ -13,6 +14,7 @@ export const RemotionBookCoverPlayer: React.FC<RemotionBookCoverPlayerProps> = (
     isHovered: externalHover,
     className = '',
 }) => {
+    const { t } = useTranslation();
     const playerRef = useRef<PlayerRef>(null);
     const [internalHover, setInternalHover] = useState(false);
 
@@ -75,7 +77,7 @@ export const RemotionBookCoverPlayer: React.FC<RemotionBookCoverPlayerProps> = (
                     activeHover ? 'opacity-100' : 'opacity-0'
                 }`}
             >
-                ✨ Cinematic Motion
+                {t('landing.catalog.cinematic_motion')}
             </div>
         </div>
     );

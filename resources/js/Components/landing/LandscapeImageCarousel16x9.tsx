@@ -120,7 +120,7 @@ export const LandscapeImageCarousel16x9: React.FC<LandscapeImageCarousel16x9Prop
                         <button
                             key={idx}
                             onClick={() => setCurrentIndex(idx)}
-                            aria-label={`Ke slide ${idx + 1}`}
+                            aria-label={t('landing.hero.carousel.go_to_slide', { num: idx + 1 })}
                             className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-2 focus-visible:outline-white ${
                                 idx === currentIndex
                                     ? 'w-6 bg-[#FFE66D]'
@@ -135,7 +135,7 @@ export const LandscapeImageCarousel16x9: React.FC<LandscapeImageCarousel16x9Prop
             <button
                 type="button"
                 onClick={handlePrev}
-                aria-label="Slide sebelumnya"
+                aria-label={t('landing.hero.carousel.prev_slide')}
                 className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/55 backdrop-blur-md border border-white/20 text-white flex items-center justify-center opacity-80 hover:opacity-100 hover:bg-black/80 transition-all focus-visible:outline-2 focus-visible:outline-white shadow-md cursor-pointer"
             >
                 <ChevronLeft className="w-5 h-5" />
@@ -144,7 +144,7 @@ export const LandscapeImageCarousel16x9: React.FC<LandscapeImageCarousel16x9Prop
             <button
                 type="button"
                 onClick={handleNext}
-                aria-label="Slide berikutnya"
+                aria-label={t('landing.hero.carousel.next_slide')}
                 className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/55 backdrop-blur-md border border-white/20 text-white flex items-center justify-center opacity-80 hover:opacity-100 hover:bg-black/80 transition-all focus-visible:outline-2 focus-visible:outline-white shadow-md cursor-pointer"
             >
                 <ChevronRight className="w-5 h-5" />

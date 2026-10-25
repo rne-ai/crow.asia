@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { router } from '@inertiajs/react';
 import { ChevronDown, Globe, Sparkles } from 'lucide-react';
 import { LocaleCode } from '@/types/remotion';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export interface SupportedLocaleItem {
     code: LocaleCode;
@@ -29,6 +30,7 @@ export const GlobalLocaleMenu: React.FC<GlobalLocaleMenuProps> = ({
     onLocaleChange,
     currentPathResolver,
 }) => {
+    const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -106,7 +108,7 @@ export const GlobalLocaleMenu: React.FC<GlobalLocaleMenuProps> = ({
                 onClick={() => setIsOpen((prev) => !prev)}
                 aria-expanded={isOpen}
                 aria-haspopup="true"
-                aria-label={`Pilih Bahasa, Bahasa saat ini: ${activeLocale.nativeName}`}
+                aria-label={t('nav.select_language', { lang: activeLocale.nativeName })}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg border border-[#E5E0D5] bg-[#FFFFFF] text-[#111113] hover:bg-[#FAF8F5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8] transition-colors min-h-[38px]"
             >
                 <span className="text-sm leading-none" role="img" aria-hidden="true">
@@ -126,7 +128,7 @@ export const GlobalLocaleMenu: React.FC<GlobalLocaleMenuProps> = ({
                 >
                     <div className="px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider text-stone-400 border-b border-[#E5E0D5]/60 flex items-center gap-1.5">
                         <Globe className="w-3.5 h-3.5 text-stone-400" />
-                        <span>Bahasa / Region</span>
+                        <span>{t('nav.language_region')}</span>
                     </div>
 
                     <div className="max-h-72 overflow-y-auto py-1">

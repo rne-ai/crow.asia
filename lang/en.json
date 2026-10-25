@@ -18,9 +18,12 @@
       "book-1": "VOL. 01: Mastering Team Leadership",
       "book-2": "VOL. 02: Anti-Burnout Leadership",
       "book-3": "VOL. 03: Orchestrating Leaders"
-    }
+    },
+    "select_language": "Select Language, Current language: :lang",
+    "language_region": "Language / Region"
   },
   "landing": {
+    "meta_title": "crow.asia — Pan-Asian Interactive Leadership Field Playbook Platform",
     "badge": "PRACTICAL GUIDE TO LEADING PEOPLE • READ FREE INITIAL CHAPTERS",
     "hero": {
       "badge": "PRACTICAL GUIDE TO LEADING PEOPLE • READ FREE INITIAL CHAPTERS",
@@ -60,14 +63,19 @@
             "short_desc": "How to coach subordinate team leads, dissolve inter-team ego silos, and translate company-wide strategy.",
             "action_link": "Read Free Chapter 1 →"
           }
-        ]
+        ],
+        "go_to_slide": "Go to slide :num",
+        "prev_slide": "Previous slide",
+        "next_slide": "Next slide"
       }
     },
     "catalog": {
       "badge": "LEADERSHIP TRILOGY CURRICULUM",
       "title": "3 Playbooks Tailored to Your Leadership Stage",
       "desc": "No academic textbooks with lofty theories. Every book delivers practical steps, real case studies, and exact dialogue scripts ready to use in your workplace or business immediately.",
-      "status_free_sample": "🔓",
+      "status_free_sample": "🔓 FREE SAMPLE CHAPTERS",
+      "cinematic_motion": "✨ Cinematic Motion",
+      "edition_label": "ID + EN",
       "chapters_count_label": "13 Practical Chapters + Summaries",
       "access_info": "Free preview: Introduction & Chapter 1 (Purchase to unlock Chapters 2–13 & Reference Summaries)",
       "suitable_for": "Target Roles:",
@@ -101,7 +109,7 @@
       "header_badge": "30-SECOND BOOK SELECTOR",
       "title": "Unsure Where to Start Reading?",
       "desc": "Answer this quick diagnostic about your most urgent leadership friction.",
-      "card_badge": "Leader Challenge Diagnostic",
+      "card_badge": "Leadership Diagnosis",
       "step_indicator": "Step :current / :total",
       "step_1_q": "1. What situation drains your mind the most this week?",
       "step_1_o1": "I hesitate to correct staff mistakes, struggle to give crystal-clear directives, and end up redoing their tasks myself.",
@@ -295,5 +303,11 @@
   "compiler": {
     "mermaid_badge": "📊 WORKFLOW DIAGRAM • TACTICAL SCHEMA",
     "practice_badge": "🎯 PRACTICE ACTIONS • WORKSPACE STEPS"
+  },
+  "footer": {
+    "tagline": "Pan-Asian Interactive Leadership Field Playbook",
+    "description": "Tactical desk playbooks for team leads, engineering managers, and executives. Grounded in real field experience and validated organizational research.",
+    "copyright": "© 2026 crow.asia. All rights reserved.",
+    "tech_specs": "Desktop 100vw • Dual-Register • Remotion 16:9 • WCAG AA"
   }
 }

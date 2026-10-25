@@ -97,10 +97,10 @@ export default function MarketingFullWidthLayout({
                     <div className="space-y-2">
                         <div className="flex items-center gap-2 font-bold text-base text-[#111113]">
                             <span>🦅 crow.asia</span>
-                            <span className="font-normal text-xs text-stone-500">— Pan-Asian Interactive Leadership Field Playbook</span>
+                            <span className="font-normal text-xs text-stone-500">— {t('footer.tagline')}</span>
                         </div>
                         <p className="max-w-xl text-stone-500 text-xs leading-relaxed">
-                            Buku pegangan meja kerja taktis untuk para pemimpin tim, manajer rekayasa, dan eksekutif. Ditulis berbasis studi lapangan nyata dan riset perilaku organisasi teruji.
+                            {t('footer.description')}
                         </p>
                     </div>
 
@@ -118,8 +118,8 @@ export default function MarketingFullWidthLayout({
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-[#E5E0D5]/60 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-stone-400">
-                    <p>© 2026 crow.asia. Seluruh hak cipta dilindungi undang-undang.</p>
-                    <p className="font-mono text-[11px]">Desktop 100vw • Dual-Register • Remotion 16:9 • WCAG AA</p>
+                    <p>{t('footer.copyright')}</p>
+                    <p className="font-mono text-[11px]">{t('footer.tech_specs')}</p>
                 </div>
             </footer>
         </div>

@@ -18,9 +18,12 @@
       "book-1": "VOL. 01: Mahir Memimpin Tim",
       "book-2": "VOL. 02: Anti-Burnout",
       "book-3": "VOL. 03: Orkestrasi"
-    }
+    },
+    "select_language": "Pilih Bahasa, Bahasa saat ini: :lang",
+    "language_region": "Bahasa / Wilayah"
   },
   "landing": {
+    "meta_title": "crow.asia — Platform Pembaca Taktis Interaktif Kepemimpinan",
     "badge": "LEADERSHIP TACTICAL PLAYBOOK",
     "hero": {
       "badge": "LEADERSHIP TACTICAL PLAYBOOK",
@@ -60,14 +63,19 @@
             "short_desc": "Cara membina para kepala tim di bawahmu, meruntuhkan ego antar-tim, dan menerjemahkan target besar usaha.",
             "action_link": "Baca Gratis Bab 1 →"
           }
-        ]
+        ],
+        "go_to_slide": "Ke slide :num",
+        "prev_slide": "Slide sebelumnya",
+        "next_slide": "Slide berikutnya"
       }
     },
     "catalog": {
       "badge": "KURIKULUM TRILOGI KEPEMIMPINAN",
       "title": "3 Buku Panduan Sesuai Tahap Tantanganmu Memimpin Orang",
       "desc": "Bukan buku teori kampus yang tebal dan mengawang-awang. Setiap buku berisi langkah praktis, studi kasus nyata, dan contoh kalimat percakapan yang bisa langsung kamu pakai di tempat kerja maupun tempat usahamu.",
-      "status_free_sample": "🔓",
+      "status_free_sample": "🔓 GRATIS BAB AWAL",
+      "cinematic_motion": "✨ Gerakan Sinematik",
+      "edition_label": "ID + EN",
       "chapters_count_label": "13 Bab Praktis + Lampiran",
       "access_info": "Terbuka gratis: Pendahuluan & Bab 1 (Lanjut beli untuk membuka Bab 2–13 & Lampiran)",
       "suitable_for": "Cocok Untuk:",
@@ -101,7 +109,7 @@
       "header_badge": "PANDUAN PILIH BUKU (30 DETIK)",
       "title": "Bingung Mulai Baca dari Buku yang Mana?",
       "desc": "Jawab pertanyaan singkat ini sesuai situasi yang paling sering kamu hadapi belakangan ini.",
-      "card_badge": "Diagnosis Tantangan Leader",
+      "card_badge": "Diagnosis Kepemimpinan",
       "step_indicator": "Langkah :current / :total",
       "step_1_q": "1. Situasi apa yang paling sering menguras pikiran kamu minggu ini?",
       "step_1_o1": "Saya sering sungkan menegur staf yang salah, bingung memberi arahan jelas, dan sering berakhir membereskan ulang pekerjaan mereka sendiri.",
@@ -295,5 +303,11 @@
   "compiler": {
     "mermaid_badge": "📊 DIAGRAM ALUR KERJA • SKEMA TAKTIS",
     "practice_badge": "🎯 LATIHAN PRAKTIK • AKSI MEJA KERJA"
+  },
+  "footer": {
+    "tagline": "Buku Panduan Lapangan Kepemimpinan Pan-Asia",
+    "description": "Buku pegangan meja kerja taktis untuk para pemimpin tim, manajer rekayasa, dan eksekutif. Ditulis berbasis studi lapangan nyata dan riset perilaku organisasi teruji.",
+    "copyright": "© 2026 crow.asia. Seluruh hak cipta dilindungi undang-undang.",
+    "tech_specs": "Desktop 100vw • Dual-Register • Remotion 16:9 • WCAG AA"
   }
 }
