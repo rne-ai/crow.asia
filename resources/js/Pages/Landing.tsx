@@ -2,10 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Head } from '@inertiajs/react';
 import MarketingFullWidthLayout from '@/Layouts/MarketingFullWidthLayout';
 import { SupportedLocaleItem } from '@/Components/navigation/GlobalLocaleMenu';
-import { HeroTrilogy16x9Comp } from '@/Components/remotion/compositions/HeroTrilogy16x9Comp';
+import { LandscapeImageCarousel16x9 } from '@/Components/landing/LandscapeImageCarousel16x9';
 import { RemotionBookCoverPlayer } from '@/Components/reader/RemotionBookCoverPlayer';
 import { BookId, LocaleCode } from '@/types/remotion';
-import { Player, PlayerRef } from '@remotion/player';
 import { useTranslation } from '@/hooks/useTranslation';
 import {
     ArrowRight,
@@ -76,8 +75,6 @@ export default function Landing({
     // FAQ Accordion State
     const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
 
-    const playerRef = useRef<PlayerRef>(null);
-
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -97,12 +94,16 @@ export default function Landing({
 
     const heroDesc = t('landing.hero.desc');
 
-    const faqItems = [
-        { q: t('landing.faq.items.0.q'), a: t('landing.faq.items.0.a') },
-        { q: t('landing.faq.items.1.q'), a: t('landing.faq.items.1.a') },
-        { q: t('landing.faq.items.2.q'), a: t('landing.faq.items.2.a') },
-        { q: t('landing.faq.items.3.q'), a: t('landing.faq.items.3.a') },
-    ];
+    const rawFaq = t('landing.faq.items') as unknown;
+    const faqItems: Array<{ q: string; a: string }> = Array.isArray(rawFaq)
+        ? (rawFaq as Array<{ q: string; a: string }>)
+        : [
+            { q: t('landing.faq.items.0.q'), a: t('landing.faq.items.0.a') },
+            { q: t('landing.faq.items.1.q'), a: t('landing.faq.items.1.a') },
+            { q: t('landing.faq.items.2.q'), a: t('landing.faq.items.2.a') },
+            { q: t('landing.faq.items.3.q'), a: t('landing.faq.items.3.a') },
+            { q: t('landing.faq.items.4.q'), a: t('landing.faq.items.4.a') },
+        ];
 
     return (
         <MarketingFullWidthLayout currentLocale={locale}>
@@ -154,73 +155,25 @@ export default function Landing({
 
                         <div className="flex flex-wrap items-center gap-4 pt-2">
                             <a
-                                href={`/read/book-1/${locale}/ch-0`}
+                                href="#katalog"
                                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#111113] text-[#FAF8F5] font-bold text-sm hover:bg-stone-800 transition-colors focus-visible:outline-2 focus-visible:outline-[#1D4ED8] shadow-xs min-h-[44px]"
                             >
-                                <BookOpen className="w-4 h-4" />
-                                <span>{t('landing.hero.cta_read_free')}</span>
+                                <BookOpen className="w-4 h-4 text-[#FFE66D]" />
+                                <span>{t('landing.hero.cta_free')}</span>
                             </a>
                             <a
-                                href="#harga"
+                                href="#diagnosis"
                                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-[#E5E0D5] bg-[#FFFFFF] text-[#111113] font-bold text-sm hover:bg-stone-50 transition-colors focus-visible:outline-2 focus-visible:outline-[#1D4ED8] shadow-2xs min-h-[44px]"
                             >
-                                <span>{t('landing.hero.cta_view_bundle')}</span>
+                                <span>{t('landing.hero.cta_find_book')}</span>
                                 <ArrowRight className="w-4 h-4 text-stone-400" />
                             </a>
                         </div>
                     </div>
 
-                    {/* Right Column: Interactive Remotion 16:9 Showcase */}
+                    {/* Right Column: 16:9 Landscape Image Carousel */}
                     <div className="w-full lg:w-1/2 flex flex-col gap-3">
-                        <div className="w-full rounded-2xl border border-[#E5E0D5] bg-[#FFFFFF] p-2.5 sm:p-3 shadow-sm">
-                            <div className="relative w-full overflow-hidden rounded-xl bg-black" style={{ aspectRatio: '16 / 9' }}>
-                                {!mounted ? (
-                                    <div className="flex h-full w-full items-center justify-center font-mono text-xs text-stone-400">
-                                        {t('landing.hero.showcase_loading')}
-                                    </div>
-                                ) : (
-                                    <Player
-                                        ref={playerRef}
-                                        component={HeroTrilogy16x9Comp}
-                                        inputProps={{
-                                            activeVolume,
-                                            locale,
-                                        }}
-                                        durationInFrames={540}
-                                        fps={30}
-                                        compositionWidth={1280}
-                                        compositionHeight={720}
-                                        style={{ width: '100%', height: '100%' }}
-                                        controls
-                                        autoPlay={false}
-                                        loop
-                                    />
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Volume Switcher Tabs for 16:9 Player */}
-                        <div className="flex items-center justify-center gap-2 font-mono text-xs">
-                            <span className="text-stone-400 hidden sm:inline">{t('landing.hero.preview_animation')}</span>
-                            {books.map((b) => (
-                                <button
-                                    key={b.id}
-                                    type="button"
-                                    onClick={() => setActiveVolume(b.id)}
-                                    className={`px-3 py-1.5 rounded-lg border transition-all flex items-center gap-1.5 min-h-[36px] ${
-                                        activeVolume === b.id
-                                            ? 'bg-[#111113] text-white border-[#111113] font-bold shadow-2xs'
-                                            : 'bg-white text-stone-600 border-[#E5E0D5] hover:border-stone-400'
-                                    }`}
-                                >
-                                    <span
-                                        className="w-2 h-2 rounded-full"
-                                        style={{ backgroundColor: b.accentHex }}
-                                    />
-                                    <span>{b.volumeCode}</span>
-                                </button>
-                            ))}
-                        </div>
+                        <LandscapeImageCarousel16x9 locale={locale} />
                     </div>
                 </div>
             </section>
@@ -479,14 +432,14 @@ export default function Landing({
                                         href={`/read/${recommendedBook.id}/${locale}/ch-0`}
                                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#111113] text-white text-xs sm:text-sm font-bold hover:bg-stone-800 transition-colors"
                                     >
-                                        <BookOpen className="w-4 h-4" />
+                                        <BookOpen className="w-4 h-4 text-[#FFE66D]" />
                                         <span>{t('landing.quiz.cta_open_recommended')}</span>
                                     </a>
                                     <a
                                         href="#harga"
                                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-[#E5E0D5] bg-[#FAF8F5] text-stone-800 text-xs sm:text-sm font-bold hover:bg-stone-100 transition-colors"
                                     >
-                                        <span>{t('landing.pricing.cta_buy')} ({formatPrice(recommendedBook.priceSingleIdr, recommendedBook.priceSingleUsd)})</span>
+                                        <span>{t('landing.quiz.cta_repeat_quiz')}</span>
                                     </a>
                                 </div>
                             </div>
@@ -536,20 +489,20 @@ export default function Landing({
                                                     illustrationPath: `/illustrations/${b.id}/portrait.png`,
                                                     coverTitleTop: t(`landing.catalog.cover_titles.${b.id}.top`),
                                                     coverTitleBottom: t(`landing.catalog.cover_titles.${b.id}.bottom`),
-                                                    chaptersLabel: t('landing.catalog.chapters_count', { count: 15 }),
+                                                    chaptersLabel: t('landing.catalog.chapters_count_label'),
                                                     editionLabel: 'ID + EN',
                                                 }}
                                                 className="w-full max-w-[280px]"
                                             />
                                         </div>
 
-                                        {/* Tag and Price Header */}
+                                        {/* Tag and Status Header */}
                                         <div className="flex items-center justify-between text-xs font-mono pt-1">
                                             <span className="px-2 py-0.5 rounded bg-stone-100 text-stone-700 font-bold uppercase text-[10px]">
                                                 {b.volumeCode} • {t(`landing.catalog.curriculum_tag_${b.id}`)}
                                             </span>
-                                            <span className="font-extrabold text-sm text-[#111113]">
-                                                {formatPrice(b.priceSingleIdr, b.priceSingleUsd)}
+                                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold text-[11px]">
+                                                {t('landing.catalog.status_free_sample')}
                                             </span>
                                         </div>
 
@@ -568,7 +521,7 @@ export default function Landing({
                                                 {t('landing.catalog.suitable_for')}
                                             </span>
                                             <p className="text-stone-800 font-medium text-[11px] leading-snug">
-                                                {b.targetRoles.join(', ')}
+                                                {t(`landing.catalog.target_roles.${b.id}`) || b.targetRoles.join(', ')}
                                             </p>
                                         </div>
 
@@ -576,16 +529,21 @@ export default function Landing({
                                         <p className="text-xs text-stone-600 leading-relaxed font-normal pt-1">
                                             {t(`landing.catalog.cta_paragraphs.${b.id}`)}
                                         </p>
+
+                                        {/* Access info note */}
+                                        <p className="text-[11px] font-mono text-stone-400 italic pt-1">
+                                            {t('landing.catalog.access_info')}
+                                        </p>
                                     </div>
 
-                                    {/* Single Action Button: Mulai Membaca */}
+                                    {/* Single Action Button: Baca Gratis Bab 1 */}
                                     <div className="pt-4 border-t border-[#E5E0D5]">
                                         <a
                                             href={`/read/${b.id}/${locale}/ch-0`}
                                             className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#111113] text-[#FAF8F5] font-bold text-xs sm:text-sm hover:bg-stone-800 transition-colors shadow-2xs min-h-[44px]"
                                         >
-                                            <BookOpen className="w-4 h-4" />
-                                            <span>{t('landing.catalog.start_reading')}</span>
+                                            <BookOpen className="w-4 h-4 text-[#FFE66D]" />
+                                            <span>{t('landing.catalog.read_free_btn', { vol: b.volumeCode })}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -654,15 +612,15 @@ export default function Landing({
                                         <div className="flex items-center justify-center sm:justify-start gap-2">
                                             {currency === 'IDR' ? (
                                                 <span className="text-xs line-through text-stone-400 font-mono">
-                                                    Rp 197.000
+                                                    Rp 237.000
                                                 </span>
                                             ) : (
                                                 <span className="text-xs line-through text-stone-400 font-mono">
-                                                    $14.99
+                                                    $20.97
                                                 </span>
                                             )}
                                             <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                                                {currency === 'IDR' ? t('landing.pricing.save_badge', { amount: 'Rp 48.000' }) : t('landing.pricing.save_badge', { amount: '$5.00' })}
+                                                {currency === 'IDR' ? t('landing.pricing.save_badge', { amount: 'Rp 88.000' }) : t('landing.pricing.save_badge', { amount: '$8.98' })}
                                             </span>
                                         </div>
 
@@ -670,7 +628,7 @@ export default function Landing({
                                             {formatPrice(bundleTier.priceIdr, bundleTier.priceUsd)}
                                         </div>
                                         <p className="text-[11px] font-mono text-stone-500">
-                                            {t('landing.pricing.bundle_price_sub')}
+                                            {t('landing.pricing.bundle.price_note')}
                                         </p>
                                     </div>
 
@@ -678,7 +636,7 @@ export default function Landing({
                                         href={`/checkout/${bundleTier.id}?locale=${locale}`}
                                         className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#111113] text-white font-bold text-sm hover:bg-stone-800 transition-colors shadow-sm min-h-[44px]"
                                     >
-                                        <span>{t('landing.pricing.bundle_cta', { price: formatPrice(bundleTier.priceIdr, bundleTier.priceUsd) })}</span>
+                                        <span>{t('landing.pricing.bundle.cta')}</span>
                                     </a>
                                 </div>
                             </div>
@@ -720,7 +678,7 @@ export default function Landing({
                                         </div>
 
                                         <ul className="space-y-2 text-xs text-stone-700">
-                                            {tier.features.slice(0, 2).map((feat, fIdx) => (
+                                            {tier.features.slice(0, 3).map((feat, fIdx) => (
                                                 <li key={fIdx} className="flex items-start gap-2">
                                                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                                                     <span className="leading-snug">{feat}</span>
@@ -731,20 +689,20 @@ export default function Landing({
 
                                     <a
                                         href={`/checkout/${tier.id}?locale=${locale}`}
-                                        className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-[#E5E0D5] bg-[#FAF8F5] text-stone-800 font-bold text-xs hover:bg-stone-100 transition-colors min-h-[42px]"
+                                        className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border-2 border-stone-900 bg-transparent text-stone-900 font-bold text-xs hover:bg-stone-900 hover:text-white transition-colors min-h-[42px]"
                                     >
-                                        <span>{t('landing.pricing.single_buy_cta', { price: formatPrice(tier.priceIdr, tier.priceUsd) })}</span>
+                                        <span>{t('landing.pricing.single_card.cta', { title: b.volumeCode, price: formatPrice(tier.priceIdr, tier.priceUsd) })}</span>
                                     </a>
                                 </div>
                             );
                         })}
                     </div>
 
-                    {/* Comparison Matrix Table (Image 4 bottom table) */}
+                    {/* Comparison Matrix Table (5 Clean Rows) */}
                     <div className="space-y-4 pt-6 border-t border-[#E5E0D5]">
                         <div className="text-center">
                             <h3 className="font-bold text-base sm:text-lg text-[#111113]">
-                                {t('landing.pricing.table_title')}
+                                {t('landing.comparison_table.title')}
                             </h3>
                         </div>
 
@@ -752,52 +710,51 @@ export default function Landing({
                             <table className="w-full text-left text-xs">
                                 <thead>
                                     <tr className="border-b border-[#E5E0D5] bg-[#FAF8F5] text-stone-600 font-mono text-[11px]">
-                                        <th className="p-3.5 w-1/5">{t('landing.pricing.table_header_feature')}</th>
-                                        <th className="p-3.5 w-1/5 text-center">{t('landing.pricing.table_col_b1')}</th>
-                                        <th className="p-3.5 w-1/5 text-center">{t('landing.pricing.table_col_b2')}</th>
-                                        <th className="p-3.5 w-1/5 text-center">{t('landing.pricing.table_col_b3')}</th>
+                                        <th className="p-3.5 w-1/5">{t('landing.comparison_table.col_feature')}</th>
+                                        <th className="p-3.5 w-1/5 text-center">{t('landing.comparison_table.col_b1')}</th>
+                                        <th className="p-3.5 w-1/5 text-center">{t('landing.comparison_table.col_b2')}</th>
+                                        <th className="p-3.5 w-1/5 text-center">{t('landing.comparison_table.col_b3')}</th>
                                         <th className="p-3.5 w-1/5 text-center bg-amber-50/70 border-x-2 border-t-2 border-amber-400 font-extrabold text-[#111113]">
-                                            {t('landing.pricing.table_col_bundle')}
+                                            {t('landing.comparison_table.col_bundle')}
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-[#E5E0D5] text-stone-700">
-                                    <tr>
-                                        <td className="p-3.5 font-bold text-stone-900 bg-[#FAF8F5]/40">{t('landing.pricing.table_row_role')}</td>
-                                        <td className="p-3.5 text-center">Leader Baru & Supervisor</td>
-                                        <td className="p-3.5 text-center">Ketahanan & Anti-Burnout</td>
-                                        <td className="p-3.5 text-center">Manajer Divisi & Lintas Tim</td>
-                                        <td className="p-3.5 text-center bg-amber-50/40 border-x-2 border-amber-400 font-bold text-[#111113]">
-                                            Seluruh Level Kepemimpinan
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="p-3.5 font-bold text-stone-900 bg-[#FAF8F5]/40">{t('landing.pricing.table_row_chapters')}</td>
-                                        <td className="p-3.5 text-center">15 Bab + 3 File Master PDF</td>
-                                        <td className="p-3.5 text-center">15 Bab + 3 File Master PDF</td>
-                                        <td className="p-3.5 text-center">15 Bab + 3 File Master PDF</td>
-                                        <td className="p-3.5 text-center bg-amber-50/40 border-x-2 border-amber-400 font-bold text-[#111113]">
-                                            45 Bab Penuh + 9 File Master PDF
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="p-3.5 font-bold text-stone-900 bg-[#FAF8F5]/40">{t('landing.pricing.table_row_frameworks')}</td>
-                                        <td className="p-3.5 text-center">Rumus Target 3K & Koreksi 4 Mata</td>
-                                        <td className="p-3.5 text-center">Perisai Kaca & Detachment 18:00</td>
-                                        <td className="p-3.5 text-center">Coaching the Coach & Rumus 3S</td>
-                                        <td className="p-3.5 text-center bg-amber-50/40 border-x-2 border-amber-400 font-bold text-[#111113]">
-                                            Seluruh Framework (CCL, Harvard, Gallup)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="p-3.5 font-bold text-stone-900 bg-[#FAF8F5]/40">{t('landing.pricing.table_row_price')}</td>
-                                        <td className="p-3.5 text-center font-bold text-stone-900">{formatPrice(49000, 3.99)}</td>
-                                        <td className="p-3.5 text-center font-bold text-stone-900">{formatPrice(49000, 3.99)}</td>
-                                        <td className="p-3.5 text-center font-bold text-stone-900">{formatPrice(99000, 6.99)}</td>
-                                        <td className="p-3.5 text-center bg-amber-50/40 border-x-2 border-b-2 border-amber-400 font-black text-sm text-[#111113]">
-                                            {formatPrice(149000, 9.99)} <span className="text-[10px] font-normal text-emerald-700 block">(Hemat 24%)</span>
-                                        </td>
-                                    </tr>
+                                    {(() => {
+                                        const rawRows = t('landing.comparison_table.rows') as unknown;
+                                        const rows = Array.isArray(rawRows) ? rawRows : [];
+
+                                        return rows.map((row: { name: string; b1: string; b2: string; b3: string; bundle: string }, rIdx: number) => {
+                                            const isLastRow = rIdx === rows.length - 1;
+
+                                            return (
+                                                <tr key={rIdx}>
+                                                    <td className="p-3.5 font-bold text-stone-900 bg-[#FAF8F5]/40">{row.name}</td>
+                                                    <td className={`p-3.5 text-center ${isLastRow ? 'font-bold text-stone-900' : ''}`}>
+                                                        {isLastRow ? formatPrice(59000, 4.99) : row.b1}
+                                                    </td>
+                                                    <td className={`p-3.5 text-center ${isLastRow ? 'font-bold text-stone-900' : ''}`}>
+                                                        {isLastRow ? formatPrice(79000, 6.99) : row.b2}
+                                                    </td>
+                                                    <td className={`p-3.5 text-center ${isLastRow ? 'font-bold text-stone-900' : ''}`}>
+                                                        {isLastRow ? formatPrice(99000, 8.99) : row.b3}
+                                                    </td>
+                                                    <td className={`p-3.5 text-center bg-amber-50/40 border-x-2 ${isLastRow ? 'border-b-2 font-black text-sm text-[#111113]' : 'font-bold text-[#111113]'} border-amber-400`}>
+                                                        {isLastRow ? (
+                                                            <>
+                                                                {formatPrice(149000, 11.99)}{' '}
+                                                                <span className="text-[10px] font-normal text-emerald-700 block">
+                                                                    ({currency === 'IDR' ? 'Hemat Rp88.000' : 'Save $8.98'})
+                                                                </span>
+                                                            </>
+                                                        ) : (
+                                                            row.bundle
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            );
+                                        });
+                                    })()}
                                 </tbody>
                             </table>
                         </div>

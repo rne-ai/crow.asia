@@ -23,7 +23,7 @@ export const BookCoverRemotionComp: React.FC<BookCoverProps> = ({
     illustrationPath,
     coverTitleTop,
     coverTitleBottom,
-    chaptersLabel = '15 Bab + PDF',
+    chaptersLabel = '13 Bab + Lampiran',
     editionLabel = 'ID + EN',
 }) => {
     const frame = useCurrentFrame();
