@@ -302,13 +302,13 @@ class SeedManuscriptsCommand extends Command
                 'descriptions' => ['id' => 'Akses menyeluruh seluruh trilogi (39 bab praktis + 3 lampiran), Bahasa Indonesia (Kasual & Standar) + English, dan seluruh berkas PDF A5.', 'en' => 'Full access to complete trilogy (39 practical chapters + 3 summaries), ID (Casual & Standard) + English, and all A5 PDFs.'],
                 'features' => [
                     'id' => [
-                        'Buka Penuh Seluruh 3 Buku (Total 39 Bab Praktis + 3 Lampiran)',
+                        'Buka Penuh Seluruh 3 Buku (Total 39 Bab Praktis)',
                         'Ratusan Contoh Kalimat & Skrip Percakapan Siap Salin',
                         'Bebas Beralih Mode Bahasa Bacaan Kapan Saja (Standar & Kasual)',
                         'Akses Web-Reader Selamanya + Unduhan 3 PDF Siap Cetak',
                     ],
                     'en' => [
-                        'Full Access to All 3 Books (39 Practical Chapters + 3 Summaries)',
+                        'Full Access to All 3 Books (39 Practical Chapters)',
                         'Hundreds of Ready-to-Copy Scripts for Difficult Situations',
                         'Seamless Language & Register Switching (Standard & Casual)',
                         'Lifetime Interactive Web-Reader Access + 3 Print-Ready PDFs',

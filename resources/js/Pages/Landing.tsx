@@ -126,6 +126,7 @@ export default function Landing({
                             <mark className="crow-hero-mark">
                                 {t('landing.hero.title_mark')}
                             </mark>{' '}
+                            <br className="hidden sm:inline" />
                             {t('landing.hero.title_middle')}{' '}
                             <span className="crow-scribble-container">
                                 <span>{t('landing.hero.title_scribble')}</span>
@@ -146,6 +147,7 @@ export default function Landing({
                                     />
                                 </svg>
                             </span>{' '}
+                            <br className="hidden sm:inline" />
                             {t('landing.hero.title_suffix')}
                         </h1>
 
