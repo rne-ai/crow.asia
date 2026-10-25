@@ -1,5 +1,9 @@
 # 06. Sistem Autentikasi, Commerce & Integrasi Mayar
 
+[← 05. Web Reader & Remotion](./05-reader-ui-and-remotion-engine.md) | [📚 Indeks Utama](./00-index-and-overview.md) | [07. Operasional & Runbook →](./07-operations-testing-and-runbook.md)
+
+---
+
 Dokumen ini memaparkan arsitektur autentikasi pengguna, panel superadmin Filament v5, model pembatasan akses (*paywall & content gating*), serta alur transaksi pembayaran Mayar.id dengan validasi token dan proteksi idempotensi pada platform **`crow.asia`**.
 
 ---
@@ -47,18 +51,18 @@ Platform menerapkan strategi *Freemium Reading Funnel* untuk memaksimalkan konve
 
 ```mermaid
 flowchart TD
-    Req[Reader membuka /read/book-1/id/ch-X] --> IndexCheck{Index Bab <= 1?}
+    Req["Reader membuka /read/book-1/id/ch-X"] --> IndexCheck{"Index Bab <= 1?"}
     
-    IndexCheck -->|Ya (Bab 0 & Bab 1)| AllowFree[Gratis Tanpa Syarat:<br/>- compiled_html lengkap dikirimkan<br/>- hasAccess = true<br/>- Bebas dibaca tanpa login]
+    IndexCheck -->|"Ya (Bab 0 & Bab 1)"| AllowFree["Gratis Tanpa Syarat:<br/>- compiled_html lengkap dikirimkan<br/>- hasAccess = true<br/>- Bebas dibaca tanpa login"]
     
-    IndexCheck -->|Tidak (Bab 2 s.d. 13)| CheckAuth{User Login?}
+    IndexCheck -->|"Tidak (Bab 2 s.d. 13)"| CheckAuth{"User Login?"}
     
-    CheckAuth -->|Tidak| DenyMask[Akses Terkunci:<br/>- compiled_html TIDAK dikirimkan<br/>- safe_preview_html dikirimkan<br/>- hasAccess = false<br/>- Tampilkan Paywall Banner]
+    CheckAuth -->|Tidak| DenyMask["Akses Terkunci:<br/>- compiled_html TIDAK dikirimkan<br/>- safe_preview_html dikirimkan<br/>- hasAccess = false<br/>- Tampilkan Paywall Banner"]
     
-    CheckAuth -->|Ya| CheckRole{Role == 'admin'?}
-    CheckRole -->|Ya| AllowFull[Admin Bypass:<br/>- Full compiled_html dikirimkan<br/>- hasAccess = true]
+    CheckAuth -->|Ya| CheckRole{"Role == 'admin'?"}
+    CheckRole -->|Ya| AllowFull["Admin Bypass:<br/>- Full compiled_html dikirimkan<br/>- hasAccess = true"]
     
-    CheckRole -->|Tidak| CheckEntitlement{user_entitlements exists<br/>WHERE user_id AND book_id?}
+    CheckRole -->|Tidak| CheckEntitlement{"user_entitlements exists<br/>WHERE user_id AND book_id?"}
     CheckEntitlement -->|Ya| AllowFull
     CheckEntitlement -->|Tidak| DenyMask
 ```
@@ -83,11 +87,12 @@ Model penetapan harga bergradasi diterapkan untuk memberikan proposisi nilai (*v
 
 ## 4. Integrasi Payment Gateway Mayar.id
 
-### A. Inisiasi Transaksi (`CheckoutController@process`):
+### A. Inisiasi Transaksi (`CheckoutController@store`):
 1. Pengunjung mengeklik tombol beli pada tier harga (`/checkout/{tierId}`).
-2. Sistem membuat record `Order` baru dengan status `PENDING` dan nomor pesanan unik format `CROW-YYYYMMDD-XXXXXX`.
-3. Server memanggil API Mayar (`MayarInvoiceService`) untuk membuat tautan pembayaran (*payment link*).
-4. Pengunjung dialihkan ke halaman pembayaran resmi Mayar yang mendukung QRIS instan, Virtual Account, dan Kartu Kredit.
+2. Pengunjung mengirimkan formulir pemesanan ke `POST /checkout/process`.
+3. Sistem membuat record `Order` baru dengan status `PENDING` dan nomor pesanan unik format `CROW-YYYYMMDD-XXXXXX`.
+4. Server memanggil API Mayar (`MayarInvoiceService`) untuk membuat tautan pembayaran (*payment link*).
+5. Pengunjung dialihkan ke halaman pembayaran resmi Mayar yang mendukung QRIS instan, Virtual Account, dan Kartu Kredit.
 
 ### B. Keamanan & Idempotensi Webhook (`MayarWebhookController`):
 Ketika pembayaran lunas, Mayar mengirimkan callback POST ke endpoint `/api/webhooks/mayar`.
@@ -145,3 +150,8 @@ sequenceDiagram
    Jika webhook untuk pesanan yang sama diterima kembali (akibat retry jaringan), sistem mendeteksi bahwa pesanan sudah berstatus `PAID` dan langsung merespon `HTTP 200 OK` tanpa membuat ulang entitas hak akses (*duplicate grant prevention*).
 4. **Auto-Account Creation:**  
    Bagi pembeli yang belum mendaftar, `EntitlementSyncService` secara otomatis membuatkan akun pembaca dan menautkan lisensi ke email yang digunakan saat pembayaran.
+
+---
+
+[← 05. Web Reader & Remotion](./05-reader-ui-and-remotion-engine.md) | [📚 Indeks Utama](./00-index-and-overview.md) | [07. Operasional & Runbook →](./07-operations-testing-and-runbook.md)
+

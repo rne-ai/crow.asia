@@ -1,5 +1,9 @@
 # 04. Mesin Multibahasa Dinamis & Sistem Dual-Register
 
+[← 03. Pipeline Naskah](./03-manuscript-pipeline-and-compiler.md) | [📚 Indeks Utama](./00-index-and-overview.md) | [05. Web Reader & Remotion →](./05-reader-ui-and-remotion-engine.md)
+
+---
+
 Dokumen ini memaparkan arsitektur internasionalisasi (*i18n*), sistem kamus JSON terpusat, hook reaktif `useTranslation`, mesin register ganda bahasa Indonesia (Kasual vs Standar), dan penanganan mata uang ganda (*dual-currency*) pada platform **`crow.asia`**.
 
 ---
@@ -173,15 +177,15 @@ Sesuai rancangan arsitektur `restrict-id-registers-to-reader`:
 
 ```mermaid
 flowchart TD
-    Req[Reader Request: /read/book-1/{locale}/{slug}] --> CheckLocale{Locale == 'id'?}
-    CheckLocale -->|Tidak (en)| ForceStandard[Kunci Register ke 'standard'<br/>Sembunyikan Tombol Register Switch]
-    CheckLocale -->|Ya (id)| CheckQuery{Ada Query ?reg=?}
-    CheckQuery -->|Ya| SetFromQuery[Gunakan Register dari Query]
-    CheckQuery -->|Tidak| CheckCookie{Ada Cookie crow:reg?}
-    CheckCookie -->|Ya| SetFromCookie[Gunakan Register dari Cookie]
-    CheckCookie -->|Tidak| SetDefaultStandard[Gunakan Default: 'standard']
+    Req["Reader Request: /read/book-1/{locale}/{slug}"] --> CheckLocale{"Locale == 'id'?"}
+    CheckLocale -->|"Tidak (en)"| ForceStandard["Kunci Register ke 'standard'<br/>Sembunyikan Tombol Register Switch"]
+    CheckLocale -->|"Ya (id)"| CheckQuery{"Ada Query ?reg=?"}
+    CheckQuery -->|Ya| SetFromQuery["Gunakan Register dari Query"]
+    CheckQuery -->|Tidak| CheckCookie{"Ada Cookie crow:id-register?"}
+    CheckCookie -->|Ya| SetFromCookie["Gunakan Register dari Cookie"]
+    CheckCookie -->|Tidak| SetDefaultStandard["Gunakan Default: 'standard'"]
     
-    SetFromQuery --> FetchTranslation[Ambil Terjemahan Bab dari Database<br/>ChapterTranslation WHERE locale AND register]
+    SetFromQuery --> FetchTranslation["Ambil Terjemahan Bab dari Database<br/>ChapterTranslation WHERE locale AND register"]
     SetFromCookie --> FetchTranslation
     SetDefaultStandard --> FetchTranslation
     ForceStandard --> FetchTranslation
@@ -214,7 +218,7 @@ sequenceDiagram
     participant DB as PostgreSQL 18
 
     Reader->>Client: Klik Toggle Gaya Bahasa ("Kasual")
-    Client->>Client: Set Cookie: crow:reg=casual; path=/
+    Client->>Client: Set Cookie: crow:id-register=casual, path=/
     Client->>Controller: GET /read/book-1/id/ch-1?reg=casual (X-Inertia: true)
     Controller->>Controller: Validasi Register: 'casual' valid untuk locale 'id'
     Controller->>DB: SELECT * FROM chapter_translations WHERE locale='id' AND register='casual'
@@ -223,3 +227,8 @@ sequenceDiagram
     Client->>Client: Update Konten Naskah Secara Instan Tanpa Reload
     Client-->>Reader: Naskah Berubah Menjadi Gaya Obrolan Akrab (Gue/Lo)
 ```
+
+---
+
+[← 03. Pipeline Naskah](./03-manuscript-pipeline-and-compiler.md) | [📚 Indeks Utama](./00-index-and-overview.md) | [05. Web Reader & Remotion →](./05-reader-ui-and-remotion-engine.md)
+

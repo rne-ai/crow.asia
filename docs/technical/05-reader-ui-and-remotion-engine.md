@@ -1,5 +1,9 @@
 # 05. Antarmuka Web Reader & Engine Video Remotion
 
+[← 04. Mesin Multibahasa](./04-i18n-and-multilingual-engine.md) | [📚 Indeks Utama](./00-index-and-overview.md) | [06. Commerce & Mayar →](./06-commerce-auth-and-entitlements.md)
+
+---
+
 Dokumen ini memaparkan arsitektur antarmuka pembaca naskah (*Web Reader*), sistem laci catatan kaki dinamis (*footnotes drawer*), sinkronisasi checklist cloud, dan integrasi grafis gerak terprogram berbasis **Remotion v4** pada platform **`crow.asia`**.
 
 ---
@@ -57,27 +61,27 @@ Untuk menjaga kemurnian alur baca tanpa gangguan teks referensi yang panjang di 
   3. Menandai nomor catatan kaki dengan highlight emas sementara.
 - Tautan balik (`↩`) di samping catatan kaki memungkinkan pembaca kembali seketika ke paragraf bacaan semula.
 
-### B. Sinkronisasi Checklist Cloud (`/api/reader/checklist-toggle`):
+### B. Sinkronisasi Checklist Cloud (`/api/checklists/toggle`):
 Setiap bab dilengkapi instrumen aksi kerja praktis yang dapat dicentang langsung di layar:
 ```typescript
-const handleToggleChecklist = async (itemId: string, currentChecked: boolean) => {
+const handleToggleChecklist = async (itemIndex: number, currentChecked: boolean) => {
     // 1. Optimistic UI update di klien
-    setChecklistState(prev => ({ ...prev, [itemId]: !currentChecked }));
+    setChecklistState(prev => ({ ...prev, [itemIndex]: !currentChecked }));
 
     // 2. Kirim update ke server secara asinkron
-    await fetch('/api/reader/checklist-toggle', {
+    await fetch('/api/checklists/toggle', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken },
         body: JSON.stringify({
             book_id: book.id,
             chapter_slug: currentChapter.slug,
-            item_id: itemId,
-            is_checked: !currentChecked,
+            item_index: itemIndex,
+            is_completed: !currentChecked,
         }),
     });
 };
 ```
-Progres centang disimpan di tabel `checklist_progress` dan tetap tersimpan saat pembaca membuka aplikasi dari perangkat lain.
+Progres centang disimpan di tabel `checklist_progress` (kolom `item_index` dan `is_completed`) dan tetap tersimpan saat pembaca membuka aplikasi dari perangkat lain.
 
 ### C. Modal Pencarian Cepat SOS Topic Search:
 Pintasan tombol keyboard `Ctrl + K` (atau `Cmd + K` di macOS) memunculkan dialog pencarian darurat `SosSearchModal.tsx`. Pembaca dapat mengetikkan kata kunci kendala lapangan (contoh: *"menegur anak buah"*, *"rapat molor"*, *"staf defensif"*), dan sistem akan menampilkan cuplikan skrip dialog yang relevan dalam hitungan milidetik menggunakan indeks TsVector PostgreSQL.
@@ -145,3 +149,8 @@ Seluruh antarmuka tunduk pada filter kualitas desain **Antislop** yang terdokume
    Seluruh tombol, panah navigasi, dan checkbox memiliki ukuran area sentuh minimal **44x44 piksel** guna memastikan kenyamanan penggunaan di perangkat smartphone.
 4. **Navigasi Keyboard Penuh:**  
    Setiap elemen interaktif dapat diakses melalui tombol `Tab`, `Enter`, dan `Space`, dengan cincin fokus visual tegas (`focus-visible:outline-2 focus-visible:outline-[#1D4ED8]`).
+
+---
+
+[← 04. Mesin Multibahasa](./04-i18n-and-multilingual-engine.md) | [📚 Indeks Utama](./00-index-and-overview.md) | [06. Commerce & Mayar →](./06-commerce-auth-and-entitlements.md)
+

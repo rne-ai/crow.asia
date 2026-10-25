@@ -1,5 +1,9 @@
 # 03. Pipeline Pengolahan Naskah & Kompiler
 
+[← 02. Skema Basis Data](./02-database-schema-and-models.md) | [📚 Indeks Utama](./00-index-and-overview.md) | [04. Mesin Multibahasa →](./04-i18n-and-multilingual-engine.md)
+
+---
+
 Dokumen ini memaparkan arsitektur pipeline pengolahan naskah Markdown (*manuscript ingestion pipeline*), proses parsing *Abstract Syntax Tree* (AST), kompilasi HTML aman, transformasi blok taktis (Mermaid, kotak skrip, laci catatan kaki, checklist cloud), hingga eksekusi seeder pada platform **`crow.asia`**.
 
 ---
@@ -176,7 +180,7 @@ Service `App\Services\Content\ChapterCompilerService` mengonfigurasi AST markdow
 4. **Token Nama Rekan Tim Reaktif:**
    Placeholder seperti `[Nama Anggota Tim]` diubah menjadi:
    ```html
-   <span class="crow-token-name" data-default="Alex">Alex</span>
+   <span class="teammate-token" data-default="Alex">Alex</span>
    ```
    Di masa depan, pembaca dapat mengganti nama ini dengan nama asli anak buahnya dan seluruh dialog di naskah akan berganti secara reaktif.
 
@@ -185,16 +189,17 @@ Untuk bab berbayar (Bab 2–13), kompiler menghasilkan cuplikan aman:
 ```php
 private function generateSafePreview(string $fullHtml): string
 {
-    // Ambil maksimal 2 paragraf pertama pembuka
-    preg_match_all('/<p>(.*?)<\/p>/s', $fullHtml, $matches);
-    $firstParagraphs = array_slice($matches[0] ?? [], 0, 2);
+    // Ambil maksimal 3 elemen pembuka pertama (<p> atau <blockquote>)
+    preg_match_all('/<(p|blockquote)[^>]*>.*?<\/\1>/si', $fullHtml, $matches);
+    if (!empty($matches[0])) {
+        $previewBlocks = array_slice($matches[0], 0, 3);
+        return implode("\n", $previewBlocks);
+    }
 
-    return '<div class="crow-paywall-masked-content">' 
-        . implode("\n", $firstParagraphs) 
-        . '</div><div class="crow-paywall-gradient-fade"></div>';
+    return Str::limit(strip_tags($fullHtml), 300);
 }
 ```
-Konten naskah selebihnya **sama sekali tidak dikirimkan ke browser** jika pengguna belum memiliki hak akses, menjamin keamanan hak cipta naskah dari inspeksi *DevTools*.
+Konten naskah selebihnya **sama sekali tidak dikirimkan ke browser** jika pengguna belum memiliki hak akses, menjamin keamanan hak cipta naskah dari inspeksi *DevTools*. Efek visual gradien buram (*fade out blur*) diterapkan di sisi frontend React (`ChapterView.tsx`).
 
 ---
 
@@ -217,3 +222,8 @@ php artisan crow:seed-manuscripts
    Menyimpan 4 tier aktif (`tier-book-1`, `tier-book-2`, `tier-book-3`, dan `bundle-all-3` Rp149rb).
 
 Proses seeder ini beroperasi secara *idempotent* menggunakan `updateOrCreate`, sehingga aman dijalankan berulang kali saat terjadi pembaruan teks naskah.
+
+---
+
+[← 02. Skema Basis Data](./02-database-schema-and-models.md) | [📚 Indeks Utama](./00-index-and-overview.md) | [04. Mesin Multibahasa →](./04-i18n-and-multilingual-engine.md)
+

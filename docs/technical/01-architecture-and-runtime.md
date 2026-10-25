@@ -1,5 +1,9 @@
 # 01. Arsitektur Sistem & Runtime Environment
 
+[← 00. Indeks & Ringkasan](./00-index-and-overview.md) | [📚 Indeks Utama](./00-index-and-overview.md) | [02. Skema Basis Data →](./02-database-schema-and-models.md)
+
+---
+
 Dokumen ini memaparkan arsitektur runtime, siklus hidup request (*request-response lifecycle*), dan integrasi hybrid antara backend Laravel 13 dan frontend React 19 melalui Inertia.js v3 pada platform **`crow.asia`**.
 
 ---
@@ -143,19 +147,22 @@ public function share(Request $request): array
 
 ## 4. Pipeline Middleware & Routing
 
-Aplikasi memisahkan rute ke dalam dua domain utama:
+Seluruh rute aplikasi (antarmuka web, API interaktif, dan webhook) dikelola terpusat di `routes/web.php`:
 
-### A. Peta Rute Aplikasi (`routes/web.php` & `routes/api.php`):
+### A. Peta Rute Aplikasi (`routes/web.php`):
 
 | Method | URI Path | Controller & Action | Akses / Guard | Fungsi |
 | :--- | :--- | :--- | :--- | :--- |
 | `GET` | `/` | `LandingController@index` | Publik | Landing page marketing, carousel 16:9, kuis, katalog, dan harga |
 | `GET` | `/read/{bookId}/{locale}/{slug}` | `ReaderController@show` | Publik / Gated | Antarmuka pembaca Web Reader (Bab 0 & 1 gratis; Bab 2–13 berlisensi) |
 | `GET` | `/checkout/{tierId}` | `CheckoutController@show` | Publik / Auth | Halaman ringkasan pembelian dan form data pembeli |
-| `POST` | `/checkout/{tierId}/process` | `CheckoutController@process` | Publik / Auth | Inisiasi pesanan Mayar dan pengalihan ke payment gateway |
+| `POST` | `/checkout/process` | `CheckoutController@store` | Publik / Auth | Inisiasi pesanan Mayar dan pembuatan payment link |
+| `GET` | `/checkout/mock-pay/{orderNumber}` | `CheckoutController@update` | Dev / Testing | Simulator pelunasan pembayaran instan untuk testing lokal |
 | `GET` | `/dashboard` | `DashboardController@index` | `auth` | Dashboard pembaca berlisensi, unduhan PDF, dan status pesanan |
-| `POST` | `/api/reader/checklist-toggle` | `ReaderController@toggleChecklist` | `auth` | API sinkronisasi status checklist interaktif per bab |
-| `POST` | `/api/webhooks/mayar` | `MayarWebhookController@handle` | Webhook Token | Endpoint penerima callback pembayaran Mayar (idempotent) |
+| `GET` | `/download/pdf/{bookId}` | `DownloadPdfController@show` | `auth` | Endpoint unduhan file master PDF A5 resmi berlisensi |
+| `POST` | `/api/checklists/toggle` | `ChecklistController` | `auth` | API sinkronisasi status checklist interaktif per bab |
+| `GET` | `/api/search` | `SearchController` | Publik | Endpoint pencarian cepat TsVector untuk modal SOS Topic Search |
+| `POST` | `/api/webhooks/mayar` | `MayarWebhookController` | Webhook Token | Endpoint penerima callback pembayaran Mayar (idempotent) |
 | `GET` | `/admin` | Filament Admin Panel | `auth`, `admin` | Panel superadmin untuk mengelola naskah, lisensi, dan user |
 
 ### B. Urutan Eksekusi Global Middleware:
@@ -215,3 +222,8 @@ sequenceDiagram
     Browser->>Browser: React Hydration & Update Virtual DOM (< 25ms)
     Browser-->>User: Tampilan Naskah Interaktif Terbuka Sempurna
 ```
+
+---
+
+[← 00. Indeks & Ringkasan](./00-index-and-overview.md) | [📚 Indeks Utama](./00-index-and-overview.md) | [02. Skema Basis Data →](./02-database-schema-and-models.md)
+

@@ -1,5 +1,9 @@
 # 07. Operasional, Pengujian & Runbook Pemeliharaan
 
+[← 06. Commerce & Mayar](./06-commerce-auth-and-entitlements.md) | [📚 Indeks Utama](./00-index-and-overview.md)
+
+---
+
 Dokumen ini memaparkan panduan operasional teknis, orkestrasi container Docker, referensi perintah artisan, strategi suite pengujian Pest 5, serta prosedur pemeliharaan dan pemulihan sistem (*disaster recovery*) pada platform **`crow.asia`**.
 
 ---
@@ -159,3 +163,8 @@ docker compose exec -T postgres pg_dump -U crow dbcrow | gzip > backup_$(date +%
 # Memulihkan data dari cadangan
 gunzip -c backup_YYYYMMDD_HHMMSS.sql.gz | docker compose exec -T postgres psql -U crow -d dbcrow
 ```
+
+---
+
+[← 06. Commerce & Mayar](./06-commerce-auth-and-entitlements.md) | [📚 Indeks Utama](./00-index-and-overview.md)
+

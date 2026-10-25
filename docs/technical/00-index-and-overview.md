@@ -36,7 +36,7 @@ Berikut adalah daftar teknologi, pustaka, dan infrastruktur yang digunakan beser
 | **Video & Motion** | [Remotion](https://www.remotion.dev/) | `v4.x` | Framework video terprogram React untuk animasi cover buku dan carousel |
 | **Admin Panel** | [Filament](https://filamentphp.com/) | `v5.x` | Panel administrasi superadmin untuk manajemen buku, bab, user, dan lisensi |
 | **Markdown Parser** | [League CommonMark](https://commonmark.thephpleague.com/) | `v2.6+` | Parser markdown berstandar CommonMark & GFM dengan ekstensi kustom |
-| **HTML Sanitizer** | [Mews Purifier](https://github.com/mewebstudio/Purifier) | `v3.4+` | Sanitasi HTML berbasis HTMLPurifier untuk mencegah serangan XSS |
+| **HTML Sanitizer** | [Symfony HtmlSanitizer](https://symfony.com/doc/current/html_sanitizer.html) | `v8.x` | Sanitasi HTML berbasis komponen resmi Symfony untuk mencegah serangan XSS |
 | **Test Suite** | [Pest PHP](https://pestphp.com/) | `v5.x` | Framework pengujian testing elegan berbasis PHPUnit |
 | **E2E Automation** | [Playwright](https://playwright.dev/) | `v1.50+` | Audit visual otomatis dan verifikasi cross-browser multi-locale |
 | **Payment Gateway** | [Mayar.id](https://mayar.id/) | REST / Webhook | Otomasi tagihan QRIS/VA dan verifikasi webhook pembayaran berlisensi |
@@ -88,8 +88,7 @@ crow.asia/
 │       ├── Pages/               # Halaman utama Inertia (Landing, Checkout, Dashboard, Reader)
 │       └── hooks/               # Custom React hooks (useTranslation)
 ├── routes/
-│   ├── web.php                  # Rute antarmuka Web & Reader
-│   ├── api.php                  # Rute API (Checklist toggle, Mayar Webhook)
+│   ├── web.php                  # Seluruh rute Web, API, dan Webhook
 │   └── console.php              # Rute konsol terjadwal
 ├── tests/
 │   ├── Feature/                 # Pengujian fitur end-to-end Pest 5 (Commerce, Reader, i18n)

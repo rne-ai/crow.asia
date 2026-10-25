@@ -1,5 +1,9 @@
 # 02. Skema Basis Data & Model Domain
 
+[← 01. Arsitektur & Runtime](./01-architecture-and-runtime.md) | [📚 Indeks Utama](./00-index-and-overview.md) | [03. Pipeline Naskah →](./03-manuscript-pipeline-and-compiler.md)
+
+---
+
 Dokumen ini memaparkan arsitektur data, skema tabel relasional PostgreSQL 18, model domain Eloquent, tipe data khusus (UUIDv7, JSONB, TsVector, pgvector), serta kebijakan tata kelola basis data platform **`crow.asia`**.
 
 ---
@@ -54,7 +58,7 @@ erDiagram
     }
 
     chapters {
-        uuid id PK "UUIDv7"
+        bigint id PK "Auto-increment ID"
         varchar book_id FK "References books.id"
         varchar slug "ch-0, ch-1 s.d. ch-14"
         smallint chapter_index "0 = Pendahuluan, 1-13 = Bab, 14 = Lampiran"
@@ -70,8 +74,8 @@ erDiagram
     }
 
     chapter_translations {
-        uuid id PK "UUIDv7"
-        uuid chapter_id FK "References chapters.id"
+        bigint id PK "Auto-increment ID"
+        bigint chapter_id FK "References chapters.id"
         varchar locale "id | en"
         varchar register "casual | standard"
         varchar title "Judul Bab Terlokalisasi"
@@ -114,7 +118,7 @@ erDiagram
         varchar mayar_invoice_id "Unique Mayar Invoice ID"
         varchar mayar_transaction_id "Unique Mayar Transaction ID"
         text payment_link "URL Pembayaran Mayar"
-        varchar payment_status "PENDING | PAID | EXPIRED | FAILED"
+        varchar payment_status "PENDING | PAID | CLOSED | EXPIRED"
         jsonb raw_webhook_payload "Payload Mentah Mayar"
         timestamp paid_at "Waktu Pelunasan"
         timestamp created_at
@@ -137,9 +141,8 @@ erDiagram
         uuid user_id FK "References users.id"
         varchar book_id FK "References books.id"
         varchar chapter_slug "ch-1, ch-2, dst."
-        varchar item_id "Hash / ID Checklist"
-        boolean is_checked "Status Centang"
-        timestamp checked_at
+        smallint item_index "Indeks Item Checklist (0, 1, 2...)"
+        boolean is_completed "Status Selesai"
         timestamp created_at
         timestamp updated_at
     }
@@ -160,12 +163,14 @@ erDiagram
 
 ## 2. Standar Desain Basis Data
 
-1. **Primary Key UUIDv7 (`uuidv7()`):**  
-   Seluruh tabel dinamis (`users`, `chapters`, `chapter_translations`, `orders`, `user_entitlements`, `checklist_progress`) menggunakan UUIDv7 sebagai kunci utama bawaan PostgreSQL:
-   ```sql
-   id UUID PRIMARY KEY DEFAULT uuidv7()
-   ```
-   UUIDv7 mengombinasikan timestamp 48-bit presisi milidetik dengan byte acak kriptografis. Ini menjamin identitas unik global tanpa fragmentasi indeks B-Tree yang lazim terjadi pada UUIDv4 acak.
+1. **Strategi Primary Key:**  
+   - **Tabel Transaksional & User (`users`, `orders`, `user_entitlements`, `checklist_progress`):** Menggunakan kunci utama `UUIDv7` bawaan PostgreSQL:
+     ```sql
+     id UUID PRIMARY KEY DEFAULT uuidv7()
+     ```
+     UUIDv7 mengombinasikan timestamp 48-bit presisi milidetik dengan byte acak kriptografis, menjamin keunikan global tanpa fragmentasi indeks B-Tree yang lazim terjadi pada UUIDv4 acak.
+   - **Tabel Naskah Terindeks (`chapters`, `chapter_translations`):** Menggunakan kunci utama `BIGINT` auto-increment (`bigIncrements('id')`) untuk efisiensi penyimpanan dan joins hierarkis lokal yang rapat.
+   - **Tabel Master Statis (`books`, `pricing_tiers`, `supported_locales`):** Menggunakan natural string slug (`book-1`, `tier-book-1`, `id`).
 2. **Kamus Dokumen Bersarang (*JSONB Multi-Locale*):**  
    Kolom seperti `names`, `descriptions`, dan `features` pada `pricing_tiers` disimpan dalam format JSONB terstruktur:
    ```json
@@ -197,18 +202,20 @@ erDiagram
 - `pdf_r2_keys` (JSONB): Lokasi objek berkas PDF A5 siap unduh di storage Cloudflare R2.
 
 ### B. Tabel `chapters`
+- `id` (BIGINT, PK): Kunci utama numerik auto-increment.
 - `book_id` (VARCHAR 32, FK): Menautkan bab ke induk buku (`ON DELETE CASCADE`).
 - `slug` (VARCHAR 64): Pengenal ramah URL (`ch-0` untuk Pendahuluan, `ch-1` s.d. `ch-13` untuk Bab, `ch-14` untuk Lampiran).
 - `is_free_sample` (BOOLEAN): Bernilai `true` untuk bab indeks 0 dan 1. Mengizinkan pembaca tamu membaca naskah tanpa lisensi berbayar.
 - `remotion_composition_id` (VARCHAR 64): ID komposisi video Remotion pendamping bab.
 
 ### C. Tabel `chapter_translations`
-- `chapter_id` (UUID, FK): Menautkan terjemahan ke entitas bab.
+- `id` (BIGINT, PK): Kunci utama numerik auto-increment.
+- `chapter_id` (BIGINT, FK): Menautkan terjemahan ke entitas bab (`ON DELETE CASCADE`).
 - `locale` (VARCHAR 16) & `register` (VARCHAR 16): Menentukan bahasa (`id`, `en`) dan gaya sapaan (`casual`, `standard`).
 - `compiled_html` (TEXT): Hasil kompilasi aman dari `ChapterCompilerService`, siap dirender di Web Reader.
 - `safe_preview_html` (TEXT): Pratinjau teks yang telah dipotong dan disamarkan untuk pengguna yang belum membeli lisensi.
 - `extracted_checklists` (JSONB): Berisi array objek instrumen checklist:
-  `[{"id": "chk-01", "text": "Melakukan audit 3P", "order": 1}]`.
+  `[{"itemIndex": 0, "labelHtml": "...", "isCompleted": false}]`.
 
 ### D. Tabel `pricing_tiers`
 - `id` (VARCHAR 32, PK): `tier-book-1`, `tier-book-2`, `tier-book-3`, dan `bundle-all-3`.
@@ -300,3 +307,8 @@ Sesuai aturan operasional yang ditetapkan pada `AGENTS.md`:
    - Host: `127.0.0.1`, Port: `5432`, Database: `dbcrow`, User: `crow`.
 3. **Pemberlakuan Mode Aman (*Read-Safe Policy*):**  
    Tool `tools.dbx.dbx_execute_query` menerapkan proteksi bawaan terhadap query destruktif tingkat tinggi (`DROP DATABASE`, `DELETE FROM` tanpa where). Perubahan skema dilakukan secara terstruktur melalui migrasi Laravel (`php artisan migrate`).
+
+---
+
+[← 01. Arsitektur & Runtime](./01-architecture-and-runtime.md) | [📚 Indeks Utama](./00-index-and-overview.md) | [03. Pipeline Naskah →](./03-manuscript-pipeline-and-compiler.md)
+
